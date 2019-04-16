@@ -13,3 +13,9 @@ books.
 
 For the purpose of your project, the web site offers 2 main functionalities: User Registration and
 Book Reservation
+
+
+
+to start the project, once you are in the right folder type:
+npm install
+node index.js
