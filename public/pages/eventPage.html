@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>BookStore</title>
+
+</head>
+<body>
+  <a href="../index.html"><h1>Welcome to our BookStore!</h1></a>
+  <input list="queryParam" id="queryBox"/>
+  <datalist id="queryParam">
+    <option value="title">
+    <option value="isbn">
+    <option value="author's name">
+    <option value="genre">
+    <option value="theme">
+  </datalist>
+  <input id="searchBox" type="text" size="20"/>
+  <button id="searchButton">Search</button>
+  <button onclick="location.href = './books.html';" id="bookButton">Library</button>
+  <button onclick="location.href = './cartPage.html';" id="cartButton">Cart</button>
+  <button onclick="location.href = './loginPage.html';" id="loginButton">Login</button>
+  <button onclick="location.href = './events.html';" id="eventButton">Events</button>
+  <button onclick="location.href = './infoPage.html';" id="infoButton">Ordering and shipping info</button>
+  <button onclick="location.href = './giftCardPage.html';" id="giftCardButton">giftCard</button>
+  <button onclick="location.href = './contactUsPage.html';" id="contactUsButton">Contact Us</button>
+  <button onclick="location.href = './FAQPage.html';" id="FAQButton">FAQ</button>
+
+
+
+  <hr/>
+
+  <div id="status">Page of a specific event</div>
+
+  <script src="../assets/js/jquery-3.3.1.min.js"></script>
+  <script src="../assets/js/eventPage.js"></script>
+</body>
+</html>

@@ -26,8 +26,17 @@ const getAuthorByID = (req, res, next) => {
   }
 };
 
+function getAuthorByName(authorName){
+  return db.select('id').from('authors').where('name', 'ilike', '%'+authorName+'%').then(function(authorID){
+    var result = JSON.stringify(authorID[0].id);
+    return result;
+  });
+}
+
+
 
 module.exports = {
   getAuthors,
-  getAuthorByID
+  getAuthorByID,
+  getAuthorByName
 }

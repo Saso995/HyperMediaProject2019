@@ -6,33 +6,42 @@ router.get('/', function(req, res) {
   if(req.session.cart){
     res.send(req.session.cart);
   } else{
-    res.send("Cart empty, add a book!");
+    res.json({ text: "Cart empty, add a book!" })
   }
 });
 
 router.get('/checkout', function(req, res, next){
-  res.send("You are trying to buy some stuff");
+  res.json({ text: "You are checking out!" })
 });
 
-router.get('/:id', function(req, res, next){
-  var productId = req.params.id;
-  var cart = new Cart(req.session.cart ? req.session.cart : {});
-  //mettere controlli su quanti ne ho in magazzino forse
-  db.select().from('books').where('id', productId).then(function(book){
-    if(Object.keys(book).length > 0){
-      var product = book[0];
-      cart.add(product, product.id);
-      req.session.cart = cart;
-      //res.redirect('/cart'); //da rimuovere dopo è comodo per testing
-      res.send("added");
-    } else {
-      next(new Error("No book found"));
-    }
-  });
+
+router.post('/', function(req, res, next){
+  if(req.signedCookies.user_id){
+    var productId = req.body.id;
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
+    db.select().from('books').where('id', productId).then(function(book){
+      if(Object.keys(book).length > 0){
+        var product = book[0];
+        cart.add(product, product.id);
+        req.session.cart = cart;
+        res.send("added");
+      } else {
+        next(new Error("No book found"));
+      }
+    });
+  } else {
+    res.json({
+      message: "You are not logged! You have to log in if you want to add something to the cart."
+    });
+  }
+
+
+
+
 });
 
-router.delete('/:id', function(req, res, next){
-  var toRemove = req.params.id;
+router.delete('/', function(req, res, next){
+  var toRemove = req.body.id;
   if(req.session.cart){
     var cart = new Cart(req.session.cart);
     if (toRemove in cart.items){

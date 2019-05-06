@@ -30,13 +30,13 @@ app.use(expressSession({
   saveUninitialized: false,
   resave: false,
   store: store,
-  cookie: {maxAge: 10 * 60 * 1000} //cart expires after 10 minutes
+  cookie: {maxAge: 1 * 60 * 1000, httpOnly:true} //cart expires after 1 minutes
 }));
 app.use(cookieParser('keyboard_cat')); //da modificare
 
 authenticationRouter.use(bodyParser.json())
 
-app.use(express.static('./public/pages'));
+app.use(express.static(__dirname + "/public"));
 app.use('/backend', backEndRouter);
 app.use('/book', bookRouter);
 app.use('/author', authorRouter);

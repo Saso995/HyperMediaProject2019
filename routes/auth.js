@@ -3,12 +3,6 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../other/userQueries');
 
-router.get('/', (req, res) => {
-  res.json({
-    message: 'Locked'
-  });
-});
-
 router.post('/signup', (req, res, next) => {
   req.check('email', 'Invalid email address').isEmail();
   req.check('password', 'Password is invalid').isLength({min: 6}).equals(req.body.confirmPassword);
@@ -22,21 +16,26 @@ router.post('/signup', (req, res, next) => {
           bcrypt.hash(req.body.password, 10).then((hash) => {
             const user = {
               email: req.body.email,
-              password: hash
+              password: hash,
+              firstname: req.body.firstName,
+              lastname: req.body.lastName,
+              birthdate: req.body.birthDate,
+              address: req.body.address
             };
             User.create(user).then(id => {
               res.json({
                 id,
-                messagge: "Logged"
+                messagge: "Successfully registered! Now you can login with your data."
               });
             });
           });
         } else {
-          next(new Error("Email in use!"));
+            next(new Error("Email in use!"));
         }
     });
   } else {
-    next(new Error('Invalid user'));
+    //next(errors);
+    res.json(errors);
   }
 });
 
@@ -56,21 +55,22 @@ router.post('/login', (req, res, next) => {
                       res.cookie('user_id', user.id, {
                         httpOnly: true,
                         signed: true
-                        //adding secure remove the cookies from signedCookies I don't know why
+                        //adding secure remove the cookies from signedCookies
                       });
                       res.json({
                         message: "Logged in!"
                       });
                     } else {
-                      next(new Error("Invalid login"));
+                      next(new Error("Wrong Password"));
                     }
                   });
           } else {
-            next(new Error("Invalid login"));
+            next(new Error("This email doesn't exist"));
           }
         });
   } else {
-    next(new Error("Invalid login"));
+    //next(new Error("Invalid login"));
+    res.json(errors);
   }
 });
 
@@ -78,9 +78,13 @@ router.post('/logout', (req, res, next) => {
   console.log(req.signedCookies);
   if(req.signedCookies.user_id){
     res.cookie("user_id", "", { expires: new Date(0)});
-    res.redirect('/auth');
+    res.json({
+      message: "Logged out!"
+    });
   } else {
-    res.send("You are not logged");
+    res.json({
+      message: "You are not logged!"
+    });
   }
 });
 
