@@ -44,7 +44,8 @@ app.use('/event', eventRouter);
 app.use('/auth', authenticationRouter);
 app.use('/cart', cartRouter);
 
-app.listen(1337, function(){
+var PORT = process.env.PORT || 1337;
+app.listen(PORT, function(){
   console.log("Listening at port 1337");
 });
 
