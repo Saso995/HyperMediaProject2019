@@ -9,7 +9,7 @@ $(document).ready(() => {
 
 
   $.ajax({
-    url: '../../book/?' + key,
+    url: '../../book/' + key,
     type: 'GET',
     dataType : 'json', // this URL returns data in JSON format
     success: (data) => {
