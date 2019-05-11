@@ -10,7 +10,7 @@ $(document).ready(() => {
       $('#pages').html(data.book[0].pages);
       $('#genre').html(data.book[0].genre);
       $('#isbn').html(data.book[0].isbn);
-      $("#img").attr('src','http://localhost:1337/resources/books/' + data.book[0].id + '.jpg');
+      $("#img").attr('src','https://bova-colombo-hyp2019.herokuapp.com/resources/books/' + data.book[0].id + '.jpg');
       $('#authorName').html(data.authorName);
       var d = data.book[0].publicationdate;
       var onlyD = d.substr(0, 10);
