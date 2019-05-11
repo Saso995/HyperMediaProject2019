@@ -8,7 +8,7 @@ $(document).ready(() => {
       $('#bio').html(data.author[0].bio);
       for(var i in data.myBooks) {
         console.log(data.myBooks[i]);
-        let toAppend = "<li><a href='https://bova-colombo-hyp2019.herokuapp.com/book/" + data.myBooks[i].id + "' >" + data.myBooks[i].title+ "</a></li>";
+        let toAppend = "<li><a href='https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?" + data.myBooks[i].id + "' >" + data.myBooks[i].title+ "</a></li>";
         console.log(toAppend);
         $("ol").append(toAppend);
       }
