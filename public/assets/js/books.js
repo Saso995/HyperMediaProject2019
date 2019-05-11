@@ -6,6 +6,9 @@ $(document).ready(() => {
     var params = window.location.search.split('?')[1].split('&');
     key = params[0].split('=')[0];
     value = decodeURIComponent(params[0].split('=')[1]);
+    console.log(params)
+    console.log(key)
+    console.log(value)
   }
 
   $.ajax({
@@ -21,7 +24,7 @@ $(document).ready(() => {
       $('#status').html("Error: "+ JSON.stringify(data));
     }
   });
-  
+
   $('#searchButton').click(() => {
     if ($('#searchBox').val()){
       var url = './books.html?' + encodeURIComponent($('#queryBox').val()) + '=' + encodeURIComponent($('#searchBox').val());
