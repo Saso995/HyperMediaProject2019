@@ -1,36 +1,190 @@
-<html>
-<head>
-<title>BookStore</title>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/mycss.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-</head>
-<body>
-  <a href="../index.html"><h1>Welcome to our BookStore!</h1></a>
-  <input list="queryParam" id="queryBox"/>
-  <datalist id="queryParam">
-    <option value="title">
-    <option value="isbn">
-    <option value="author's name">
-    <option value="genre">
-    <option value="theme">
-  </datalist>
-  <input id="searchBox" type="text" size="20"/>
-  <button id="searchButton">Search</button>
-  <button onclick="location.href = './books.html';" id="bookButton">Library</button>
-  <button onclick="location.href = './cartPage.html';" id="cartButton">Cart</button>
-  <button onclick="location.href = './loginPage.html';" id="loginButton">Login</button>
-  <button onclick="location.href = './events.html';" id="eventButton">Events</button>
-  <button onclick="location.href = './infoPage.html';" id="infoButton">Ordering and shipping info</button>
-  <button onclick="location.href = './giftCardPage.html';" id="giftCardButton">giftCard</button>
-  <button onclick="location.href = './contactUsPage.html';" id="contactUsButton">Contact Us</button>
-  <button onclick="location.href = './FAQPage.html';" id="FAQButton">FAQ</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <title></title>
+  </head>
+  <body>
+    <!---navbar--->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Home</a>
+      <button class="navbar-toggler order-first" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!---filter dropdown--->
 
 
+      <!---search bar and button--->
+      <form class="form-inline my-2 my-lg-0">
+        <div class="dropdown">
+          <button class="btn-on-nav dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="selection">Search in</span><span class="caret"></span>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Title</a>
+            <a class="dropdown-item" href="#">Author</a>
+            <a class="dropdown-item" href="#">Genre</a>
+            <a class="dropdown-item" href="#">Theme</a>
+          </div>
+        </div>
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search"></input>
+        <button class="btn-on-nav" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+      </form>
 
-  <hr/>
 
-  <div id="status">Page of a specific Author</div>
+      <script>
+        $(".dropdown-menu a").click(function(){
 
-  <script src="../assets/js/jquery-3.3.1.min.js"></script>
+          $(this).parents(".dropdown").find('.selection').text($(this).text());
+          $(this).parents(".dropdown").find('.selection').val($(this).text());
+
+        });
+      </script>
+
+      <!---other ref--->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Gift card</a>
+          </li>
+          <li class="nav-item">
+            <button class="btn-on-nav"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn-on-nav"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!---container--->
+    <div class="container-fluid">
+      <div class="row" id="left_col">
+        <div class="col-md-3">
+          <section class="cover">
+            <img src="" class="img-thumbnail rounded mx-auto d-block img-responsive" id="img">
+          </section>
+        </div>
+
+        <div class="col-md-6" id="middle_col">
+          <section class="title">
+            <h2 class ="author-name" id="author-name">author_name</h2>
+          </section>
+          <section class="description">
+            <h5 class="title-description">
+              <b>Bio:</b>
+            </h5>
+            <div class="text-description" id="bio">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+          </section>
+          <section class="books">
+            <h4 class="books">
+              <span>My books: </span>
+              <ol id="mybooks">
+
+              </ol>
+
+            </h4>
+          </section>
+        </div>
+
+
+      </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="page-footer font-small footer-color pt-4 my-md-5 pt-md-5 border-top">
+
+
+      <!-- Footer Links -->
+      <div class="container-fluid">
+
+        <!-- Grid row -->
+        <div class="row">
+
+          <!-- Grid column -->
+          <div class="col-md-5 mt-md-0 mt-3">
+
+            <!-- Content -->
+            <h5>Our Library</h5>
+            <p class="text-justify text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia</p>
+
+          </div>
+          <!-- Grid column -->
+
+          <hr class="clearfix w-100 d-md-none pb-3">
+
+          <!-- Grid column -->
+          <div class="offset-md-1 col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5>Service for you</h5>
+
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="text-muted" href="#!">Customer care</a>
+              </li>
+              <li>
+                <a class="text-muted" href="#!">FAQ and help</a>
+              </li>
+              <li>
+                <a class="text-muted" href="#!">Contact us</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5>Your purchase</h5>
+
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="text-muted" href="#!">Ordering info</a>
+              </li>
+              <li>
+                <a class="text-muted" href="#!">Shipping info</a>
+              </li>
+              <li>
+                <a class="text-muted" href="#!">Payment methods</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+      </div>
+      <!-- Footer Links -->
+
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-3">© 2019 Copyright:
+        <a href="#"> Gesù.com</a>
+      </div>
+      <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+
+  </body>
   <script src="../assets/js/authorPage.js"></script>
-</body>
 </html>
