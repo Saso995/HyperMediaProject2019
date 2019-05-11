@@ -1,9 +1,22 @@
-$('#searchButton').click(() => {
-  if ($('#searchBox').val()){
-    var url = './books.html?' + encodeURIComponent($('#queryBox').val()) + '=' + encodeURIComponent($('#searchBox').val());
-    window.location.href = url;
-  } else {
-    var url = './books.html';
-    window.location.href = url;
-  }
+$(document).ready(() => {
+  $.ajax({
+    url: '../../author/1',
+    type: 'GET',
+    dataType : 'json', // this URL returns data in JSON format
+    success: (data) => {
+      $('#author-name').html(data.author[0].name);
+      $('#bio').html(data.author[0].bio);
+      for(var i in data.myBooks) {
+        console.log(data.myBooks[i]);
+        let toAppend = "<li><a href='http://localhost:1337/book/" + data.myBooks[i].id + "' >" + data.myBooks[i].title+ "</a></li>";
+        console.log(toAppend);
+        $("ol").append(toAppend);
+      }
+      $("#img").attr('src','http://localhost:1337/resources/authors/' + data.author[0].id + '.jpg');
+
+    },
+    error: (data) => {
+      console.log('There is some error');
+    }
+  });
 });
