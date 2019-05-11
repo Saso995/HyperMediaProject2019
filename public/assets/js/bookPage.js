@@ -6,6 +6,7 @@ $(document).ready(() => {
     var params = window.location.search.split('?')[1].split('&');
     key = params[0].split('=')[0];
     value = decodeURIComponent(params[0].split('=')[1]);
+  }
 
 
   $.ajax({
