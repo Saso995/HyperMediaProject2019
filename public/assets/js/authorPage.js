@@ -1,6 +1,14 @@
 $(document).ready(() => {
+  var key = '';
+  var value = '';
+  if(window.location.search){
+    var queryString = new Array();
+    var params = window.location.search.split('?')[1].split('&');
+    key = params[0].split('=')[0];
+  }
+
   $.ajax({
-    url: '../../author/1',
+    url: '../../author/' + key,
     type: 'GET',
     dataType : 'json', // this URL returns data in JSON format
     success: (data) => {

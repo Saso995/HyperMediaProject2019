@@ -21,6 +21,7 @@ $(document).ready(() => {
       $('#isbn').html(data.book[0].isbn);
       $("#img").attr('src','https://bova-colombo-hyp2019.herokuapp.com/resources/books/' + data.book[0].id + '.jpg');
       $('#authorName').html(data.authorName);
+      $("#authorName").attr('href','https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data.book[0].authorid);
       var d = data.book[0].publicationdate;
       var onlyD = d.substr(0, 10);
       $('#publicationDate').html(onlyD);
