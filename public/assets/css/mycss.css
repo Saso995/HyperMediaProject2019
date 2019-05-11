@@ -1,0 +1,30 @@
+/* Style buttons */
+.btn-on-nav {
+  background-color: #f8f9fa;
+  border: none; /* Remove borders */
+  color: #7c7c7d;
+  padding: 8.25px 6px; /* Some padding */
+}
+
+/* Darker background on mouse-over */
+.btn-on-nav:hover {
+  color: rgba(0,0,0,0.7);
+}
+
+.btn-on-nav:focus {
+  outline: none;
+}
+
+/*li ul*/
+li {
+    list-style-type: none;
+}
+
+ul {
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+.container-fluid {
+  padding-top: 30px;
+}

@@ -4,6 +4,9 @@ module.exports = {
   getOne: function (id){
     return db('users').where('id', id).first();
   },
+  getUserName: function (id){
+    return db.select('firstname', 'lastname').from('users').where('id', id).first();
+  },
   getUserByEmail: function (email){
     return db('users').where('email', email).first();
   },

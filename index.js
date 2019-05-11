@@ -37,6 +37,7 @@ app.use(cookieParser('keyboard_cat')); //da modificare
 authenticationRouter.use(bodyParser.json())
 
 app.use(express.static(__dirname + "/public"));
+app.use('/resources',express.static(__dirname + '/public/assets/img')); //l'ho dovuto mettere per poter fornire le immagini, ci sarà un altro metodo spero
 app.use('/backend', backEndRouter);
 app.use('/book', bookRouter);
 app.use('/author', authorRouter);

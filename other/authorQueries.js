@@ -33,10 +33,18 @@ function getAuthorByName(authorName){
   });
 }
 
+function getName(id){
+  return db.select('name').from('authors').where('id', id).then(function(authorName){
+    var result = authorName[0].name;
+    return result;
+  });
+}
+
 
 
 module.exports = {
   getAuthors,
   getAuthorByID,
-  getAuthorByName
+  getAuthorByName,
+  getName
 }

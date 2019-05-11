@@ -24,7 +24,9 @@ router.post('/', function(req, res, next){
         var product = book[0];
         cart.add(product, product.id);
         req.session.cart = cart;
-        res.send("added");
+        res.json({
+          message: "Added!"
+        });
       } else {
         next(new Error("No book found"));
       }
