@@ -5,15 +5,11 @@ $(document).ready(() => {
     var queryString = new Array();
     var params = window.location.search.split('?')[1].split('&');
     key = params[0].split('=')[0];
-    value = decodeURIComponent(params[0].split('=')[1]);
-    console.log(params)
-    console.log(key)
-    console.log(value)
   }
 
 
   $.ajax({
-    url: '../../book/?' + value,
+    url: '../../book/?' + key,
     type: 'GET',
     dataType : 'json', // this URL returns data in JSON format
     success: (data) => {
