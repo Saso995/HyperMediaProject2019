@@ -22,9 +22,9 @@ $(document).ready(() => {
         $('#pages').html(data.book[0].pages);
         $('#genre').html(data.book[0].genre);
         $('#isbn').html(data.book[0].isbn);
-        $("#img").attr('src','http://localhost:1337/resources/books/' + data.book[0].id + '.jpg');
+        $("#img").attr('src','https://bova-colombo-hyp2019.herokuapp.com/resources/books/' + data.book[0].id + '.jpg');
         $('#authorName').html(data.authorName);
-        $("#authorName").attr('href','http://localhost:1337/pages/authorPage.html?' + data.book[0].authorid);
+        $("#authorName").attr('href','https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data.book[0].authorid);
         var d = data.book[0].publicationdate;
         var onlyD = d.substr(0, 10);
         $('#publicationDate').html(onlyD);
@@ -32,12 +32,12 @@ $(document).ready(() => {
       error: (data) => {
         alert("What the hell are you looking for?!");
         console.log('There is some error');
-        window.location.replace("http://localhost:1337");
+        window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/");
       }
     });
   }
   else{
-    window.location.replace("http://localhost:1337");
+    window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/");
   }
   //display reviews
   $.ajax({
