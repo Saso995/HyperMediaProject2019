@@ -1,34 +1,226 @@
 <html>
   <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/mycss.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
     <title>BookStore</title>
   </head>
-  <body>
-    <a href="../index.html"><h1>Welcome to our BookStore!</h1></a>
+    <!---navbar--->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Home</a>
+      <button class="navbar-toggler order-first" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <input list="queryParam" id="queryBox"/>
-    <datalist id="queryParam">
-      <option value="title">
-      <option value="isbn">
-      <option value="author's name">
-      <option value="genre">
-      <option value="theme">
-    </datalist>
-    <input id="searchBox" type="text" size="20"/>
-    <button id="searchButton">Search</button>
-    <button onclick="location.href = './books.html';" id="bookButton">Library</button>
-    <button onclick="location.href = './loginPage.html';" id="loginButton">Login</button>
-    <button onclick="location.href = './events.html';" id="eventButton">Events</button>
-    <button onclick="location.href = './infoPage.html';" id="infoButton">Ordering and shipping info</button>
-    <button onclick="location.href = './giftCardPage.html';" id="giftCardButton">giftCard</button>
-    <button onclick="location.href = './contactUsPage.html';" id="contactUsButton">Contact Us</button>
-    <button onclick="location.href = './FAQPage.html';" id="FAQButton">FAQ</button>
+      <!---search bar and button--->
+      <form class="form-inline my-2 my-lg-0">
+        <div class="dropdown">
+          <button class="btn-on-nav dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="selection">Search in</span><span class="caret"></span>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Title</a>
+            <a class="dropdown-item" href="#">Author</a>
+            <a class="dropdown-item" href="#">Genre</a>
+            <a class="dropdown-item" href="#">Theme</a>
+          </div>
+        </div>
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search"></input>
+        <button class="btn-on-nav" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+      </form>
 
 
+      <script>
+        $(".dropdown-menu a").click(function(){
 
-    <hr/>
+          $(this).parents(".dropdown").find('.selection').text($(this).text());
+          $(this).parents(".dropdown").find('.selection').val($(this).text());
 
-    <div id="status"></div>
+        });
+      </script>
 
+      <!---other ref--->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Gift card</a>
+          </li>
+          <li class="nav-item">
+            <button class="btn-on-nav"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn-on-nav"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!---navbar--->
+
+    <!-- cartpart -->
+    <div class="container-fluid">
+    <h1>Cart</h1>
+
+    <div class="row">
+      <div class="col-lg-8" id="left_col">
+        <div class="card">
+        <table class="table table-hover shopping-cart-wrap">
+        <thead class="text-muted">
+        <tr>
+          <th scope="col">Product</th>
+          <th scope="col" width="120">Quantity</th>
+          <th scope="col" width="120">Price</th>
+          <th scope="col" width="120">Total</th>
+          <th scope="col" width="60"></th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <figure class="media">
+              	<div class="img-wrap"><img src="./prova.jpg" class="img-sm" width="120" style="padding-right: 5px;"></img></div>
+              	<figcaption class="media-body">
+              		<h5 class="title">product_name</h5>
+              		<dl class="param param-inline small">
+              		  <dt>Author: </dt>
+              		  <dd>author_name</dd>
+              		</dl>
+              	</figcaption>
+              </figure>
+          	</td>
+          	<td>
+              <div class="input-group" style="width: 70%">
+                <button class="btn btn-outline-secondary btn-sm" style="border: none;"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                <input class="form-control text-center" value="1" readonly></input>
+                <button class="btn btn-outline-secondary btn-sm" style="border: none;"><i class="fa fa-plus" aria-hidden="true"></i></button>
+              </div>
+          	</td>
+          	<td>
+              <div class="price">
+                <span>€ 10,90</span>
+              </div>
+          	</td>
+            <td>
+              <div class="total">
+                <span>€ 10,90</span>
+              </div>
+          	</td>
+          	<td class="text-right">
+          	  <button class="btn btn-outline-secondary"><i class="fa fa-trash" aria-hidden="true"></i></button>
+          	</td>
+          </tr>
+
+          <tr>
+            <td>
+              <figure class="media">
+              	<div class="img-wrap"><img src="./prova.jpg" class="img-sm" width="120" style="padding-right: 5px;"></img></div>
+              	<figcaption class="media-body">
+              		<h5 class="title">product_name</h5>
+              		<dl class="param param-inline small">
+              		  <dt>Author: </dt>
+              		  <dd>author_name</dd>
+              		</dl>
+              	</figcaption>
+              </figure>
+          	</td>
+          	<td>
+              <div class="input-group" style="width: 70%">
+                <button class="btn btn-outline-secondary btn-sm" style="border: none;"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                <input class="form-control text-center" value="2" readonly></input>
+                <button class="btn btn-outline-secondary btn-sm" style="border: none;"><i class="fa fa-plus" aria-hidden="true"></i></button>
+              </div>
+          	</td>
+          	<td>
+              <div class="price">
+                <span>€ 9,90</span>
+              </div>
+          	</td>
+            <td>
+              <div class="total">
+                <span>€ 18,80</span>
+              </div>
+          	</td>
+          	<td class="text-right">
+          	  <a href="" class="btn btn-outline-secondary"><i class="fa fa-trash" aria-hidden="true"></i></a>
+          	</td>
+          </tr>
+          <tr>
+            <td>
+              <figure class="media">
+               <div class="img-wrap"><img src="./prova.jpg" class="img-sm" width="120" style="padding-right: 5px;"></img></div>
+               <figcaption class="media-body">
+                 <h5 class="title">product_name</h5>
+                 <dl class="param param-inline small">
+                   <dt>Author: </dt>
+                   <dd>author_name</dd>
+                 </dl>
+               </figcaption>
+              </figure>
+           </td>
+           <td>
+             <div class="input-group" style="width: 70%">
+               <button class="btn btn-outline-secondary btn-sm" style="border: none;"><i class="fa fa-minus" aria-hidden="true"></i></button>
+               <input class="form-control text-center" value="1" readonly></input>
+               <button class="btn btn-outline-secondary btn-sm" style="border: none;"><i class="fa fa-plus" aria-hidden="true"></i></button>
+             </div>
+           </td>
+           <td>
+              <div class="price">
+                <span>€ 8,90</span>
+              </div>
+           </td>
+            <td>
+              <div class="total">
+                <span>€ 8,90</span>
+              </div>
+           </td>
+           <td class="text-right">
+             <a href="" class="btn btn-outline-secondary"><i class="fa fa-trash" aria-hidden="true"></i></a>
+           </td>
+          </tr>
+        </tbody>
+        </table>
+      </div> <!-- cardcart -->
+    </div>
+    <div class="col-lg-4" id="right_col">
+      <div class="card text-secondary">
+        <div class="card-body">
+          <h5 class="card-title" id="price">Order Summery</h5>
+          <hr>
+          <div class="inline">
+            <span>Subtotal:</span>
+            <span class="float-right">€10,90</span>
+          </div>
+          <div class="inline">
+            <span>Subtotal:</span>
+            <span class="float-right">€18,80</span>
+          </div>
+          <div class="inline">
+            <span>Subtotal:</span>
+            <span class="float-right">€8,90</span>
+          </div>
+          <hr>
+          <div class="inline">
+            <span>Total:</span>
+            <span class="float-right">€38,60</span>
+          </div>
+          <br>
+          <div class="text-right">
+            <button class="btn-secondary" id="payment-btn">Check out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--container end-->
 
     <script src="../assets/js/jquery-3.3.1.min.js"></script>
     <script src="../assets/js/cartPage.js"></script>
