@@ -6,4 +6,6 @@ router.get('/', queries.getEvents);
 
 router.get('/:id', queries.getEventByID);
 
+router.get('/book/:bookid', queries.getEventByBookID);
+
 module.exports = router;

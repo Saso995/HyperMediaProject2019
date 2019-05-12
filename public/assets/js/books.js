@@ -21,7 +21,7 @@ $(document).ready(() => {
       $('#status').html("Error: "+ JSON.stringify(data));
     }
   });
-
+  
   $('#searchButton').click(() => {
     if ($('#searchBox').val()){
       var url = './books.html?' + encodeURIComponent($('#queryBox').val()) + '=' + encodeURIComponent($('#searchBox').val());

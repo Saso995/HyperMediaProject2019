@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../other/connectionDB');
+var authorQueries = require('../other/authorQueries.js');
 
 router.get('/', function(req, res) {
   if(req.session.cart){
@@ -20,41 +21,85 @@ router.post('/', function(req, res, next){
     var productId = req.body.id;
     var cart = new Cart(req.session.cart ? req.session.cart : {});
     db.select().from('books').where('id', productId).then(function(book){
-      if(Object.keys(book).length > 0){
-        var product = book[0];
-        cart.add(product, product.id);
-        req.session.cart = cart;
-        res.json({
-          message: "Added!"
-        });
-      } else {
-        next(new Error("No book found"));
-      }
+      authorQueries.getName(book[0].authorid).then(function(result){
+        if(Object.keys(book).length > 0){
+          var product = book[0];
+          cart.add(product, product.id, result);
+          req.session.cart = cart;
+          res.json({
+            message: "Added!"
+          });
+        } else {
+          next(new Error("No book found"));
+        }
+      });
     });
   } else {
     res.json({
       message: "You are not logged! You have to log in if you want to add something to the cart."
     });
   }
-
-
-
-
 });
 
+
 router.delete('/', function(req, res, next){
-  var toRemove = req.body.id;
+  if(req.session.cart){
+      req.session.destroy();
+      res.json({
+        message: "Cart emptied!"
+      });
+    } else {
+      res.json({
+        message: "There are no books in your cart"
+      });
+    }
+});
+
+router.delete('/:id', function(req, res, next){
+  var toRemove = req.params.id;
+  if(req.session.cart){
+    var cart = new Cart(req.session.cart);
+    if (toRemove in cart.items){
+      cart.removeAllItem(toRemove);
+      req.session.cart = cart;
+      if(req.session.cart.totalQty === 0)
+        req.session.destroy();
+      res.json({
+        message: "Successfully removed!"
+      });
+    } else {
+      res.json({
+        message: "This book is not in your cart"
+      });
+    }
+  } else{
+    res.json({
+      message: "cart empty!"
+    });
+  }
+});
+
+router.patch('/:id', function(req, res, next){
+  var toRemove = req.params.id;
   if(req.session.cart){
     var cart = new Cart(req.session.cart);
     if (toRemove in cart.items){
       cart.removeItem(toRemove);
       req.session.cart = cart;
-      res.send("Item removed");
+      if(req.session.cart.totalQty === 0)
+        req.session.destroy();
+      res.json({
+        message: "Successfully removed!"
+      });
     } else {
-      next(new Error("This book is not in your cart"));
+      res.json({
+        message: "This book is not in your cart"
+      });
     }
   } else{
-    next(new Error("Cart empty"));
+    res.json({
+      message: "cart empty!"
+    });
   }
 });
 
@@ -65,11 +110,14 @@ function Cart(oldCart){
   this.items = oldCart.items || {};
   this.totalQty = oldCart.totalQty || 0;
   this.totalPrice = oldCart.totalPrice || 0;
+  this.authors = oldCart.authors || {};
 
-  this.add = function(item, id){
+  this.add = function(item, id, authorName){
     var storedItem = this.items[id];
+    var storedAuthor = this.items[id];
     if (!storedItem){
       storedItem = this.items[id] = {item: item, qty: 0, price: 0};
+      storedAuthor = this.authors[id] = {name: authorName}
     }
     storedItem.qty++;
     storedItem.price = storedItem.item.price * storedItem.qty;
@@ -77,12 +125,27 @@ function Cart(oldCart){
     this.totalPrice += storedItem.item.price;
   };
 
-  this.removeItem = function(id){
+  this.removeAllItem = function(id){
     var storedItem = this.items[id];
     this.totalQty -= storedItem.qty;
     this.totalPrice -= storedItem.item.price * storedItem.qty;
 
     delete this.items[id];
+  }
+
+  this.removeItem = function(id){
+    var storedItem = this.items[id];
+    if (storedItem.qty > 1){
+      var oldQuantity = storedItem.qty;
+      var oldPrice = storedItem.price;
+      storedItem.qty--;
+      storedItem.price = storedItem.item.price *storedItem.qty;
+      this.totalQty = this.totalQty - (oldQuantity - storedItem.qty);
+      this.totalPrice -= (oldPrice-storedItem.price);
+    }
+    else{
+      this.removeAllItem(id);
+    }
   }
 
   this.generateArray = function(){

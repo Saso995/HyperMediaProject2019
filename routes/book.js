@@ -13,31 +13,43 @@ router.post('/:id/reviews', (req, res, next) => {
   req.sanitize('message').whitelist(['a-zA-Z0-9 !?:,.']);
   req.check('message', 'Review too short!').isLength({min: 40});
   var errors = req.validationErrors();
-  if(!errors && req.signedCookies.user_id){
-    reviews
-    .getReview(req.params.id, req.signedCookies.user_id)
-    .then(review => {
-      console.log('review', review);
-      if(!review){
-        const review = {
-          userid: req.signedCookies.user_id,
-          bookid: req.params.id,
-          message: req.body.message,
-          rating: req.body.rating
-        };
-        reviews.create(review).then(id => {
-          res.json({
-            id,
-            message: "Review Successfully inserted!"
+  if(req.signedCookies.user_id){
+    if(!errors){
+      reviews
+      .getReview(req.params.id, req.signedCookies.user_id)
+      .then(review => {
+        console.log('review', review);
+        if(!review){
+          const review = {
+            userid: req.signedCookies.user_id,
+            bookid: req.params.id,
+            message: req.body.message,
+            rating: req.body.rating
+          };
+          reviews.create(review).then(id => {
+            res.json({
+              id,
+              message: "Review Successfully inserted!"
+            });
           });
-        });
-      } else {
-        next(new Error("You already reviewed this book!"))
-      }
-    });
-  } else {
-    res.json(errors);
+        } else {
+          res.json({
+            message: "You already reviewed this book!"
+          });
+        }
+      });
+    } else {
+      res.json({
+        message: errors[0].msg
+      });
+    }
   }
+  else {
+    res.json({
+      message: "You are not logged! You have to log in if you want to add a review."
+    });
+  }
+
 });
 
 module.exports = router;

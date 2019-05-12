@@ -29,7 +29,8 @@ const getBooks = (req, res) => {
 };
 
 const getBooksByID = (req, res, next) => {
-  if(Number.isInteger(parseInt(req.params.id, 10))){
+  //if(Number.isInteger(parseInt(req.params.id, 10))){
+  if(req.check('id').isNumeric()){
     db.select().from('books').where('id', req.params.id).then(function(data){
       if(Object.keys(data).length > 0){
         let id = data[0].authorid;

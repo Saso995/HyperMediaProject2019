@@ -30,7 +30,7 @@ app.use(expressSession({
   saveUninitialized: false,
   resave: false,
   store: store,
-  cookie: {maxAge: 1 * 60 * 1000, httpOnly:true} //cart expires after 1 minutes
+  cookie: {maxAge: 30 * 60 * 1000, httpOnly:true} //cart expires after 1 minutes
 }));
 app.use(cookieParser('keyboard_cat')); //da modificare
 
