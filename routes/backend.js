@@ -6,6 +6,6 @@ var swaggerDocument = YAML.load('./public/back-end/spec.yaml');
 
 router.use('/swaggerui', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-router.use(express.static('back-end'));
+router.use(express.static('public/back-end'));
 
 module.exports = router;
