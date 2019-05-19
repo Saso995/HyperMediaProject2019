@@ -17,7 +17,7 @@ const getBooks = (req, res, next) => {
         });
       }
       else if(colName ==="favorite"){
-        db.select('books.*',  'authors.name').from('books').join('authors', 'books.authorid', '=', 'authors.id').where('favorite', true).orderBy('id').then(function(result){
+        db.select('books.*',  'authors.name as authorName').from('books').join('authors', 'books.authorid', '=', 'authors.id').where('favorite', true).orderBy('id').then(function(result){
           res.send(result)
         });
       }
