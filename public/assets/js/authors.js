@@ -6,10 +6,10 @@ $(document).ready(() => {
     success: (data) => {
         for (var i in data){
           let idAuthor = data[i].id;
-          let img_path = 'http://localhost:1337/resources/authors/'+idAuthor+'.jpg';
+          let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/authors/'+idAuthor+'.jpg';
           let name = data[i].name;
           let currentState = i;
-          let linkAuthor = 'http://localhost:1337/pages/authorPage.html?' + idAuthor;
+          let linkAuthor = 'https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + idAuthor;
           let bio = data[i].bio;
           $("#page").append(`
             <tr class="list">
@@ -168,11 +168,11 @@ $('#searchButton').click(() => {
 
 
 $('#loginButton').click(()=>{
-  window.location.replace("http://localhost:1337/pages/loginPage.html");
+  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("http://localhost:1337/pages/cartPage.html");
+  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
 });
 
 function doesHttpOnlyCookieExist(cookiename) {

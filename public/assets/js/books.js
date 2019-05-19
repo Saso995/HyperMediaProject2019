@@ -15,14 +15,14 @@ $(document).ready(() => {
     success: (data) => {
         for (var i in data){
           let idBook = data[i].id;
-          let img_path = 'http://localhost:1337/resources/books/'+idBook+'.jpg';
+          let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/books/'+idBook+'.jpg';
           let title = data[i].title;
           let price = data[i].price;
           let author = data[i].authorName;
           let theme = data[i].theme;
           let currentState = i;
-          let linkBook = 'http://localhost:1337/pages/bookPage.html?' + idBook;
-          let linkAuthor = 'http://localhost:1337/pages/authorPage.html?' + data[i].authorid;
+          let linkBook = 'https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + idBook;
+          let linkAuthor = 'https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data[i].authorid;
           let ranking = "";
           if (key === "bestseller"){
             ranking = data[i].position+'° In best seller, in data: '+data[i].data_rank;
@@ -241,11 +241,11 @@ $(document).on('click', "[id^=add]", function(){
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("http://localhost:1337/pages/loginPage.html");
+  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("http://localhost:1337/pages/cartPage.html");
+  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
 });
 
 function doesHttpOnlyCookieExist(cookiename) {

@@ -12,15 +12,14 @@ $(document).ready(() => {
       type: 'GET',
       dataType : 'json', // this URL returns data in JSON format
       success: (data) => {
-          console.log(data)
           for (var i in data){
             let idevent = data[i].id;
-            let img_path = 'http://localhost:1337/resources/events/'+data[i].bookid+'.jpg';
+            let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/events/'+data[i].bookid+'.jpg';
             let title = data[i].name;;
             let currentState = i;
             let date= data[i].date;
             let location= data[i].location;
-            let linkEvent = 'http://localhost:1337/pages/eventPage.html?' + idevent;
+            let linkEvent = 'https://bova-colombo-hyp2019.herokuapp.com/pages/eventPage.html?' + idevent;
             $("#page").append(`
               <tr class="list">
                 <td>
@@ -137,12 +136,12 @@ $(document).ready(() => {
           if(data.length>0){
             for (var i in data){
               let idevent = data[i].id;
-              let img_path = 'http://localhost:1337/resources/events/'+data[i].bookid+'.jpg';
+              let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/events/'+data[i].bookid+'.jpg';
               let title = data[i].name;;
               let currentState = i;
               let date= data[i].date;
               let location= data[i].location;
-              let linkEvent = 'http://localhost:1337/pages/eventPage.html?' + idevent;
+              let linkEvent = 'https://bova-colombo-hyp2019.herokuapp.com/pages/eventPage.html?' + idevent;
               $("#page").append(`
                 <tr class="list">
                   <td>
@@ -240,7 +239,7 @@ $(document).ready(() => {
             let dialog = new Messi ("Sorry there are no events in this city :(",{
                 animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
                 buttons: [{id: 0, label: 'Ok'}],
-                callback: function() { window.location.replace("http://localhost:1337/pages/events.htm"); },
+                callback: function() { window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/events.htm"); },
                 center:false,
                 position: { top: '300px', left: '500px' }
               }
@@ -309,11 +308,11 @@ $('#searchButton').click(() => {
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("http://localhost:1337/pages/loginPage.html");
+  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("http://localhost:1337/pages/cartPage.html");
+  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
 });
 
 
