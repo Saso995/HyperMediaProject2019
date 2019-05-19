@@ -9,6 +9,8 @@ router.get('/:id', queries.getBooksByID);
 
 router.get('/:id/reviews', queries.myReviews);
 
+router.get('/:id/reviews/score', queries.myReviewScore);
+
 router.post('/:id/reviews', (req, res, next) => {
   req.sanitize('message').whitelist(['a-zA-Z0-9 !?:,.']);
   req.check('message', 'Review too short!').isLength({min: 40});
@@ -51,5 +53,9 @@ router.post('/:id/reviews', (req, res, next) => {
   }
 
 });
+
+router.get('/:id/similar/:idSimilar', queries.mySimilar);
+
+router.get('/get/bestsellerMonth', queries.getBestSeller);
 
 module.exports = router;

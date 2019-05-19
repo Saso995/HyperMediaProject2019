@@ -15,7 +15,7 @@
   <body>
     <!---navbar--->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Home</a>
+      <a class="navbar-brand" href="../../">Home</a>
       <button class="navbar-toggler order-first" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -26,15 +26,15 @@
           <button class="btn-on-nav dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="selection">Search in</span><span class="caret"></span>
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item">Title</a>
-            <a class="dropdown-item">Author</a>
-            <a class="dropdown-item">Genre</a>
-            <a class="dropdown-item">Theme</a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="queryBox">
+            <a class="dropdown-item">title</a>
+            <a class="dropdown-item">author</a>
+            <a class="dropdown-item">genre</a>
+            <a class="dropdown-item">theme</a>
           </div>
         </div>
-        <input class="form-control" type="search" placeholder="Search" aria-label="Search"></input>
-        <button class="btn-on-nav" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="searchBox"></input>
+        <button class="btn-on-nav" type="submit" id ="searchButton"><i class="fa fa-search" aria-hidden="true"></i></button>
       </div>
 
 
@@ -51,16 +51,16 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">Events</a>
+            <a class="nav-link" href="../pages/events.html">Events</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Gift card</a>
           </li>
           <li class="nav-item">
-            <button class="btn-on-nav"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+            <button class="btn-on-nav" id="loginButton"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
           </li>
           <li class="nav-item">
-            <button class="btn-on-nav"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</button>
+            <button class="btn-on-nav" id="cartButton"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</button>
           </li>
         </ul>
       </div>
@@ -112,6 +112,16 @@
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </div>
           </section>
+          <br>
+          <section class="events">
+            <h5 class="title-events">
+              <b>My events:</b>
+            </h5>
+            <div class="text-description" id="myEvents">
+              <ol>
+              </ol>
+            </div>
+          </section>
         </div>
 
         <div class="col-md-3" id="right_col">
@@ -119,7 +129,7 @@
             <div class="card-body">
               <h5 class="product-price" id="price">€9,90</h5>
               <p class="product-stock">In Stock</p>
-              <button class="add-prod-btn btn-success" id="addButton"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+              <button class="add-prod-btn btn-success" id="adButton"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
             </div>
           </div>
         </div>
@@ -127,7 +137,44 @@
       </div>
     </div>
     <!---pagebody--->
-    <br><br>
+    <br>
+    <!-- similar product slider -->
+    <div class="container-fluid">
+    	<div class="row">
+    		<div class="col-md-12">
+    			<h2>Similar Book</h2>
+    			<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
+    			<!-- Wrapper for carousel items -->
+    			<div class="carousel-inner">
+    				<div class="item carousel-item active">
+    					<div class="row" id="carousel1Row">
+    					</div>
+    				</div>
+
+            <div class="item carousel-item">
+    					<div class="row" id="carousel2Row">
+    					</div>
+    				</div>
+
+            <div class="item carousel-item">
+    					<div class="row" id="carousel3Row">
+    					</div>
+    				</div>
+
+    			</div>
+    			<!-- Carousel controls -->
+    			<a class="carousel-control left carousel-control-prev" href="#myCarousel" data-slide="prev">
+    				<i class="fa fa-angle-left"></i>
+    			</a>
+    			<a class="carousel-control right carousel-control-next" href="#myCarousel" data-slide="next">
+    				<i class="fa fa-angle-right"></i>
+    			</a>
+    		</div>
+    		</div>
+    	</div>
+    </div>
+    <!-- similar product slider -->
+
     <!-- reviews -->
     <div class="container-fluid">
       <h2 class="text-left">Users reviews</h2>
@@ -146,11 +193,10 @@
         <textarea class="form-control z-depth-1" id="textarea" rows="3" placeholder="Write your comment here..."></textarea>
         <br>
         <div class="text-right">
-            <button class="btn btn-secondary" id="addReviwButton">Add a review</button>
+            <button class="btn btn-secondary" id="adReviwButton">Add a review</button>
         </div>
       </div>
     </div>
-
     <!-- reviews -->
 
     <!-- Footer -->
@@ -189,7 +235,7 @@
                 <a class="text-muted" href="#!">FAQ and help</a>
               </li>
               <li>
-                <a class="text-muted" href="#!">Contact us</a>
+                <a class="text-muted" href="../pages/contactUsPage.html">Contact us</a>
               </li>
             </ul>
 
@@ -204,13 +250,13 @@
 
             <ul class="list-unstyled text-small">
               <li>
-                <a class="text-muted" href="#!">Ordering info</a>
+                <a class="text-muted" href="../pages/infoPage.html#headingOrdInfo1">Ordering info</a>
               </li>
               <li>
-                <a class="text-muted" href="#!">Shipping info</a>
+                <a class="text-muted" href="../pages/infoPage.html#accordionShipInfo1">Shipping info</a>
               </li>
               <li>
-                <a class="text-muted" href="#!">Payment methods</a>
+                <a class="text-muted" href="../pages/infoPage.html#accordionPayInfo1">Payment methods</a>
               </li>
             </ul>
 

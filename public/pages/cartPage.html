@@ -14,7 +14,7 @@
   </head>
     <!---navbar--->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Home</a>
+      <a class="navbar-brand" href="../../">Home</a>
       <button class="navbar-toggler order-first" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -25,15 +25,15 @@
           <button class="btn-on-nav dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="selection">Search in</span><span class="caret"></span>
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item">Title</a>
-            <a class="dropdown-item">Author</a>
-            <a class="dropdown-item">Genre</a>
-            <a class="dropdown-item">Theme</a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="queryBox">
+            <a class="dropdown-item">title</a>
+            <a class="dropdown-item">author</a>
+            <a class="dropdown-item">genre</a>
+            <a class="dropdown-item">theme</a>
           </div>
         </div>
-        <input class="form-control" type="search" placeholder="Search" aria-label="Search"></input>
-        <button class="btn-on-nav" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="searchBox"></input>
+        <button class="btn-on-nav" type="submit" id ="searchButton"><i class="fa fa-search" aria-hidden="true"></i></button>
       </div>
 
 
@@ -50,16 +50,16 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">Events</a>
+            <a class="nav-link" href="../pages/events.html">Events</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Gift card</a>
           </li>
           <li class="nav-item">
-            <button class="btn-on-nav"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+            <button class="btn-on-nav" id="loginButton"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
           </li>
           <li class="nav-item">
-            <button class="btn-on-nav"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</button>
+            <button class="btn-on-nav" id="cartButton"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</button>
           </li>
         </ul>
       </div>
@@ -92,6 +92,7 @@
       <div class="card text-secondary">
         <div class="card-body">
           <h5 class="card-title" id="price">Order Summery:</h5>
+          <p>(You have 30 minutes to complete your order)</p>
           <div class="inline">
             <span>Total:</span>
             <span class="float-right" id="total"></span>
@@ -105,6 +106,86 @@
       </div>
     </div>
     <!--container end-->
+
+
+        <!-- Footer -->
+        <footer class="page-footer font-small footer-color pt-4 my-md-5 pt-md-5 border-top">
+
+
+          <!-- Footer Links -->
+          <div class="container-fluid">
+
+            <!-- Grid row -->
+            <div class="row">
+
+              <!-- Grid column -->
+              <div class="col-md-5 mt-md-0 mt-3">
+
+                <!-- Content -->
+                <h5>Our Library</h5>
+                <p class="text-justify text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia</p>
+
+              </div>
+              <!-- Grid column -->
+
+              <hr class="clearfix w-100 d-md-none pb-3">
+
+              <!-- Grid column -->
+              <div class="offset-md-1 col-md-3 mb-md-0 mb-3">
+
+                <!-- Links -->
+                <h5>Service for you</h5>
+
+                <ul class="list-unstyled text-small">
+                  <li>
+                    <a class="text-muted" href="#!">Customer care</a>
+                  </li>
+                  <li>
+                    <a class="text-muted" href="#!">FAQ and help</a>
+                  </li>
+                  <li>
+                    <a class="text-muted" href="../pages/contactUsPage.html">Contact us</a>
+                  </li>
+                </ul>
+
+              </div>
+              <!-- Grid column -->
+
+              <!-- Grid column -->
+              <div class="col-md-3 mb-md-0 mb-3">
+
+                <!-- Links -->
+                <h5>Your purchase</h5>
+
+                <ul class="list-unstyled text-small">
+                  <li>
+                    <a class="text-muted" href="../pages/infoPage.html#headingOrdInfo1">Ordering info</a>
+                  </li>
+                  <li>
+                    <a class="text-muted" href="../pages/infoPage.html#accordionShipInfo1">Shipping info</a>
+                  </li>
+                  <li>
+                    <a class="text-muted" href="../pages/infoPage.html#accordionPayInfo1">Payment methods</a>
+                  </li>
+                </ul>
+
+              </div>
+              <!-- Grid column -->
+
+            </div>
+            <!-- Grid row -->
+
+          </div>
+          <!-- Footer Links -->
+
+          <!-- Copyright -->
+          <div class="footer-copyright text-center py-3">© 2019 Copyright:
+            <a href="#"> Gesù.com</a>
+          </div>
+          <!-- Copyright -->
+
+        </footer>
+        <!-- Footer -->
 
     <script src="../assets/js/jquery-3.3.1.min.js"></script>
     <script src="../assets/js/cartPage.js"></script>

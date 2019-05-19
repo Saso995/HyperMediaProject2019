@@ -20,11 +20,11 @@ router.post('/', function(req, res, next){
   if(req.signedCookies.user_id){
     var productId = req.body.id;
     var cart = new Cart(req.session.cart ? req.session.cart : {});
-    db.select().from('books').where('id', productId).then(function(book){
-      authorQueries.getName(book[0].authorid).then(function(result){
+    db.select('id','title','authorid','price').from('books').where('id', productId).then(function(book){  //modificato a lezione CONTROLLARLO
+      authorQueries.getName(book[0].authorid).then(function(authorName){
         if(Object.keys(book).length > 0){
           var product = book[0];
-          cart.add(product, product.id, result);
+          cart.add(product, product.id, authorName);
           req.session.cart = cart;
           res.json({
             message: "Added!"

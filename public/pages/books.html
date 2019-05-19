@@ -1,36 +1,245 @@
 <html>
   <head>
     <title>BookStore</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/mycss.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   </head>
   <body>
-    <a href="../index.html"><h1>Welcome to our BookStore!</h1></a>
 
-    <input list="queryParam" id="queryBox"/>
-    <datalist id="queryParam">
-      <option value="title">
-      <option value="isbn">
-      <option value="author's name">
-      <option value="genre">
-      <option value="theme">
-    </datalist>
-    <input id="searchBox" type="text" size="20"/>
-    <button id="searchButton">Search</button>
-    <button onclick="location.href = './cartPage.html';" id="cartButton">Cart</button>
-    <button onclick="location.href = './loginPage.html';" id="loginButton">Login</button>
-    <button onclick="location.href = './events.html';" id="eventButton">Events</button>
-    <button onclick="location.href = './infoPage.html';" id="infoButton">Ordering and shipping info</button>
-    <button onclick="location.href = './giftCardPage.html';" id="giftCardButton">giftCard</button>
-    <button onclick="location.href = './contactUsPage.html';" id="contactUsButton">Contact Us</button>
-    <button onclick="location.href = './FAQPage.html';" id="FAQButton">FAQ</button>
+    <!---navbar--->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="../../">Home</a>
+      <button class="navbar-toggler order-first" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!---search bar and button--->
+      <div class="form-inline my-2 my-lg-0">
+        <div class="dropdown">
+          <button class="btn-on-nav dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="selection">Search in</span><span class="caret"></span>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="queryBox">
+            <a class="dropdown-item">title</a>
+            <a class="dropdown-item">author</a>
+            <a class="dropdown-item">genre</a>
+            <a class="dropdown-item">theme</a>
+          </div>
+        </div>
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="searchBox"></input>
+        <button class="btn-on-nav" type="submit" id ="searchButton"><i class="fa fa-search" aria-hidden="true"></i></button>
+      </div>
+
+
+      <script>
+        $(".dropdown-menu a").click(function(){
+
+          $(this).parents(".dropdown").find('.selection').text($(this).text());
+          $(this).parents(".dropdown").find('.selection').val($(this).text());
+
+        });
+      </script>
+
+      <!---other ref--->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="../pages/events.html">Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Gift card</a>
+          </li>
+          <li class="nav-item">
+            <button class="btn-on-nav" id="loginButton"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn-on-nav" id="cartButton"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!---navbar--->
+
+    <!-- BookPageBody -->
+    <div class="container-fluid">
+      <div class="row" id="left_col">
+        <!-- filter col -->
+        <div class="col-md-3">
+          <div class="card" style="width: 18rem;">
+            <div class="card-header">
+              Filters
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <h4>Genre</h4>
+                <div id="retractable-list">
+                  <ul>
+                    <li><a class="link-list" href="../pages/books.html?genre=fantasy">Fantasy</a></li>
+                    <li><a class="link-list" href="../pages/books.html?genre=adventure">Adventure</a></li>
+                    <li><a class="link-list" href="../pages/books.html?genre=mistery">Mistery</a></li>
+                    <li><a class="link-list" href="../pages/books.html?genre=thriller">Thriller</a></li>
+                    <div class="collapse" id="genre-list">
+                      <li><a class="link-list" href="../pages/books.html?genre=crime">Crime</a></li>
+                      <li><a class="link-list" href="../pages/books.html?genre=horror">Horror</a></li>
+                      <li><a class="link-list" href="../pages/books.html?genre=manga">Manga</a></li>
+                    </div>
+                  </ul>
+                  <a class="collapsed" data-toggle="collapse" href="#genre-list" aria-expanded="false" aria-controls="genre-list"></a>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <h4>Theme</h4>
+                <div id="retractable-list">
+                  <ul>
+                    <li><a class="link-list" href="../pages/books.html?theme=friendship">Friendship</a></li>
+                    <li><a class="link-list" href="../pages/books.html?theme=magic">Magic</a></li>
+                    <li><a class="link-list" href="../pages/books.html?theme=school">School</a></li>
+                    <li><a class="link-list" href="../pages/books.html?theme=love">Love</a></li>
+                    <div class="collapse" id="theme-list">
+                      <li><a class="link-list" href="../pages/books.html?theme=religion">Religion</a></li>
+                      <li><a class="link-list" href="../pages/books.html?theme=death">Death</a></li>
+                      <li><a class="link-list" href="../pages/books.html?theme=fight">Fight</a></li>
+                      <li><a class="link-list" href="../pages/books.html?theme=war">War</a></li>
+                    </div>
+                  </ul>
+                  <a class="collapsed" data-toggle="collapse" href="#theme-list" aria-expanded="false" aria-controls="theme-list"></a>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <h4>Price</h4>
+                <div id="retractable-list">
+                  <ul>
+                    <li><a class="link-list" href="../pages/books.html?price=lessthan10"> < 10€</a></li>
+                    <li><a class="link-list" href="../pages/books.html?price=between20">10 < € < 20</a></li>
+                    <li><a class="link-list" href="../pages/books.html?price=between30">20 < € < 30</a></li>
+                    <li><a class="link-list" href="../pages/books.html?price=morethan30">> 30€</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <h4>Other</h4>
+                <div id="retractable-list">
+                  <ul>
+                    <li><a class="link-list" href="../pages/books.html?bestseller">Best sellers</a></li>
+                    <li><a class="link-list" href="../pages/books.html?favorite">Our favorite</a></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- filter col -->
+        <!-- book searched list -->
+        <div class="col-md-9" id="right_col">
+          <div class="card" style="border-top:0">
+          <table class="table" style="margin-bottom:0">
+          <tbody id="page">
+          </tbody>
+          </table>
+
+        <br>
+        <!-- page navigation -->
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li class="mr-auto" id="previous-page"><a class="page-link" href="javascript:void(0)">Previous</a></li>
+          </ul>
+        </nav>
+        <!-- page navigation -->
+        </div>
+      </div>
+      <!-- book searched list -->
+    </div>
+    <!-- BookPageBody -->
 
 
 
-    <hr/>
+    <!-- Footer -->
+    <footer class="page-footer font-small footer-color pt-4 my-md-5 pt-md-5 border-top">
 
-    <div id="status"></div>
+
+      <!-- Footer Links -->
+      <div class="container-fluid">
+
+        <!-- Grid row -->
+        <div class="row">
+
+          <!-- Grid column -->
+          <div class="col-md-5 mt-md-0 mt-3">
+
+            <!-- Content -->
+            <h5>Our Library</h5>
+            <p class="text-justify text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia</p>
+
+          </div>
+          <!-- Grid column -->
+
+          <hr class="clearfix w-100 d-md-none pb-3">
+
+          <!-- Grid column -->
+          <div class="offset-md-1 col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5>Service for you</h5>
+
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="text-muted" href="#!">Customer care</a>
+              </li>
+              <li>
+                <a class="text-muted" href="#!">FAQ and help</a>
+              </li>
+              <li>
+                <a class="text-muted" href="../pages/contactUsPage.html">Contact us</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5>Your purchase</h5>
+
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="text-muted" href="../pages/infoPage.html#headingOrdInfo1">Ordering info</a>
+              </li>
+              <li>
+                <a class="text-muted" href="../pages/infoPage.html#accordionShipInfo1">Shipping info</a>
+              </li>
+              <li>
+                <a class="text-muted" href="../pages/infoPage.html#accordionPayInfo1">Payment methods</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+      </div>
+      <!-- Footer Links -->
+
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-3">© 2019 Copyright:
+        <a href="#"> Gesù.com</a>
+      </div>
+      <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
 
 
-    <script src="../assets/js/jquery-3.3.1.min.js"></script>
     <script src="../assets/js/books.js"></script>
 
   </body>

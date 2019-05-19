@@ -11,7 +11,7 @@ if(window.location.search){
 $(document).ready(() => {
 //load stuff about the book
   if (key){
-    $.ajax({
+  $.ajax({
       url: '../../book/' + key,
       type: 'GET',
       dataType : 'json', // this URL returns data in JSON format
@@ -22,23 +22,115 @@ $(document).ready(() => {
         $('#pages').html(data.book[0].pages);
         $('#genre').html(data.book[0].genre);
         $('#isbn').html(data.book[0].isbn);
-        $("#img").attr('src','https://bova-colombo-hyp2019.herokuapp.com/resources/books/' + data.book[0].id + '.jpg');
+        $("#img").attr('src','http://localhost:1337/resources/books/' + data.book[0].id + '.jpg');
         $('#authorName').html(data.authorName);
-        $("#authorName").attr('href','https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data.book[0].authorid);
+        $("#authorName").attr('href','http://localhost:1337/pages/authorPage.html?' + data.book[0].authorid);
         var d = data.book[0].publicationdate;
         var onlyD = d.substr(0, 10);
         $('#publicationDate').html(onlyD);
+        let similarType = data.book[0].similar_type;
+        fillSimilar(similarType);
       },
       error: (data) => {
         alert("What the hell are you looking for?!");
         console.log('There is some error');
-        window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/");
+        window.location.replace("http://localhost:1337");
       }
     });
   }
   else{
-    window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/");
+    window.location.replace("http://localhost:1337");
   }
+
+  //fills book's Events
+  $.ajax({
+    url: '../../event/book/' + key,
+    type: 'GET',
+    dataType : 'json', // this URL returns data in JSON format
+    success: (data) => {
+      console.log(data)
+      for(var i in data) {
+        let toAppend = "<li><a href='http://localhost:1337/pages/eventPage.html?" + data[i].id + "' >" + data[i].location+ "</a>"+ " "+ data[i].date+ "</li>";
+        $("ol").append(toAppend);
+      }
+    },
+    error: (data) => {
+      $("ol").append(data.responseText);
+    }
+  });
+
+  //function to display all the similar books
+  function fillSimilar(similarType) {
+      //fetch info about similar books
+      $.ajax({
+        url: '../../book/' + key + '/similar/' + similarType,
+        type: 'GET',
+        dataType : 'json', // this URL returns data in JSON format
+        success: (data) => {
+          var count = 0;
+          for (var i in data){
+            let img_path = 'http://localhost:1337/resources/books/'+data[i].id+'.jpg';
+            let title = data[i].title;
+            let price = data[i].price;
+            let idBook = data[i].id;
+            let linkBook = 'http://localhost:1337/pages/bookPage.html?' + idBook;
+            //fetch rating about similar books and fills the html page dynamically
+            $.ajax({
+              url: '../../book/' + data[i].id + '/reviews/score',
+              type: 'GET',
+              dataType : 'json', // this URL returns data in JSON format
+              success: (avg) => {
+                let nblack = 5 - avg[0].avg;
+                let yellowStar = '<li class="list-inline-item"><i class="text-warning fa fa-star"></i></li>';
+                let blackStar = '<li class="list-inline-item"><i class="text-warning fa fa-star-o"></i></li>';
+                let totalYellow = ``;
+                let totalBlack = ``;
+                for (let white = avg[0].avg; white > 0 ; white--){
+                  totalYellow += yellowStar;
+                }
+                for (nblack; nblack > 0 ; nblack--){
+                  totalBlack += blackStar
+                }
+                function similar(id) {
+                  $(id).append(`
+                    <div class="col-sm-3">
+                      <div class="thumb-wrapper">
+                        <div class="img-box">
+                          <img src="${img_path}" class="img-responsive img-fluid"  alt="">
+                        </div>
+                        <div class="thumb-content">
+                          <h4><a href=${linkBook}>${title}</a></h4>
+                          <p class="item-price"><span>${price}€</span></p>
+                          <div class="star-rating">
+                            <ul class="list-inline">
+                            ${totalYellow+totalBlack}
+                            </ul>
+                          </div>
+                          <button class="add-prod-btn btn-success" id="add${idBook}"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                        </div>
+                      </div>
+                    </div>
+                  `);
+                }
+                if (count < 4){
+                  similar("#carousel1Row");
+                  count++;
+                }
+                else if(count > 3 && count < 8){
+                  similar("#carousel2Row");
+                  count++;
+                }
+                else if(count > 7 && count < 11){
+                  similar("#carousel3Row")
+                  count++;
+                }
+              }
+            });
+          }
+        }
+      });
+  }
+
   //display reviews
   $.ajax({
     url: '../../book/' + key + '/reviews',
@@ -46,7 +138,6 @@ $(document).ready(() => {
     dataType : 'json', // this URL returns data in JSON format
     success: (data) => {
       var count = Object.keys(data).length;
-      console.log(count);
       for(var i in data) {
         //add stars
         let nblack = 5 - data[i].review.rating;
@@ -90,9 +181,33 @@ $(document).ready(() => {
       }
     },
     error: (data) => {
-      console.log('There is some error');
+      console.log(data.responseText);
     }
   });
+
+  //to change login button into logout
+    if(doesHttpOnlyCookieExist('user_id')){
+      $('#status').html('logged');
+      $('#loginButton').html('Log out');
+      $("#loginButton").attr("id", "logoutButton");
+
+      $("#logoutButton").unbind("click").click(function () {
+        $.ajax({
+          url: '../../auth/logout',
+          type: 'POST',
+          dataType : 'json',
+          success: (data) => {
+            alert((JSON.stringify(data.message)));
+            $('#loginButton').html('Login');
+            $("#loginButton").attr("id", "loginButton");
+            location.reload();
+          },
+          error: (data) => {
+            alert((JSON.stringify(data.message)));
+          }
+        });
+      });
+    }
 });
 //keep updated the number of stars
 let nowStars;
@@ -100,7 +215,7 @@ $('#starInput input').on('change', function() {
   nowStars = ($('input[name=rating]:checked', '#starInput').val());
 });
 //post review
-$('#addReviwButton').click(() => {
+$('#adReviwButton').click(() => {
   if(nowStars){
     $.ajax({
       url: '../../book/' + key + '/reviews',
@@ -122,7 +237,7 @@ $('#addReviwButton').click(() => {
   }
 });
 //add to cart
-$('#addButton').click(() => {
+$('#adButton').click(() => {
   $.ajax({
     url: '../../cart',
     type: 'POST',
@@ -138,3 +253,53 @@ $('#addButton').click(() => {
     }
   });
 });
+
+$(document).on('click', "[id^=add]", function(){
+    let id = this.id.slice(3);
+    $.ajax({
+      url: '../../cart',
+      type: 'POST',
+      data: {
+        'id': id
+      },
+      dataType : 'json',
+      success: (data) => {
+        alert(JSON.stringify(data.message));
+      },
+      error: (data) => {
+        console.log(JSON.stringify(data));
+      }
+    });
+});
+
+$('#loginButton').click(()=>{
+  window.location.replace("http://localhost:1337/pages/loginPage.html");
+});
+
+$('#cartButton').click(()=>{
+  window.location.replace("http://localhost:1337/pages/cartPage.html");
+});
+
+$('#searchButton').click(() => {
+  if ($('#searchBox').val()){
+    var url = './books.html?' + encodeURIComponent($('.selection').val()) + '=' + encodeURIComponent($('#searchBox').val());
+    window.location.href = url;
+  } else {
+    var url = './books.html';
+    window.location.href = url;
+  }
+});
+
+
+function doesHttpOnlyCookieExist(cookiename) {
+   var d = new Date();
+   d.setTime(d.getTime() + (1000));
+   var expires = "expires=" + d.toUTCString();
+
+   document.cookie = cookiename + "=new_value;path=/;" + expires;
+   if (document.cookie.indexOf(cookiename + '=') == -1) {
+       return true;
+    } else {
+       return false;
+    }
+}

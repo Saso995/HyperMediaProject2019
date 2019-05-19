@@ -9,11 +9,12 @@ $(document).ready(() => {
           alert(data.text)
         }
         else{
+          console.log(data)
           //show all the books in the cart
           for (var j in data.items){
-            let img = 'https://bova-colombo-hyp2019.herokuapp.com/resources/books/' + data.items[j].item.id + '.jpg';
-            let linkBook = 'https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + data.items[j].item.id;
-            let linkAuthor = 'https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data.items[j].item.authorid;
+            let img = 'http://localhost:1337/resources/books/' + data.items[j].item.id + '.jpg';
+            let linkBook = 'http://localhost:1337/pages/bookPage.html?' + data.items[j].item.id;
+            let linkAuthor = 'http://localhost:1337/pages/authorPage.html?' + data.items[j].item.authorid;
             $('#table').append(`
               <tr>
                 <td>
@@ -73,6 +74,30 @@ $(document).ready(() => {
         }
       }
     });
+
+    //to change login button into logout
+      if(doesHttpOnlyCookieExist('user_id')){
+        $('#status').html('logged');
+        $('#loginButton').html('Log out');
+        $("#loginButton").attr("id", "logoutButton");
+
+        $("#logoutButton").unbind("click").click(function () {
+          $.ajax({
+            url: '../../auth/logout',
+            type: 'POST',
+            dataType : 'json',
+            success: (data) => {
+              alert((JSON.stringify(data.message)));
+              $('#loginButton').html('Login');
+              $("#loginButton").attr("id", "loginButton");
+              location.reload();
+            },
+            error: (data) => {
+              alert((JSON.stringify(data.message)));
+            }
+          });
+        });
+      }
 });
 
 $('#empty-btn').click(() => {
@@ -139,3 +164,34 @@ $(document).on('click', "[id^=less]", function(){
     }
   });
 });
+
+$('#searchButton').click(() => {
+  if ($('#searchBox').val()){
+    var url = './books.html?' + encodeURIComponent($('.selection').val()) + '=' + encodeURIComponent($('#searchBox').val());
+    window.location.href = url;
+  } else {
+    var url = './books.html';
+    window.location.href = url;
+  }
+});
+
+$('#loginButton').click(()=>{
+  window.location.replace("http://localhost:1337/pages/loginPage.html");
+});
+
+$('#cartButton').click(()=>{
+  window.location.replace("http://localhost:1337/pages/cartPage.html");
+});
+
+function doesHttpOnlyCookieExist(cookiename) {
+   var d = new Date();
+   d.setTime(d.getTime() + (1000));
+   var expires = "expires=" + d.toUTCString();
+
+   document.cookie = cookiename + "=new_value;path=/;" + expires;
+   if (document.cookie.indexOf(cookiename + '=') == -1) {
+       return true;
+    } else {
+       return false;
+    }
+}

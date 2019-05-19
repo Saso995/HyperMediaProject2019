@@ -1,35 +1,552 @@
-<html>
-<head>
-<title>BookStore</title>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/mycss.css">
+    <link rel="stylesheet" href="../assets/css/infoPage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-</head>
-<body>
-  <a href="../index.html"><h1>Welcome to our BookStore!</h1></a>
-  <input list="queryParam" id="queryBox"/>
-  <datalist id="queryParam">
-    <option value="title">
-    <option value="isbn">
-    <option value="author's name">
-    <option value="genre">
-    <option value="theme">
-  </datalist>
-  <input id="searchBox" type="text" size="20"/>
-  <button id="searchButton">Search</button>
-  <button onclick="location.href = './books.html';" id="bookButton">Library</button>
-  <button onclick="location.href = './cartPage.html';" id="cartButton">Cart</button>
-  <button onclick="location.href = './loginPage.html';" id="loginButton">Login</button>
-  <button onclick="location.href = './events.html';" id="eventButton">Events</button>
-  <button onclick="location.href = './giftCardPage.html';" id="giftCardButton">giftCard</button>
-  <button onclick="location.href = './contactUsPage.html';" id="contactUsButton">Contact Us</button>
-  <button onclick="location.href = './FAQPage.html';" id="FAQButton">FAQ</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <title></title>
+  </head>
+  <body>
+    <!---navbar--->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="../../">Home</a>
+      <button class="navbar-toggler order-first" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!---search bar and button--->
+      <div class="form-inline my-2 my-lg-0">
+        <div class="dropdown">
+          <button class="btn-on-nav dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="selection">Search in</span><span class="caret"></span>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="queryBox">
+            <a class="dropdown-item">title</a>
+            <a class="dropdown-item">author</a>
+            <a class="dropdown-item">genre</a>
+            <a class="dropdown-item">theme</a>
+          </div>
+        </div>
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="searchBox"></input>
+        <button class="btn-on-nav" type="submit" id ="searchButton"><i class="fa fa-search" aria-hidden="true"></i></button>
+      </div>
+
+
+      <script>
+        $(".dropdown-menu a").click(function(){
+
+          $(this).parents(".dropdown").find('.selection').text($(this).text());
+          $(this).parents(".dropdown").find('.selection').val($(this).text());
+
+        });
+      </script>
+
+      <!---other ref--->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="../pages/events.html">Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Gift card</a>
+          </li>
+          <li class="nav-item">
+            <button class="btn-on-nav" id="loginButton"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn-on-nav" id="cartButton"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!---navbar--->
+
+    <br><br>
+    <div class="container">
+      <!--Accordion wrapper-->
+      <div class="accordion md-accordion" id="accordionOrdInfo1" role="tablist" aria-multiselectable="true">
+
+        <!-- Accordion card -->
+        <div class="first-card card">
+
+          <!-- Card header -->
+          <div class="card-header" role="tab" id="headingOrdInfo1">
+            <h1 class="card-title text-center">Ordering Info</h1>
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionOrdInfo1" href="#collapseOrdInfo1"
+              aria-expanded="false" aria-controls="collapseOrdInfo1">
+              <h5 class="mb-0">
+                How Do I Place An Order <i class="float-right fa fa-angle-down"></i>
+              </h5>
+            </a>
+          </div>
+
+          <!-- Card body -->
+          <div id="collapseOrdInfo1" class="collapse" role="tabpanel" aria-labelledby="headingOrdInfo1"
+            data-parent="#accordionOrdInfo1">
+            <div class="card-body">
+              In the list of results of a search and in each product sheet you will have the opportunity to add the product to your cart.
+              Once you have found everything you were looking for click on Proceed to purchase.
+              If you choose to pay by Credit Card, Masterpass or PayPal the charge will be made only when your order is ready for shipment.
+              Please note that any products not available at the time of shipment will not be charged until the actual finding and sending.
+              The minimum amount required for an order of physical products is € 5.00.
+            </div>
+          </div>
+
+        </div>
+        <!-- Accordion card -->
+
+        <!-- Accordion card -->
+        <div class="card">
+
+          <!-- Card header -->
+          <div class="card-header" role="tab" id="headingOrdInfo2">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionOrdInfo1" href="#collapseOrdInfo21"
+              aria-expanded="false" aria-controls="collapseOrdInfo21">
+              <h5 class="mb-0">
+                Why Can't I Put Items In My Shopping Cart? <i class="float-right fa fa-angle-down"></i>
+              </h5>
+            </a>
+          </div>
+
+          <!-- Card body -->
+          <div id="collapseOrdInfo21" class="collapse" role="tabpanel" aria-labelledby="headingOrdInfo21"
+            data-parent="#accordionOrdInfo1">
+            <div class="card-body">
+              Does your browser accept cookies? Before contacting our customer service department, please make sure that you have authorised IBS to exchange data with you!
+
+              See also Extended Cookies Policy.
+            </div>
+          </div>
+
+        </div>
+        <!-- Accordion card -->
+
+        <!-- Accordion card -->
+        <div class="card">
+
+          <!-- Card header -->
+          <div class="card-header" role="tab" id="headingOrdInfo31">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionOrdInfo1" href="#collapseOrdInfo31"
+              aria-expanded="false" aria-controls="collapseOrdInfo31">
+              <h5 class="mb-0">
+                What Happens If a Product Is Unavailable? <i class="float-right fa fa-angle-down"></i>
+              </h5>
+            </a>
+          </div>
+
+          <!-- Card body -->
+          <div id="collapseOrdInfo31" class="collapse" role="tabpanel" aria-labelledby="headingOrdInfo31"
+            data-parent="#accordionOrdInfo1">
+            <div class="card-body">
+              It may sometimes happen that the product ordered is temporarily unavailable. You will be notified by email of the problem that has occurred and you may decide, if it is not possible to restock the product, to receive the other products already available in your order.
+
+              If you decide to have the other items in your order shipped to you, you will only be charged the amount of the available items.
+
+              For further information on the availability of the products you can consult the general conditions of sale.
+            </div>
+          </div>
+
+        </div>
+        <!-- Accordion card -->
+
+      </div>
+      <!-- Accordion wrapper -->
 
 
 
-  <hr/>
+      <br><br>
+      <!-- Shipping Info -->
 
-  <div id="status">ORDERING AND INFO PAGE</div>
+      <!--Accordion wrapper-->
+      <div class="accordion md-accordion" id="accordionShipInfo1" role="tablist" aria-multiselectable="true">
 
-  <script src="../assets/js/jquery-3.3.1.min.js"></script>
-  <script src="../assets/js/infoPage.js"></script>
-</body>
+        <!-- Accordion card -->
+        <div class="first-card card">
+
+          <!-- Card header -->
+          <div class="card-header" role="tab" id="headingShipInfo1">
+            <h1 class="card-title text-center">Shipping Info</h1>
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionShipInfo1" href="#collapseShipInfo1"
+              aria-expanded="false" aria-controls="collapseShipInfo1">
+              <h5 class="mb-0">
+                Shipping Rates <i class="float-right fa fa-angle-down"></i>
+              </h5>
+            </a>
+          </div>
+
+          <!-- Card body -->
+          <div id="collapseShipInfo1" class="collapse" role="tabpanel" aria-labelledby="headingShipInfo1"
+            data-parent="#accordionShipInfo1">
+            <div class="card-body">
+              Our Delivery Charges page shows the current shipping rates for all items purchased from IBS and shipped by IBS (excluding products sold and shipped by third-party vendors on the IBS Marketplace) and average delivery times.
+            </div>
+          </div>
+
+        </div>
+        <!-- Accordion card -->
+
+        <!-- Accordion card -->
+        <div class="card">
+
+          <!-- Card header -->
+          <div class="card-header" role="tab" id="headingShipInfo2">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionShipInfo1" href="#collapseShipInfo21"
+              aria-expanded="false" aria-controls="collapseShipInfo21">
+              <h5 class="mb-0">
+                Fast Shipping <i class="float-right fa fa-angle-down"></i>
+              </h5>
+            </a>
+          </div>
+
+          <!-- Card body -->
+          <div id="collapseShipInfo21" class="collapse" role="tabpanel" aria-labelledby="headingShipInfo21"
+            data-parent="#accordionShipInfo1">
+            <div class="card-body">
+              If you choose this type of shipment the package will be delivered by express courier in 1-2 working days. In case of non-delivery due to the absence of the recipient, the courier will leave a notice of passage with the references of the shipment. The courier may make a second delivery attempt. If the second attempt is not successful, the package will be deposited in stock at the branch of the courier and will be available for collection within 5 calendar days, starting from the day following the date of the notice of passage. For further information, please consult the general conditions of sale. The expected date of delivery is indicated in the purchase procedure and in the order confirmation email.
+            </div>
+          </div>
+
+        </div>
+        <!-- Accordion card -->
+
+        <!-- Accordion card -->
+        <div class="card">
+
+          <!-- Card header -->
+          <div class="last card-header" role="tab" id="headingShipInfo31">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionShipInfo1" href="#collapseShipInfo31"
+              aria-expanded="false" aria-controls="collapseShipInfo31">
+              <h5 class="mb-0">
+                Standard Shipping <i class="float-right fa fa-angle-down"></i>
+              </h5>
+            </a>
+          </div>
+
+          <!-- Card body -->
+          <div id="collapseShipInfo31" class="collapse" role="tabpanel" aria-labelledby="headingShipInfo31"
+            data-parent="#accordionShipInfo1">
+            <div class="card-body">
+              If you choose this type of shipment the package will be delivered by courier in 3-4 working days. In case of non-delivery due to absence of the recipient, the courier will leave a notice of passage with the references of the shipment.
+
+              The courier may make a second delivery attempt. If the second attempt is not successful, the package will be deposited in stock at the branch of the courier and will be available for collection within 5 calendar days, starting from the day following the date of the notice of passage.
+              For further information, please consult the general conditions of sale.
+              The expected date of delivery is indicated in the purchase procedure and in the order confirmation email.
+            </div>
+          </div>
+
+        </div>
+        <!-- Accordion card -->
+
+        <!-- Accordion card -->
+        <div class="card">
+
+          <!-- Card header -->
+          <div class="last card-header" role="tab" id="headingShipInfo41">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionShipInfo1" href="#collapseShipInfo41"
+              aria-expanded="false" aria-controls="collapseShipInfo41">
+              <h5 class="mb-0">
+                How To Return a Product <i class="float-right fa fa-angle-down"></i>
+              </h5>
+            </a>
+          </div>
+
+          <!-- Card body -->
+          <div id="collapseShipInfo41" class="collapse" role="tabpanel" aria-labelledby="headingShipInfo41"
+            data-parent="#accordionShipInfo1">
+            <div class="card-body">
+              Products must be returned in a state of substantial integrity. Sealed audiovisual or computer software products, if already opened by the consumer, cannot be returned. Returns of items with a broken or missing SIAE stamp will also not be accepted.
+              Within 14 days of receipt of the goods, you must inform IBS of your decision to withdraw using, if you wish, the standard withdrawal form made available on the website before confirming your purchase and shown at the bottom of the order confirmation email.
+              Alternatively, just send us an explicit statement of your wish to withdraw from the purchase, by contacting our Customer Service.
+            </div>
+          </div>
+
+        </div>
+        <!-- Accordion card -->
+
+        <!-- Accordion card -->
+        <div class="card">
+
+          <!-- Card header -->
+          <div class="last card-header" role="tab" id="headingShipInfo51">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionShipInfo1" href="#collapseShipInfo51"
+              aria-expanded="false" aria-controls="collapseShipInfo51">
+              <h5 class="mb-0">
+                What Should I Do If What I Have Purchase Does Not Arrive? <i class="float-right fa fa-angle-down"></i>
+              </h5>
+            </a>
+          </div>
+
+          <!-- Card body -->
+          <div id="collapseShipInfo51" class="collapse" role="tabpanel" aria-labelledby="headingShipInfo51"
+            data-parent="#accordionShipInfo1">
+            <div class="card-body">
+              If the purchased items are not delivered within the period specified in the purchase procedure and in the order confirmation, check the status of your orders by accessing the personal area My data and selecting the item My orders, where you will have the opportunity to follow the package during its journey: in case of problems you can contact our assistance, which will check the situation through the courier in charge of delivery (you can contact the courier only in case of fast shipment), and you can indicate a new delivery time more convenient to you.
+              In any case, IBS undertakes to notify you of the delay in delivery by email.
+            </div>
+          </div>
+
+        </div>
+        <!-- Accordion card -->
+
+
+
+
+      </div>
+      <!-- Accordion wrapper -->
+
+      <!-- Shipping Info -->
+
+
+      <br><br>
+      <!-- Payment Info -->
+
+      <!--Accordion wrapper-->
+      <div class="accordion md-accordion" id="accordionPayInfo1" role="tablist" aria-multiselectable="true">
+
+        <!-- Accordion card -->
+        <div class="first-card card">
+
+          <!-- Card header -->
+          <div class="card-header" role="tab" id="headingPayInfo1">
+            <h1 class="card-title text-center">Payment Info</h1>
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionPayInfo1" href="#collapsePayInfo1"
+              aria-expanded="false" aria-controls="collapsePayInfo1">
+              <h5 class="mb-0">
+                Payment Methods<i class="float-right fa fa-angle-down"></i>
+              </h5>
+            </a>
+          </div>
+
+          <!-- Card body -->
+          <div id="collapsePayInfo1" class="collapse" role="tabpanel" aria-labelledby="headingPayInfo1"
+            data-parent="#accordionPayInfo1">
+            <div class="card-body">
+              On nome_sito you can pay by credit card, PayPal, cash on delivery, Masterpass.
+              We reserve the right to accept payments by bank transfer if requested by the Public Administration.
+            </div>
+          </div>
+
+        </div>
+        <!-- Accordion card -->
+
+        <!-- Accordion card -->
+        <div class="card">
+
+          <!-- Card header -->
+          <div class="card-header" role="tab" id="headingPayInfo2">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionPayInfo1" href="#collapsePayInfo21"
+              aria-expanded="false" aria-controls="collapsePayInfo21">
+              <h5 class="mb-0">
+                Payment By Credit Card <i class="float-right fa fa-angle-down"></i>
+              </h5>
+            </a>
+          </div>
+
+          <!-- Card body -->
+          <div id="collapsePayInfo21" class="collapse" role="tabpanel" aria-labelledby="headingPayInfo21"
+            data-parent="#accordionPayInfo1">
+            <div class="card-body">
+              Visa, Visa Electron, Mastercard, Eurocard, CartaSi, American Express, Diners and Postepay credit cards are accepted.
+              ATTENTION: your credit card will be charged only when your order is ready for shipment and only for the items actually in the package or on the working day before shipment.
+              If an order contains securities that have been found to be unavailable because they are no longer available from the supplier, the amount of these items will be deducted from the amount indicated at the time of sending the order and order confirmation, if you have chosen to partially terminate the contract.
+            </div>
+          </div>
+
+        </div>
+        <!-- Accordion card -->
+
+        <!-- Accordion card -->
+        <div class="card">
+
+          <!-- Card header -->
+          <div class="card-header" role="tab" id="headingPayInfo41">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionPayInfo1" href="#collapsePayInfo41"
+              aria-expanded="false" aria-controls="collapsePayInfo41">
+              <h5 class="mb-0">
+                Payment By Paypal <i class="float-right fa fa-angle-down"></i>
+              </h5>
+            </a>
+          </div>
+
+          <!-- Card body -->
+          <div id="collapsePayInfo41" class="collapse" role="tabpanel" aria-labelledby="headingPayInfo41"
+            data-parent="#accordionPayInfo1">
+            <div class="card-body">
+              If you choose this form of payment after clicking on Buy you will be directed to the PayPal site where you can complete the payment process by entering your email address and your PayPal password.
+              Your financial data will not be shared with nome_sito.it but will be managed directly by PayPal.
+              ATTENTION: your PayPal account will be debited only when your order is ready for shipment and only for the items actually present. If an order contains securities that have been found to be unavailable because they are no longer available from the supplier, the amount of these items will be automatically deducted from the amount indicated at the time of order registration.
+
+              Important: for the purchase of physical products in the event that the charge is not successful, nome_sito will not ship. We will send you an e-mail to inform you that, if the payment problem is not solved successfully within 10 days of notification, we will proceed to cancel the order. In the event that the charge is not successful on digital products, we will proceed to an immediate cancellation.
+            </div>
+          </div>
+
+        </div>
+        <!-- Accordion card -->
+
+        <!-- Accordion card -->
+        <div class="card">
+
+          <!-- Card header -->
+          <div class="card-header" role="tab" id="headingPayInfo51">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionPayInfo1" href="#collapsePayInfo51"
+              aria-expanded="false" aria-controls="collapsePayInfo51">
+              <h5 class="mb-0">
+                Cash On Delivery Payment <i class="float-right fa fa-angle-down"></i>
+              </h5>
+            </a>
+          </div>
+
+          <!-- Card body -->
+          <div id="collapsePayInfo51" class="collapse" role="tabpanel" aria-labelledby="headingPayInfo51"
+            data-parent="#accordionPayInfo1">
+            <div class="card-body">
+              The cash on delivery payment, managed by the courier in charge, is possible only for shipments made in Italy. Payment will be made upon delivery of the shipment and may be made:
+
+              by check made out to the courier or to nome_sito (ask the courier which is the correct heading to use)
+              in cash: in this case we recommend to prepare the exact amount indicated in the email notice of shipment as the courier can not give change.
+              In case of cash on delivery there is an additional contribution of €3.70, which will always be specified during the purchase process, before the transmission of the order and will be remembered in the order confirmation.
+            </div>
+          </div>
+
+        </div>
+        <!-- Accordion card -->
+
+        <!-- Accordion card -->
+        <div class="card">
+
+          <!-- Card header -->
+          <div class="card-header" role="tab" id="headingPayInfo61">
+            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionPayInfo1" href="#collapsePayInfo61"
+              aria-expanded="false" aria-controls="collapsePayInfo61">
+              <h5 class="mb-0">
+                Is My Credit Card Informaion Safe? <i class="float-right fa fa-angle-down"></i>
+              </h5>
+            </a>
+          </div>
+
+          <!-- Card body -->
+          <div id="collapsePayInfo61" class="collapse" role="tabpanel" aria-labelledby="headingPayInfo61"
+            data-parent="#accordionPayInfo1">
+            <div class="card-body">
+              nome_sito uses Banca Sella's secure payment service, which uses the TLS (Transport Layer Security) security protocol: your data is encrypted and transmitted to the payment manager.
+              nome_sito does not store your credit card details, except for the last four digits and the expiry date of the credit card that you will link to your account.
+            </div>
+          </div>
+
+        </div>
+        <!-- Accordion card -->
+      </div>
+      <!-- Accordion wrapper -->
+
+      <!-- Payment Info -->
+    </div>
+
+
+  <script>
+  // accordion pluse minus goes here
+     jQuery('.accordion-toggle').click(function(){
+
+        var has = jQuery(this);
+        if(has.hasClass('collapsed')){
+           jQuery(this).find('i').removeClass('fa-angle-down');
+           jQuery(this).find('i').addClass('fa-angle-up');
+        }
+        else{
+          jQuery(this).find('i').removeClass('fa-angle-up');
+          jQuery(this).find('i').addClass('fa-angle-down');
+        }
+    })
+  </script>
+
+
+    <!-- Footer -->
+    <footer class="page-footer font-small footer-color pt-4 my-md-5 pt-md-5 border-top">
+
+
+      <!-- Footer Links -->
+      <div class="container-fluid">
+
+        <!-- Grid row -->
+        <div class="row">
+
+          <!-- Grid column -->
+          <div class="col-md-5 mt-md-0 mt-3">
+
+            <!-- Content -->
+            <h5>Our Library</h5>
+            <p class="text-justify text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia</p>
+
+          </div>
+          <!-- Grid column -->
+
+          <hr class="clearfix w-100 d-md-none pb-3">
+
+          <!-- Grid column -->
+          <div class="offset-md-1 col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5>Service for you</h5>
+
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="text-muted" href="#!">Customer care</a>
+              </li>
+              <li>
+                <a class="text-muted" href="#!">FAQ and help</a>
+              </li>
+              <li>
+                <a class="text-muted" href="../pages/contactUsPage.html">Contact us</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5>Your purchase</h5>
+
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="text-muted" href="../pages/infoPage.html#headingOrdInfo1">Ordering info</a>
+              </li>
+              <li>
+                <a class="text-muted" href="../pages/infoPage.html#accordionShipInfo1">Shipping info</a>
+              </li>
+              <li>
+                <a class="text-muted" href="../pages/infoPage.html#accordionPayInfo1">Payment methods</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+      </div>
+      <!-- Footer Links -->
+
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-3">© 2019 Copyright:
+        <a href="#"> Gesù.com</a>
+      </div>
+      <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+
+
+    <script src="../assets/js/jquery-3.3.1.min.js"></script>
+    <script src="../assets/js/infoPage.js"></script>
+  </body>
 </html>

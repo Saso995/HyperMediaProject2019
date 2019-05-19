@@ -1,37 +1,646 @@
-<html>
-<head>
-<title>BookStore</title>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/homePage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-</head>
-<body>
-  <a href="./"><h1>Welcome to our BookStore!</h1></a>
-  <input list="queryParam" id="queryBox"/>
-  <datalist id="queryParam">
-    <option value="title">
-    <option value="isbn">
-    <option value="author's name">
-    <option value="genre">
-    <option value="theme">
-  </datalist>
-  <input id="searchBox" type="text" size="20"/>
-  <button id="searchButton">Search</button>
-  <button onclick="location.href = './pages/books.html';" id="bookButton">Library</button>
-  <button onclick="location.href = './pages/cartPage.html';" id="cartButton">Cart</button>
-  <button onclick="location.href = './pages/loginPage.html';" id="loginButton">Login</button>
-  <button onclick="location.href = './pages/events.html';" id="eventButton">Events</button>
-  <button onclick="location.href = './pages/infoPage.html';" id="infoButton">Ordering and shipping info</button>
-  <button onclick="location.href = './pages/giftCardPage.html';" id="giftCardButton">giftCard</button>
-  <button onclick="location.href = './pages/contactUsPage.html';" id="contactUsButton">Contact Us</button>
-  <button onclick="location.href = './pages/FAQPage.html';" id="FAQButton">FAQ</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <title></title>
+  </head>
+  <body>
+    <!---navbar--->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="http://localhost:1337/">Home</a>
+      <button class="navbar-toggler order-first" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!---search bar and button--->
+      <div class="form-inline my-2 my-lg-0">
+        <div class="dropdown">
+          <button class="btn-on-nav dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="selection">Search in</span><span class="caret"></span>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="queryBox">
+            <a class="dropdown-item">title</a>
+            <a class="dropdown-item">author</a>
+            <a class="dropdown-item">genre</a>
+            <a class="dropdown-item">theme</a>
+          </div>
+        </div>
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="searchBox"></input>
+        <button class="btn-on-nav" type="submit" id ="searchButton"><i class="fa fa-search" aria-hidden="true"></i></button>
+      </div>
 
 
+      <script>
+        $(".dropdown-menu a").click(function(){
 
-  <hr/>
+          $(this).parents(".dropdown").find('.selection').text($(this).text());
+          $(this).parents(".dropdown").find('.selection').val($(this).text());
 
-  <div id="status"></div>
+        });
+      </script>
 
-  <script src="./assets/js/jquery-3.3.1.min.js"></script>
+      <!---other ref--->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="http://localhost:1337/pages/events.html">Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Gift card</a>
+          </li>
+          <li class="nav-item">
+            <button class="btn-on-nav" id="loginButton"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn-on-nav" id="cartButton"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!---navbar--->
+
+
+    <!-- event slider -->
+    <div class="container-fluid">
+      <h2 class="text-center">Our events this month:</h2>
+      <div id="carouselExampleIndicators" class="eventSlide carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators" id="dataSlide">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        </ol>
+          <div class="carousel-inner" id="carousel">
+            <div class="carousel-item active", style="background-image: url(https://www.dauntbooks.co.uk/wp-content/themes/winston/images/events-banner-4.jpg);">
+              <div class = "carousel-caption">
+                <a href="" id='link1'><h3 id="name1">Event 1</h3></a>
+                <p id="descr1">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+          </a>
+        </div>
+    </div>
+    <!-- event slider -->
+
+
+    <!-- best seller products slider -->
+    <div class="container-fluid">
+      <div class="slider">
+      	<div class="row">
+      		<div class="col-md-12">
+            <br>
+      			<h2 class="text-center">Best Seller this month:</h2>
+            <hr width="90%">
+      			<div id="BestSellerSlider" class="other-silder carousel slide" data-ride="carousel" data-interval="0">
+      			<!-- Wrapper for carousel items -->
+      			<div class="carousel-inner">
+      				<div class="item carousel-item active">
+      					<div class="row">
+      						<div class="col-sm-3">
+                    <h1 style="color: gold;">#1</h1>
+      							<div class="thumb-wrapper">
+      								<div class="img-box">
+      									<img src="" class="img-responsive img-fluid" id="img1"  alt="">
+      								</div>
+      								<div class="thumb-content">
+      									<a href="" id="linkBook1"><h4 id="title1">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="linkAuthor1"><dd id="author1">author_name</dd></a>
+                        </dl>
+      									<p class="item-price" id="price1"><span>€10,90</span></p>
+                        <div class="star-rating">
+      										<ul class="list-inline" id="star1">
+      										</ul>
+      									</div>
+      									<button class="add-prod-btn btn-success" id="addButton"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+      								</div>
+      							</div>
+      						</div>
+                  <div class="col-sm-3">
+                    <h1 style="color: silver;">#2</h1>
+      							<div class="thumb-wrapper">
+      								<div class="img-box">
+      									<img src="" class="img-responsive img-fluid" id="img2"  alt="">
+      								</div>
+      								<div class="thumb-content">
+      									<a href="" id="linkBook2"><h4 id="title2">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="linkAuthor2"><dd id="author2">author_name</dd></a>
+                        </dl>
+      									<p class="item-price" id="price2"><span>€10,90</span></p>
+      									<div class="star-rating">
+      										<ul class="list-inline" id="star2">
+      										</ul>
+      									</div>
+      									<button class="add-prod-btn btn-success" id="addButton"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+      								</div>
+      							</div>
+      						</div>
+                  <div class="col-sm-3">
+                    <h1 style="color: #75663f;">#3</h1>
+      							<div class="thumb-wrapper">
+      								<div class="img-box">
+      									<img src="" class="img-responsive img-fluid"  id="img3" alt="">
+      								</div>
+      								<div class="thumb-content">
+      									<a href="" id="linkBook3"><h4 id="title3">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="linkAuthor3"><dd id="author3">author_name</dd></a>
+                        </dl>
+      									<p class="item-price" id="price3"><span>€10,90</span></p>
+      									<div class="star-rating">
+      										<ul class="list-inline" id="star3">
+      										</ul>
+      									</div>
+      									<button class="add-prod-btn btn-success" id="addButton"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+      								</div>
+      							</div>
+      						</div>
+                  <div class="col-sm-3">
+                    <h1 style="color: grey;">#4</h1>
+      							<div class="thumb-wrapper">
+      								<div class="img-box">
+      									<img src="" class="img-responsive img-fluid" id="img4"  alt="">
+      								</div>
+      								<div class="thumb-content">
+      									<a href="" id="linkBook4"><h4 id="title4">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="linkAuthor4"><dd id="author4">author_name</dd></a>
+                        </dl>
+      									<p class="item-price" id="price4"><span>€10,90</span></p>
+      									<div class="star-rating">
+      										<ul class="list-inline" id="star4">
+      										</ul>
+      									</div>
+      									<button class="add-prod-btn btn-success" id="addButton"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+      								</div>
+      							</div>
+      						</div>
+      					</div>
+      				</div>
+
+
+              <div class="item carousel-item">
+      					<div class="row">
+      						<div class="col-sm-3">
+                    <h1 style="color: grey;">#5</h1>
+      							<div class="thumb-wrapper">
+      								<div class="img-box">
+      									<img src="" class="img-responsive img-fluid"  id="img5" alt="">
+      								</div>
+      								<div class="thumb-content">
+      									<a href="" id="linkBook5"><h4 id="title5">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="linkAuthor5"><dd id="author5">author_name</dd></a>
+                        </dl>
+      									<p class="item-price" id="price5"><span>€11,90</span></p>
+      									<div class="star-rating">
+      										<ul class="list-inline" id="star5">
+      										</ul>
+      									</div>
+      									<button class="add-prod-btn btn-success" id="addButton"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+      								</div>
+      							</div>
+      						</div>
+                  <div class="col-sm-3">
+                    <h1 style="color: grey;">#6</h1>
+      							<div class="thumb-wrapper">
+      								<div class="img-box">
+      									<img src="" class="img-responsive img-fluid"  id="img6" alt="">
+      								</div>
+      								<div class="thumb-content">
+      									<a href="" id="linkBook6"><h4 id="title6">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="linkAuthor6"><dd id="author6">author_name</dd></a>
+                        </dl>
+      									<p class="item-price" id="price6"><span>€11,90</span></p>
+      									<div class="star-rating">
+      										<ul class="list-inline" id="star6">
+      										</ul>
+      									</div>
+      									<button class="add-prod-btn btn-success" id="addButton"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+      								</div>
+      							</div>
+      						</div>
+                  <div class="col-sm-3">
+                    <h1 style="color: grey;">#7</h1>
+      							<div class="thumb-wrapper">
+      								<div class="img-box">
+      									<img src="" class="img-responsive img-fluid"  id="img7" alt="">
+      								</div>
+      								<div class="thumb-content">
+      									<a href="" id="linkBook7"><h4 id="title7">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="linkAuthor7"><dd id="author7">author_name</dd></a>
+                        </dl>
+      									<p class="item-price" id="price7"><span>€11,90</span></p>
+      									<div class="star-rating">
+      										<ul class="list-inline" id="star7">
+      										</ul>
+      									</div>
+      									<button class="add-prod-btn btn-success" id="addButton"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+      								</div>
+      							</div>
+      						</div>
+                  <div class="col-sm-3">
+                    <h1 style="color: grey;">#8</h1>
+      							<div class="thumb-wrapper">
+      								<div class="img-box">
+      									<img src="" class="img-responsive img-fluid"  id="img8" alt="">
+      								</div>
+      								<div class="thumb-content">
+      									<a href="" id="linkBook8"><h4 id="title8">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="linkAuthor8"><dd id="author8">author_name</dd></a>
+                        </dl>
+      									<p class="item-price" id="price8"><span>€11,90</span></p>
+      									<div class="star-rating">
+      										<ul class="list-inline" id="star8">
+      										</ul>
+      									</div>
+      									<button class="add-prod-btn btn-success" id="addButton"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+      								</div>
+      							</div>
+      						</div>
+      					</div>
+      				</div>
+
+      			</div>
+      			<!-- Carousel controls -->
+      			<a class="carousel-control left carousel-control-prev" href="#BestSellerSlider" data-slide="prev">
+      				<i class="fa fa-angle-left"></i>
+      			</a>
+      			<a class="carousel-control right carousel-control-next" href="#BestSellerSlider" data-slide="next">
+      				<i class="fa fa-angle-right"></i>
+      			</a>
+      		</div>
+      		</div>
+      	</div>
+      </div>
+    </div>
+    <!-- best seller products slider -->
+
+    <!-- our readings products slider -->
+    <div class="container-fluid">
+      <div class="slider">
+        <div class="row">
+          <div class="col-md-12">
+            <br>
+            <h2 class="text-center">Our Readings</h2>
+            <hr width="90%">
+            <div id="OurReadingsSlider" class="other-silder carousel slide" data-ride="carousel" data-interval="0">
+            <!-- Wrapper for carousel items -->
+            <div class="carousel-inner">
+              <div class="item carousel-item active">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="thumb-wrapper">
+                      <div class="img-box">
+                        <img src="" class="img-responsive img-fluid"  id="carImg1" alt="">
+                      </div>
+                      <div class="thumb-content">
+                        <a href="" id="carLinkBook1"><h4 id="carTitle1">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="carLinkAuthor1"><dd id="carAuthor1">author_name</dd></a>
+                        </dl>
+                        <p class="item-price" id="carPrice1"><span>€10,90</span></p>
+                        <div class="star-rating">
+                          <ul class="list-inline" id="carStar1">
+                          </ul>
+                        </div>
+                        <button class="add-prod-btn btn-success" id="add"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="thumb-wrapper">
+                      <div class="img-box">
+                        <img src="" class="img-responsive img-fluid"  id="carImg2" alt="">
+                      </div>
+                      <div class="thumb-content">
+                        <a href="" id="carLinkBook2"><h4 id="carTitle2">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="carLinkAuthor2"><dd id="carAuthor2">author_name</dd></a>
+                        </dl>
+                        <p class="item-price" id="carPrice2"><span>€10,90</span></p>
+                        <div class="star-rating">
+                          <ul class="list-inline" id="carStar2">
+                          </ul>
+                        </div>
+                        <button class="add-prod-btn btn-success" id="add"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="thumb-wrapper">
+                      <div class="img-box">
+                        <img src="" class="img-responsive img-fluid"  id="carImg3" alt="">
+                      </div>
+                      <div class="thumb-content">
+                        <a href="" id="carLinkBook3"><h4 id="carTitle3">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="carLinkAuthor3"><dd id="carAuthor3">author_name</dd></a>
+                        </dl>
+                        <p class="item-price" id="carPrice3"><span>€10,90</span></p>
+                        <div class="star-rating">
+                          <ul class="list-inline" id="carStar3">
+                          </ul>
+                        </div>
+                        <button class="add-prod-btn btn-success" id="add"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="thumb-wrapper">
+                      <div class="img-box">
+                        <img src="" class="img-responsive img-fluid" id="carImg4"  alt="">
+                      </div>
+                      <div class="thumb-content">
+                        <a href="" id="carLinkBook4"><h4 id="carTitle4">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="carLinkAuthor4"><dd id="carAuthor4">author_name</dd></a>
+                        </dl>
+                        <p class="item-price" id="carPrice4"><span>€10,90</span></p>
+                        <div class="star-rating">
+                          <ul class="list-inline" id="carStar4">
+                          </ul>
+                        </div>
+                        <button class="add-prod-btn btn-success" id="add"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item carousel-item">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="thumb-wrapper">
+                      <div class="img-box">
+                        <img src="" class="img-responsive img-fluid"  id="carImg5" alt="">
+                      </div>
+                      <div class="thumb-content">
+                        <a href="" id="carLinkBook5"><h4 id="carTitle5">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="carLinkAuthor5"><dd id="carAuthor5">author_name</dd></a>
+                        </dl>
+                        <p class="item-price" id="carPrice5"><span>€12,90</span></p>
+                        <div class="star-rating">
+                          <ul class="list-inline" id="carStar5">
+                          </ul>
+                        </div>
+                        <button class="add-prod-btn btn-success" id="add"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="thumb-wrapper">
+                      <div class="img-box">
+                        <img src="" class="img-responsive img-fluid"  id="carImg6" alt="">
+                      </div>
+                      <div class="thumb-content">
+                        <a href="" id="carLinkBook6"><h4 id="carTitle6">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="carLinkAuthor6"><dd id="carAuthor6">author_name</dd></a>
+                        </dl>
+                        <p class="item-price" id="carPrice6"><span>€12,90</span></p>
+                        <div class="star-rating">
+                          <ul class="list-inline" id="carStar6">
+                          </ul>
+                        </div>
+                        <button class="add-prod-btn btn-success" id="add"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="thumb-wrapper">
+                      <div class="img-box">
+                        <img src="" class="img-responsive img-fluid" id="carImg7"  alt="">
+                      </div>
+                      <div class="thumb-content">
+                        <a href="" id="carLinkBook7"><h4 id="carTitle7">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="carLinkAuthor7"><dd id="carAuthor7">author_name</dd></a>
+                        </dl>
+                        <p class="item-price" id="carPrice7"><span>€12,90</span></p>
+                        <div class="star-rating">
+                          <ul class="list-inline" id="carStar7">
+                          </ul>
+                        </div>
+                        <button class="add-prod-btn btn-success" id="add"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="thumb-wrapper">
+                      <div class="img-box">
+                        <img src="" class="img-responsive img-fluid" id="carImg8"  alt="">
+                      </div>
+                      <div class="thumb-content">
+                        <a href="" id="carLinkBook8"><h4 id="carTitle8">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="carLinkAuthor8"><dd id="carAuthor8">author_name</dd></a>
+                        </dl>
+                        <p class="item-price" id="carPrice8"><span>€12,90</span></p>
+                        <div class="star-rating">
+                          <ul class="list-inline" id="carStar8">
+                          </ul>
+                        </div>
+                        <button class="add-prod-btn btn-success" id="add"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item carousel-item">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="thumb-wrapper">
+                      <div class="img-box">
+                        <img src="" class="img-responsive img-fluid"  id="carImg9" alt="">
+                      </div>
+                      <div class="thumb-content">
+                        <a href="" id="carLinkBook9"><h4 id="carTitle9">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="carLinkAuthor9"><dd id="carAuthor9">author_name</dd></a>
+                        </dl>
+                        <p class="item-price" id="carPrice9"><span>€11,90</span></p>
+                        <div class="star-rating">
+                          <ul class="list-inline" id="carStar9">
+                          </ul>
+                        </div>
+                        <button class="add-prod-btn btn-success" id="add"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="thumb-wrapper">
+                      <div class="img-box">
+                        <img src="" class="img-responsive img-fluid" id="carImg10"  alt="">
+                      </div>
+                      <div class="thumb-content">
+                        <a href="" id="carLinkBook10"><h4 id="carTitle10">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="carLinkAuthor10"><dd id="carAuthor10">author_name</dd></a>
+                        </dl>
+                        <p class="item-price" id="carPrice10"><span>€11,90</span></p>
+                        <div class="star-rating">
+                          <ul class="list-inline" id="carStar10">
+                          </ul>
+                        </div>
+                        <button class="add-prod-btn btn-success" id="add"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="thumb-wrapper">
+                      <div class="img-box">
+                        <img src="" class="img-responsive img-fluid" id="carImg11"  alt="">
+                      </div>
+                      <div class="thumb-content">
+                        <a href="" id="carLinkBook11"><h4 id="carTitle11">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="carLinkAuthor11"><dd id="carAuthor11">author_name</dd></a>
+                        </dl>
+                        <p class="item-price" id="carPrice11"><span>€11,90</span></p>
+                        <div class="star-rating">
+                          <ul class="list-inline" id="carStar11">
+                          </ul>
+                        </div>
+                        <button class="add-prod-btn btn-success" id="add"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="thumb-wrapper">
+                      <div class="img-box">
+                        <img src="" class="img-responsive img-fluid"  id="carImg12" alt="">
+                      </div>
+                      <div class="thumb-content">
+                        <a href="" id="carLinkBook12"><h4 id="carTitle12">Book Name</h4></a>
+                        <dl class="param param-inline small">
+                          <a href="" id="carLinkAuthor12"><dd id="carAuthor12">author_name</dd></a>
+                        </dl>
+                        <p class="item-price" id="carPrice12"><span>€11,90</span></p>
+                        <div class="star-rating">
+                          <ul class="list-inline" id="carStar12">
+                          </ul>
+                        </div>
+                        <button class="add-prod-btn btn-success" id="add"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!-- Carousel controls -->
+            <a class="carousel-control left carousel-control-prev" href="#OurReadingsSlider" data-slide="prev">
+              <i class="fa fa-angle-left"></i>
+            </a>
+            <a class="carousel-control right carousel-control-next" href="#OurReadingsSlider" data-slide="next">
+              <i class="fa fa-angle-right"></i>
+            </a>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- our readings products slider -->
+
+    <!-- Footer -->
+    <footer class="page-footer font-small footer-color pt-4 my-md-5 pt-md-5 border-top">
+
+
+      <!-- Footer Links -->
+      <div class="container-fluid">
+
+        <!-- Grid row -->
+        <div class="row">
+
+          <!-- Grid column -->
+          <div class="col-md-5 mt-md-0 mt-3">
+
+            <!-- Content -->
+            <h5>Our Library</h5>
+            <p class="text-justify text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia</p>
+
+          </div>
+          <!-- Grid column -->
+
+          <hr class="clearfix w-100 d-md-none pb-3">
+
+          <!-- Grid column -->
+          <div class="offset-md-1 col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5>Service for you</h5>
+
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="text-muted" href="#!">Customer care</a>
+              </li>
+              <li>
+                <a class="text-muted" href="#!">FAQ and help</a>
+              </li>
+              <li>
+                <a class="text-muted" href="http://localhost:1337/pages/contactUsPage.html">Contact us</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5>Your purchase</h5>
+
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="text-muted" href="http://localhost:1337/pages/infoPage.html#headingOrdInfo1">Ordering info</a>
+              </li>
+              <li>
+                <a class="text-muted" href="http://localhost:1337/pages/infoPage.html#accordionShipInfo1">Shipping info</a>
+              </li>
+              <li>
+                <a class="text-muted" href="http://localhost:1337/pages/infoPage.html#accordionPayInfo1">Payment methods</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+      </div>
+      <!-- Footer Links -->
+
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-3">© 2019 Copyright:
+        <a href="#"> Gesù.com</a>
+      </div>
+      <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+
+  </body>
   <script src="./assets/js/home.js"></script>
-
-</body>
 </html>

@@ -1,0 +1,32 @@
+.card {
+  border-left: none;
+  border-right: none;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.first-card{
+  border-top: none;
+}
+.card-header {
+   background-color: white;
+}
+
+.card-body {
+  background-color: #f8f9fa;
+  font-size: 14px;
+}
+
+h5 {
+  font-size: 16px;
+}
+
+body {
+  background-color: #afafb033;
+}
+
+
+.card-title {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}

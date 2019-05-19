@@ -1,0 +1,110 @@
+body {
+ background-color: #ebeef0;
+}
+.eventSlide > .carousel-inner > .carousel-item {min-height: 600px; background-size: cover;}
+
+/* Style buttons */
+.btn-on-nav {
+  background-color: #f8f9fa;
+  border: none; /* Remove borders */
+  color: #7c7c7d;
+  padding: 8.25px 6px; /* Some padding */
+}
+
+/* Darker background on mouse-over */
+.btn-on-nav:hover {
+  color: rgba(0,0,0,0.7);
+}
+
+.btn-on-nav:focus {
+  outline: none;
+}
+
+.container-fluid {
+  padding-top: 15px
+}
+
+/*carousel*/
+.other-silder {
+	margin: 50px auto;
+	padding: 0 70px;
+}
+.other-silder .item {
+	min-height: 330px;
+  text-align: center;
+	overflow: hidden;
+}
+.other-silder .item .img-box {
+	height: 160px;
+	width: 100%;
+	position: relative;
+}
+.other-silder .item img {
+	max-width: 100%;
+	max-height: 100%;
+	display: inline-block;
+	position: absolute;
+	bottom: 0;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+}
+.other-silder .item h4 {
+	font-size: 18px;
+}
+.other-silder .item h6 {
+	font-size: 10px;
+}
+
+.other-silder .thumb-wrapper {
+	text-align: center;
+}
+.other-silder .thumb-content {
+	padding: 15px;
+}
+.other-silder .carousel-control {
+	height: 100px;
+    width: 40px;
+    background: none;
+    margin: auto 0;
+}
+.other-silder .carousel-control i {
+    font-size: 30px;
+    position: absolute;
+    top: 50%;
+    display: inline-block;
+    margin: -16px 0 0 0;
+    z-index: 5;
+    left: 0;
+    right: 0;
+    color: rgba(0, 0, 0, 0.8);
+    text-shadow: none;
+    font-weight: bold;
+}
+.other-silder .item-price {
+	font-size: 13px;
+	padding: 2px 0;
+}
+.other-silder .item-price span {
+	font-size: 110%;
+}
+.other-silder .carousel-control.left i {
+	margin-left: -3px;
+}
+.other-silder .carousel-control.left i {
+	margin-right: -3px;
+}
+.star-rating li {
+	padding: 0;
+}
+.star-rating i {
+	font-size: 14px;
+}
+
+.slider {
+   background-color: white;
+}
+
+.table td{
+  border: none;
+}

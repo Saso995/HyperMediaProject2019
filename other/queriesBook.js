@@ -3,26 +3,65 @@ var authorQueries = require('./authorQueries.js');
 var User = require('./userQueries.js');
 
 
-const getBooks = (req, res) => {
+const getBooks = (req, res, next) => {
     if(Object.keys(req.query).length > 0){ // 0 if empty or an integer > 0 if I have query parameters
       for (const key in req.query) {
         req.query[key] = req.query[key].toLowerCase();
       }
       let colName = Object.keys(req.query)[0];
       let value = req.query[colName];
-      if (colName !== "author's name"){
-        db.select().from('books').where(colName, 'ilike', '%'+value+'%').then(function(data){
+      let validResearches = ["author", "price","favorite", "bestseller", "title", "genre", "theme"];
+      if (validResearches.includes(colName, 4)){
+        db.select('books.*', 'authors.name as authorName').from('books').join('authors', 'books.authorid', '=', 'authors.id').where(colName, 'ilike', '%'+value+'%').orderBy('id').then(function(data){
           res.send(data);
         });
-      } else {
+      }
+      else if(colName ==="favorite"){
+        db.select('books.*',  'authors.name').from('books').join('authors', 'books.authorid', '=', 'authors.id').where('favorite', true).orderBy('id').then(function(result){
+          res.send(result)
+        });
+      }
+      else if(colName ==="bestseller"){
+        db.select('bestseller.*', 'books.*', 'authors.name as authorName').from('bestseller').join('books', 'bestseller.bookid', '=', 'books.id').join('authors', 'books.authorid', '=', 'authors.id').then(function(result){
+          res.send(result)
+        });
+      }
+      else if (colName === "author"){
         authorQueries.getAuthorByName(value).then(function(result){
-          db.select().from('books').where('authorid', result).then(function(data){
+          db.select('books.*', 'authors.name as authorName').from('books').join('authors', 'books.authorid', '=', 'authors.id').where('authorid', result).orderBy('id').then(function(data){
             res.send(data);
           });
         });
       }
+      else if (colName === "price"){
+        let min = 0;
+        let max = 0;
+        if(value === "lessthan10"){
+          min = 0;
+          max = 10;
+        }
+        else if (value === 'between20'){
+          min = 10;
+          max = 20;
+        }
+        else if (value === 'between30'){
+          min = 20;
+          max = 30;
+        }
+        else{
+          min = 30;
+          max = 9999999;
+        }
+        //let knex('users').whereBetween('votes', [1, 100])
+        db.select('books.*', 'authors.name as authorName').from('books').join('authors', 'books.authorid', '=', 'authors.id').whereBetween('price', [min, max]).orderBy('id').then(function(data){
+          res.send(data);
+        });
+      }
+      else{
+        next(new Error("Invalid research"));
+      }
     } else {
-      db.select().from('books').where(req.query).then(function(data){
+      db.select('books.*', 'authors.name as authorName').from('books').join('authors', 'books.authorid', '=', 'authors.id').where(req.query).orderBy('id').then(function(data){
         res.send(data);
       });
     }
@@ -71,8 +110,69 @@ const myReviews = (req, res, next) => {
   });
 }
 
+const myReviewScore = (req,res,next) => {
+  db.avg('rating').from('reviews').where('bookid', req.params.id).then(function(data){
+    res.send(data);
+  })
+}
+
+const mySimilar = (req,res) => {
+  let type= req.params.idSimilar;
+  console.log(type);
+  db.select().from('books').where("similar_type", type).whereNot('id', req.params.id).then(function(data){
+    res.send(data);
+  })
+}
+
+/*const getSimilar = (req,res,next) => {
+  var theme = req.params.theme;
+  console.log(theme)
+  var i = (theme.match(/,/g) || []).length;
+  var stringWhere = "where 'theme' LIKE ";
+  var or = " or 'theme' LIKE ";
+
+  for (; i >= 0; i--){
+    stringWhere += "'"+ "%" +theme.split(',')[i]+ "%" + "'";
+    if (i > 0){
+      stringWhere += or;
+    }
+  }
+  console.log(stringWhere)
+
+  let tot = `SELECT * FROM books ${stringWhere};`
+  console.log(tot)
+  db.raw(tot).then(function(result){
+    console.log(result);
+    res
+  });
+
+  function getSimilar(theme){
+    let par = "%"+theme+"%";
+    console.log(par);
+    return db.select().from('books').where('theme', 'ilike', par).then(function(similar){
+      var result = JSON.stringify(similar);
+      return result;
+    });
+}*/
+
+const getBestSeller = (req, res) => {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = yyyy + '-' + mm;
+  //db.select().from('bestseller').where('data_rank', 'ilike', '%'+today+'%').orderBy('position').then(function(result){
+  db.select('bestseller.*', 'books.title', 'books.price', 'books.authorid', 'authors.name').from('bestseller').join('books', 'bestseller.bookid', '=', 'books.id').join('authors', 'books.authorid', '=', 'authors.id').where('data_rank', 'ilike', '%'+today+'%').orderBy('position').then(function(result){
+    res.send(result)
+  });
+}
+
 module.exports = {
   getBooks,
   getBooksByID,
-  myReviews
+  myReviews,
+  mySimilar,
+  getBestSeller,
+  myReviewScore
 }

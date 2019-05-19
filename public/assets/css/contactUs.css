@@ -1,0 +1,22 @@
+body {
+  background-color: #afafb033;
+}
+
+.container-fluid {
+  padding-top: 0;
+  max-width: 100%; /* Maximum width */
+  position: relative;
+  margin: 0 auto; /* Center it */
+}
+
+ .content {
+  position: absolute; /* Position the background text */
+  top: 0; /* At the bottom. Use top:0 to append it to the top */
+  color: #f1f1f1; /* Grey text */
+  width: 100%; /* Full width */
+  padding: 30px; /* Some padding */
+}
+
+h1{
+  font-size: 70px;
+}

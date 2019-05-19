@@ -5,7 +5,8 @@ const User = require('../other/userQueries');
 
 router.post('/signup', (req, res, next) => {
   req.check('email', 'Invalid email address').isEmail();
-  req.check('password', 'Password is invalid').isLength({min: 6}).equals(req.body.confirmPassword);
+  req.check('password', 'Password too short (min 6 char)').isLength({min: 6});
+  req.check('password', 'Password confermation and password are different').equals(req.body.confirmPassword);
   var errors = req.validationErrors();
   if(!errors){
     User
@@ -25,7 +26,7 @@ router.post('/signup', (req, res, next) => {
             User.create(user).then(id => {
               res.json({
                 id,
-                messagge: "Successfully registered! Now you can login with your data."
+                message: "Successfully registered! Now you can login with your data."
               });
             });
           });
@@ -41,7 +42,7 @@ router.post('/signup', (req, res, next) => {
 
 
 router.post('/login', (req, res, next) => {
-  req.check('email', 'Invalid email address').isEmail();
+  req.check('email', 'This email address is invalid').isEmail();
   req.check('password', 'Password is invalid').isLength({min: 6});
   var errors = req.validationErrors();
   if(!errors){

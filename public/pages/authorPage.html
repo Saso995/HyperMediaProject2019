@@ -15,7 +15,7 @@
   <body>
     <!---navbar--->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Home</a>
+      <a class="navbar-brand" href="../../">Home</a>
       <button class="navbar-toggler order-first" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -24,21 +24,21 @@
 
 
       <!---search bar and button--->
-      <form class="form-inline my-2 my-lg-0">
+      <div class="form-inline my-2 my-lg-0">
         <div class="dropdown">
           <button class="btn-on-nav dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="selection">Search in</span><span class="caret"></span>
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Title</a>
-            <a class="dropdown-item" href="#">Author</a>
-            <a class="dropdown-item" href="#">Genre</a>
-            <a class="dropdown-item" href="#">Theme</a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="queryBox">
+            <a class="dropdown-item">title</a>
+            <a class="dropdown-item">author</a>
+            <a class="dropdown-item">genre</a>
+            <a class="dropdown-item">theme</a>
           </div>
         </div>
-        <input class="form-control" type="search" placeholder="Search" aria-label="Search"></input>
-        <button class="btn-on-nav" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-      </form>
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="searchBox"></input>
+        <button class="btn-on-nav" type="submit" id ="searchButton"><i class="fa fa-search" aria-hidden="true"></i></button>
+      </div>
 
 
       <script>
@@ -54,16 +54,16 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">Events</a>
+            <a class="nav-link" href="../pages/events.html">Events</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Gift card</a>
           </li>
           <li class="nav-item">
-            <button class="btn-on-nav"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+            <button class="btn-on-nav" id="loginButton"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
           </li>
           <li class="nav-item">
-            <button class="btn-on-nav"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</button>
+            <button class="btn-on-nav" id="cartButton"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</button>
           </li>
         </ul>
       </div>
@@ -142,7 +142,7 @@
                 <a class="text-muted" href="#!">FAQ and help</a>
               </li>
               <li>
-                <a class="text-muted" href="#!">Contact us</a>
+                <a class="text-muted" href="../pages/contactUsPage.html">Contact us</a>
               </li>
             </ul>
 
@@ -157,13 +157,13 @@
 
             <ul class="list-unstyled text-small">
               <li>
-                <a class="text-muted" href="#!">Ordering info</a>
+                <a class="text-muted" href="../pages/infoPage.html#headingOrdInfo1">Ordering info</a>
               </li>
               <li>
-                <a class="text-muted" href="#!">Shipping info</a>
+                <a class="text-muted" href="../pages/infoPage.html#accordionShipInfo1">Shipping info</a>
               </li>
               <li>
-                <a class="text-muted" href="#!">Payment methods</a>
+                <a class="text-muted" href="../pages/infoPage.html#accordionPayInfo1">Payment methods</a>
               </li>
             </ul>
 
