@@ -23,21 +23,21 @@ var cartRouter = require('./routes/cart');
 app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
-//app.use(bodyParser.urlencoded({ extended: true })); search difference
+
 app.use(expressValidator());
 app.use(expressSession({
   secret: 'keyboard_cat',
   saveUninitialized: false,
   resave: false,
   store: store,
-  cookie: {maxAge: 30 * 60 * 1000, httpOnly:true} //cart expires after 1 minutes
+  cookie: {maxAge: 30 * 60 * 1000, httpOnly:true} //cart expires after 30 minutes
 }));
-app.use(cookieParser('keyboard_cat')); //da modificare
+app.use(cookieParser('keyboard_cat'));
 
 authenticationRouter.use(bodyParser.json())
 
 app.use(express.static(__dirname + "/public"));
-app.use('/resources',express.static(__dirname + '/public/assets/img')); //l'ho dovuto mettere per poter fornire le immagini, ci sarà un altro metodo spero
+app.use('/resources',express.static(__dirname + '/public/assets/img'));
 app.use('/backend', backEndRouter);
 app.use('/book', bookRouter);
 app.use('/author', authorRouter);
