@@ -1,41 +1,3 @@
-/*
-  VECCHIO CODICE PER PRENDERE DA URL
-
-$(document).ready(() => {
-  var key = '';
-  var value = '';
-  if(window.location.search){
-    var queryString = new Array();
-    var params = window.location.search.split('?')[1].split('&');
-    key = params[0].split('=')[0];
-    value = decodeURIComponent(params[0].split('=')[1]);
-  }
-
-  $.ajax({
-    url: '../book?' + key + '=' + value,
-    type: 'GET',
-    dataType : 'json', // this URL returns data in JSON format
-    success: (data) => {
-      console.log('You received some data!', data);
-      $('#status').html("Available books: "+ JSON.stringify(data));
-    },
-    error: (data) => {
-      console.log('You received some data!', data);
-      $('#status').html("Error: "+ JSON.stringify(data));
-    }
-  });
-
-  $('#searchButton').click(() => {
-    if ($('#searchBox').val()){
-      var url = './books.html?' + encodeURIComponent($('#queryBox').val()) + '=' + encodeURIComponent($('#searchBox').val());
-      window.location.href = url;
-    } else {
-      var url = './books.html';
-      window.location.href = url;
-    }
-  });
-});*/
-
 var key = '';
 var value = '';
 if(window.location.search){
@@ -51,17 +13,16 @@ $(document).ready(() => {
     type: 'GET',
     dataType : 'json', // this URL returns data in JSON format
     success: (data) => {
-      console.log(data)
         for (var i in data){
           let idBook = data[i].id;
-          let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/books/'+idBook+'.jpg';
+          let img_path = 'http://localhost:1337/resources/books/'+idBook+'.jpg';
           let title = data[i].title;
           let price = data[i].price;
           let author = data[i].authorName;
           let theme = data[i].theme;
           let currentState = i;
-          let linkBook = 'https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + idBook;
-          let linkAuthor = 'https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data[i].authorid;
+          let linkBook = 'http://localhost:1337/pages/bookPage.html?' + idBook;
+          let linkAuthor = 'http://localhost:1337/pages/authorPage.html?' + data[i].authorid;
           let ranking = "";
           if (key === "bestseller"){
             ranking = data[i].position+'° In best seller, in data: '+data[i].data_rank;
@@ -195,7 +156,14 @@ $(document).ready(() => {
         }
     },
     error: (data) => {
-      alert(data.responseJSON.message);
+      let dialog = new Messi (data.responseJSON.message,{
+          animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
+          modal: true,
+          buttons: [{id: 0, label: 'Ok'}],
+          center:false,
+          position: { top: '300px', left: '500px' }
+        }
+      );
     }
   });
 
@@ -211,13 +179,26 @@ $(document).ready(() => {
           type: 'POST',
           dataType : 'json',
           success: (data) => {
-            alert((JSON.stringify(data.message)));
+            let dialog = new Messi (data.message,{
+                animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
+                buttons: [{id: 0, label: 'Ok'}],
+                callback: function() { location.reload(); },
+                center:false,
+                position: { top: '300px', left: '500px' }
+              }
+            );
             $('#loginButton').html('Login');
             $("#loginButton").attr("id", "loginButton");
-            location.reload();
           },
           error: (data) => {
-            alert((JSON.stringify(data.message)));
+            let dialog = new Messi (data.message,{
+                animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
+                modal: true,
+                buttons: [{id: 0, label: 'Ok'}],
+                center:false,
+                position: { top: '300px', left: '500px' }
+              }
+            );
           }
         });
       });
@@ -244,7 +225,14 @@ $(document).on('click', "[id^=add]", function(){
       },
       dataType : 'json',
       success: (data) => {
-        alert(JSON.stringify(data.message));
+        let dialog = new Messi (data.message,{
+            animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
+            modal: true,
+            buttons: [{id: 0, label: 'Ok'}],
+            center:false,
+            position: { top: '300px', left: '500px' }
+          }
+        );
       },
       error: (data) => {
         console.log(JSON.stringify(data));
@@ -253,11 +241,11 @@ $(document).on('click', "[id^=add]", function(){
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
+  window.location.replace("http://localhost:1337/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
+  window.location.replace("http://localhost:1337/pages/cartPage.html");
 });
 
 function doesHttpOnlyCookieExist(cookiename) {

@@ -4,10 +4,13 @@ $('#signUpForm').submit(function(){
       type: 'POST',
       data : $('#signUpForm').serialize(),
       success: function(data){
-        console.log(data)
         if(data.message){
-          alert(data.message);
-          window.location.href = "https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html";
+          let dialog = new Messi (data.message,{
+              animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
+              buttons: [{id: 0, label: 'Ok'}],
+              callback: function() { window.location.href = "http://localhost:1337/"; }
+            }
+          );
         }
         else{
           let error ="";
@@ -15,11 +18,21 @@ $('#signUpForm').submit(function(){
             error += data[i].msg;
             error +='\n';
           }
-          alert(error);
+          let dialog = new Messi (error,{
+              animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
+              modal: true,
+              buttons: [{id: 0, label: 'Ok'}]
+            }
+          );
         }
       },
       error: function(error){
-        alert(error.responseJSON.message)
+        let dialog = new Messi (data.responseJSON.message,{
+            animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
+            modal: true,
+            buttons: [{id: 0, label: 'Ok'}]
+          }
+        );
       }
     });
     return false;

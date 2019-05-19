@@ -6,15 +6,18 @@ $(document).ready(() => {
       dataType : 'json',
       success: (data) => {
         if(data.text){
-          alert(data.text)
+          let dialog = new Messi (data.text,{
+              animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
+              autoclose: 2000
+            }
+          );
         }
         else{
-          console.log(data)
           //show all the books in the cart
           for (var j in data.items){
-            let img = 'https://bova-colombo-hyp2019.herokuapp.com/resources/books/' + data.items[j].item.id + '.jpg';
-            let linkBook = 'https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + data.items[j].item.id;
-            let linkAuthor = 'https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data.items[j].item.authorid;
+            let img = 'http://localhost:1337/resources/books/' + data.items[j].item.id + '.jpg';
+            let linkBook = 'http://localhost:1337/pages/bookPage.html?' + data.items[j].item.id;
+            let linkAuthor = 'http://localhost:1337/pages/authorPage.html?' + data.items[j].item.authorid;
             $('#table').append(`
               <tr>
                 <td>
@@ -87,13 +90,26 @@ $(document).ready(() => {
             type: 'POST',
             dataType : 'json',
             success: (data) => {
-              alert((JSON.stringify(data.message)));
+              let dialog = new Messi (data.message,{
+                  animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
+                  buttons: [{id: 0, label: 'Ok'}],
+                  callback: function() { location.reload(); },
+                  center:false,
+                  position: { top: '300px', left: '500px' }
+                }
+              );
               $('#loginButton').html('Login');
               $("#loginButton").attr("id", "loginButton");
-              location.reload();
             },
             error: (data) => {
-              alert((JSON.stringify(data.message)));
+              let dialog = new Messi (data.message,{
+                  animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
+                  modal: true,
+                  buttons: [{id: 0, label: 'Ok'}],
+                  center:false,
+                  position: { top: '300px', left: '500px' }
+                }
+              );
             }
           });
         });
@@ -106,8 +122,14 @@ $('#empty-btn').click(() => {
     type: 'DELETE',
     dataType : 'json',
     success: (data) => {
-      alert(JSON.stringify(data.message));
-      location.reload();
+      let dialog = new Messi (data.message,{
+          animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
+          buttons: [{id: 0, label: 'Ok'}],
+          callback: function() { location.reload(); },
+          center:false,
+          position: { top: '300px', left: '500px' }
+        }
+      );
     },
     error: (data) => {
       console.log(JSON.stringify(data));
@@ -123,8 +145,14 @@ $(document).on('click', "[id^=remove]", function(){
       type: 'DELETE',
       dataType : 'json',
       success: (data) => {
-        alert(data.message);
-        location.reload();
+        let dialog = new Messi (data.message,{
+            animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
+            buttons: [{id: 0, label: 'Ok'}],
+            callback: function() { location.reload(); },
+            center:false,
+            position: { top: '300px', left: '500px' }
+          }
+        );
       }
     });
 });
@@ -139,8 +167,14 @@ $(document).on('click', "[id^=more]", function(){
     },
     dataType : 'json',
     success: (data) => {
-      alert(JSON.stringify(data.message));
-      location.reload();
+      let dialog = new Messi (data.message,{
+          animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
+          buttons: [{id: 0, label: 'Ok'}],
+          callback: function() { location.reload(); },
+          center:false,
+          position: { top: '300px', left: '500px' }
+        }
+      );
     },
     error: (data) => {
       console.log(JSON.stringify(data));
@@ -156,8 +190,14 @@ $(document).on('click', "[id^=less]", function(){
     type: 'PATCH',
     dataType : 'json',
     success: (data) => {
-      alert(JSON.stringify(data.message));
-      location.reload();
+      let dialog = new Messi (data.message,{
+          animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
+          buttons: [{id: 0, label: 'Ok'}],
+          callback: function() { location.reload(); },
+          center:false,
+          position: { top: '300px', left: '500px' }
+        }
+      );
     },
     error: (data) => {
       console.log(JSON.stringify(data));
@@ -176,11 +216,11 @@ $('#searchButton').click(() => {
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
+  window.location.replace("http://localhost:1337/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
+  window.location.replace("http://localhost:1337/pages/cartPage.html");
 });
 
 function doesHttpOnlyCookieExist(cookiename) {

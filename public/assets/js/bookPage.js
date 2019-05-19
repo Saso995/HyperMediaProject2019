@@ -22,9 +22,9 @@ $(document).ready(() => {
         $('#pages').html(data.book[0].pages);
         $('#genre').html(data.book[0].genre);
         $('#isbn').html(data.book[0].isbn);
-        $("#img").attr('src','https://bova-colombo-hyp2019.herokuapp.com/resources/books/' + data.book[0].id + '.jpg');
+        $("#img").attr('src','http://localhost:1337/resources/books/' + data.book[0].id + '.jpg');
         $('#authorName').html(data.authorName);
-        $("#authorName").attr('href','https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data.book[0].authorid);
+        $("#authorName").attr('href','http://localhost:1337/pages/authorPage.html?' + data.book[0].authorid);
         var d = data.book[0].publicationdate;
         var onlyD = d.substr(0, 10);
         $('#publicationDate').html(onlyD);
@@ -32,14 +32,17 @@ $(document).ready(() => {
         fillSimilar(similarType);
       },
       error: (data) => {
-        alert("What the hell are you looking for?!");
-        console.log('There is some error');
-        window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/");
+        let dialog = new Messi ("What the hell are you looking for?!",{
+            animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
+            buttons: [{id: 0, label: 'Ok'}],
+            callback: function() { window.location.replace("http://localhost:1337"); }
+          }
+        );
       }
     });
   }
   else{
-    window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/");
+    window.location.replace("http://localhost:1337");
   }
 
   //fills book's Events
@@ -50,7 +53,7 @@ $(document).ready(() => {
     success: (data) => {
       console.log(data)
       for(var i in data) {
-        let toAppend = "<li><a href='../../pages/eventPage.html?" + data[i].id + "' >" + data[i].location+ "</a>"+ " "+ data[i].date+ "</li>";
+        let toAppend = "<li><a href='http://localhost:1337/pages/eventPage.html?" + data[i].id + "' >" + data[i].location+ "</a>"+ " "+ data[i].date+ "</li>";
         $("ol").append(toAppend);
       }
     },
@@ -69,11 +72,11 @@ $(document).ready(() => {
         success: (data) => {
           var count = 0;
           for (var i in data){
-            let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/books/'+data[i].id+'.jpg';
+            let img_path = 'http://localhost:1337/resources/books/'+data[i].id+'.jpg';
             let title = data[i].title;
             let price = data[i].price;
             let idBook = data[i].id;
-            let linkBook = 'https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + idBook;
+            let linkBook = 'http://localhost:1337/pages/bookPage.html?' + idBook;
             //fetch rating about similar books and fills the html page dynamically
             $.ajax({
               url: '../../book/' + data[i].id + '/reviews/score',
@@ -197,13 +200,21 @@ $(document).ready(() => {
           type: 'POST',
           dataType : 'json',
           success: (data) => {
-            alert((JSON.stringify(data.message)));
+            let dialog = new Messi (data.message,{
+                animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
+                buttons: [{id: 0, label: 'Ok'}],
+                callback: function() { location.reload(); }
+              }
+            );
             $('#loginButton').html('Login');
             $("#loginButton").attr("id", "loginButton");
-            location.reload();
           },
           error: (data) => {
-            alert((JSON.stringify(data.message)));
+            let dialog = new Messi (data.message,{
+                animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
+                buttons: [{id: 0, label: 'Ok'}]
+              }
+            );
           }
         });
       });
@@ -226,14 +237,21 @@ $('#adReviwButton').click(() => {
       },
       dataType : 'json', // this URL returns data in JSON format
       success: (data) => {
-        alert(data.message);
-        if (data.message === "Review Successfully inserted!")
-          location.reload();
+        let dialog = new Messi (data.message,{
+            animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
+            buttons: [{id: 0, label: 'Ok'}],
+            callback: function() { if (data.message === "Review Successfully inserted!"){location.reload();}}
+          }
+        );
       }
     });
   }
   else{
-    alert("You have to select a number of stars");
+    let dialog = new Messi ("You have to select a number of stars",{
+        animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
+        buttons: [{id: 0, label: 'Ok'}]
+      }
+    );
   }
 });
 //add to cart
@@ -246,7 +264,11 @@ $('#adButton').click(() => {
     },
     dataType : 'json',
     success: (data) => {
-      alert(JSON.stringify(data.message));
+      let dialog = new Messi (data.message,{
+          animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
+          buttons: [{id: 0, label: 'Ok'}]
+        }
+      );
     },
     error: (data) => {
       console.log(JSON.stringify(data));
@@ -264,7 +286,11 @@ $(document).on('click', "[id^=add]", function(){
       },
       dataType : 'json',
       success: (data) => {
-        alert(JSON.stringify(data.message));
+        let dialog = new Messi (data.message,{
+            animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
+            buttons: [{id: 0, label: 'Ok'}]
+          }
+        );
       },
       error: (data) => {
         console.log(JSON.stringify(data));
@@ -273,11 +299,11 @@ $(document).on('click', "[id^=add]", function(){
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
+  window.location.replace("http://localhost:1337/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
+  window.location.replace("http://localhost:1337/pages/cartPage.html");
 });
 
 $('#searchButton').click(() => {

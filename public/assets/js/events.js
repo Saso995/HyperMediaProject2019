@@ -15,12 +15,12 @@ $(document).ready(() => {
           console.log(data)
           for (var i in data){
             let idevent = data[i].id;
-            let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/events/'+data[i].bookid+'.jpg';
+            let img_path = 'http://localhost:1337/resources/events/'+data[i].bookid+'.jpg';
             let title = data[i].name;;
             let currentState = i;
             let date= data[i].date;
             let location= data[i].location;
-            let linkEvent = 'https://bova-colombo-hyp2019.herokuapp.com/pages/eventPage.html?' + idevent;
+            let linkEvent = 'http://localhost:1337/pages/eventPage.html?' + idevent;
             $("#page").append(`
               <tr class="list">
                 <td>
@@ -76,7 +76,6 @@ $(document).ready(() => {
 
                 $("#next-page").click(function() {
                   var currentPage = $(".pagination li.active").index();
-                  console.log(currentPage)
                   if (currentPage === totalPages) {
                     return false;
                   }
@@ -116,7 +115,15 @@ $(document).ready(() => {
             }
           },
       error: (data) => {
-        alert(data.responseJSON.message);
+        //alert(data.responseJSON.message);
+        let dialog = new Messi (data.responseJSON.message,{
+            animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
+            modal: true,
+            buttons: [{id: 0, label: 'Ok'}],
+            center:false,
+            position: { top: '300px', left: '500px' }
+          }
+        );
       }
     });
   }
@@ -130,12 +137,12 @@ $(document).ready(() => {
           if(data.length>0){
             for (var i in data){
               let idevent = data[i].id;
-              let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/events/'+data[i].bookid+'.jpg';
+              let img_path = 'http://localhost:1337/resources/events/'+data[i].bookid+'.jpg';
               let title = data[i].name;;
               let currentState = i;
               let date= data[i].date;
               let location= data[i].location;
-              let linkEvent = 'https://bova-colombo-hyp2019.herokuapp.com/pages/eventPage.html?' + idevent;
+              let linkEvent = 'http://localhost:1337/pages/eventPage.html?' + idevent;
               $("#page").append(`
                 <tr class="list">
                   <td>
@@ -191,7 +198,6 @@ $(document).ready(() => {
 
                   $("#next-page").click(function() {
                     var currentPage = $(".pagination li.active").index();
-                    console.log(currentPage)
                     if (currentPage === totalPages) {
                       return false;
                     }
@@ -231,12 +237,25 @@ $(document).ready(() => {
               }
           }
           else{
-            alert("Sorry there are no events in this city :(")
-            window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/events.html");
+            let dialog = new Messi ("Sorry there are no events in this city :(",{
+                animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
+                buttons: [{id: 0, label: 'Ok'}],
+                callback: function() { window.location.replace("http://localhost:1337/pages/events.htm"); },
+                center:false,
+                position: { top: '300px', left: '500px' }
+              }
+            );
           }
           },
       error: (data) => {
-        alert(data.responseJSON.message);
+        let dialog = new Messi (data.responseJSON.message,{
+            animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
+            modal: true,
+            buttons: [{id: 0, label: 'Ok'}],
+            center:false,
+            position: { top: '300px', left: '500px' }
+          }
+        );
       }
     });
   }
@@ -253,13 +272,26 @@ $(document).ready(() => {
           type: 'POST',
           dataType : 'json',
           success: (data) => {
-            alert((JSON.stringify(data.message)));
+            let dialog = new Messi (data.message,{
+                animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
+                buttons: [{id: 0, label: 'Ok'}],
+                callback: function() { location.reload(); },
+                center:false,
+                position: { top: '300px', left: '500px' }
+              }
+            );
             $('#loginButton').html('Login');
             $("#loginButton").attr("id", "loginButton");
-            location.reload();
           },
           error: (data) => {
-            alert((JSON.stringify(data.message)));
+            let dialog = new Messi (data.responseJSON.message,{
+                animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
+                modal: true,
+                buttons: [{id: 0, label: 'Ok'}],
+                center:false,
+                position: { top: '300px', left: '500px' }
+              }
+            );
           }
         });
       });
@@ -277,11 +309,11 @@ $('#searchButton').click(() => {
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
+  window.location.replace("http://localhost:1337/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
+  window.location.replace("http://localhost:1337/pages/cartPage.html");
 });
 
 

@@ -22,20 +22,23 @@ $(document).ready(() => {
         $('#seats').html(data[0].seats);
         $('#description').html(data[0].description);
         $("#book-title").html(data[0].bookTitle);
-        $("#book-title").attr('href','https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + data[0].bookid);
+        $("#book-title").attr('href','http://localhost:1337/pages/bookPage.html?' + data[0].bookid);
         $("#authorName").html(data[0].authorName);
-        $("#authorName").attr('href','https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data[0].authorid);
-        $("#img").attr('src','https://bova-colombo-hyp2019.herokuapp.com/resources/events/' + data[0].bookid + '.jpg');
+        $("#authorName").attr('href','http://localhost:1337/pages/authorPage.html?' + data[0].authorid);
+        $("#img").attr('src','http://localhost:1337/resources/events/' + data[0].bookid + '.jpg');
       },
       error: (data) => {
-        alert("What the hell are you looking for?!");
-        console.log('There is some error');
-        window.location.replace("https://bova-colombo-hyp2019.herokuapp.com");
+        let dialog = new Messi ("What the hell are you looking for?!",{
+            animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
+            buttons: [{id: 0, label: 'Ok'}],
+            callback: function() { window.location.replace("http://localhost:1337"); }
+          }
+        );
       }
     });
   }
   else{
-    window.location.replace("https://bova-colombo-hyp2019.herokuapp.com");
+    window.location.replace("http://localhost:1337");
   }
   //to change login button into logout
     if(doesHttpOnlyCookieExist('user_id')){
@@ -49,13 +52,21 @@ $(document).ready(() => {
           type: 'POST',
           dataType : 'json',
           success: (data) => {
-            alert((JSON.stringify(data.message)));
+            let dialog = new Messi (data.message,{
+                animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
+                buttons: [{id: 0, label: 'Ok'}],
+                callback: function() { location.reload(); }
+              }
+            );
             $('#loginButton').html('Login');
             $("#loginButton").attr("id", "loginButton");
-            location.reload();
           },
           error: (data) => {
-            alert((JSON.stringify(data.message)));
+            let dialog = new Messi (data.message,{
+                animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
+                buttons: [{id: 0, label: 'Ok'}]
+              }
+            );
           }
         });
       });
@@ -73,11 +84,11 @@ $('#searchButton').click(() => {
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
+  window.location.replace("http://localhost:1337/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
+  window.location.replace("http://localhost:1337/pages/cartPage.html");
 });
 
 
