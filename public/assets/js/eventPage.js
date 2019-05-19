@@ -22,20 +22,20 @@ $(document).ready(() => {
         $('#seats').html(data[0].seats);
         $('#description').html(data[0].description);
         $("#book-title").html(data[0].bookTitle);
-        $("#book-title").attr('href','http://localhost:1337/pages/bookPage.html?' + data[0].bookid);
+        $("#book-title").attr('href','https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + data[0].bookid);
         $("#authorName").html(data[0].authorName);
-        $("#authorName").attr('href','http://localhost:1337/pages/authorPage.html?' + data[0].authorid);
-        $("#img").attr('src','http://localhost:1337/resources/events/' + data[0].bookid + '.jpg');
+        $("#authorName").attr('href','https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data[0].authorid);
+        $("#img").attr('src','https://bova-colombo-hyp2019.herokuapp.com/resources/events/' + data[0].bookid + '.jpg');
       },
       error: (data) => {
         alert("What the hell are you looking for?!");
         console.log('There is some error');
-        window.location.replace("http://localhost:1337");
+        window.location.replace("https://bova-colombo-hyp2019.herokuapp.com");
       }
     });
   }
   else{
-    window.location.replace("http://localhost:1337");
+    window.location.replace("https://bova-colombo-hyp2019.herokuapp.com");
   }
   //to change login button into logout
     if(doesHttpOnlyCookieExist('user_id')){
@@ -73,11 +73,11 @@ $('#searchButton').click(() => {
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("http://localhost:1337/pages/loginPage.html");
+  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("http://localhost:1337/pages/cartPage.html");
+  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
 });
 
 

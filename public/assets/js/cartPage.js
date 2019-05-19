@@ -12,9 +12,9 @@ $(document).ready(() => {
           console.log(data)
           //show all the books in the cart
           for (var j in data.items){
-            let img = 'http://localhost:1337/resources/books/' + data.items[j].item.id + '.jpg';
-            let linkBook = 'http://localhost:1337/pages/bookPage.html?' + data.items[j].item.id;
-            let linkAuthor = 'http://localhost:1337/pages/authorPage.html?' + data.items[j].item.authorid;
+            let img = 'https://bova-colombo-hyp2019.herokuapp.com/resources/books/' + data.items[j].item.id + '.jpg';
+            let linkBook = 'https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + data.items[j].item.id;
+            let linkAuthor = 'https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data.items[j].item.authorid;
             $('#table').append(`
               <tr>
                 <td>
@@ -176,11 +176,11 @@ $('#searchButton').click(() => {
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("http://localhost:1337/pages/loginPage.html");
+  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("http://localhost:1337/pages/cartPage.html");
+  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
 });
 
 function doesHttpOnlyCookieExist(cookiename) {

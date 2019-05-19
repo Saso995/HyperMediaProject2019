@@ -7,7 +7,7 @@ $('#loginForm').submit(function(){
         console.log(data);
         if(data.message){
           alert(data.message);
-          window.location.href = "http://localhost:1337/";
+          window.location.href = "https://bova-colombo-hyp2019.herokuapp.com";
         }
         else{
           let error ="";
