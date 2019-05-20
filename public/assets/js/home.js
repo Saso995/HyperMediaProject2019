@@ -69,7 +69,7 @@ $(document).ready(() => {
         $(idImg).attr('src', img_path)
         $(idTitle).html(data[i].title);
         $(idPrice).html(data[i].price+'€');
-        $(idAuthor).html(data[i].name);
+        $(idAuthor).html(data[i].authorName);
         $('#add').attr('id', "add"+data[i].id)
 
         $.ajax({
