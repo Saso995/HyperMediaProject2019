@@ -11,10 +11,6 @@ router.get('/', function(req, res) {
   }
 });
 
-router.get('/checkout', function(req, res, next){
-  res.json({ text: "You are checking out!" })
-});
-
 
 router.post('/', function(req, res, next){
   if(req.signedCookies.user_id){

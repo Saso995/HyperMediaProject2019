@@ -11,7 +11,6 @@ var store = new knexSessionStore ({
   tablename: "sessions"
 });
 
-var indexRouter = require('./routes/index'); //inutile per ora; CARICO LA HOME DIRETTAMENTE DA QUI
 var backEndRouter = require('./routes/backend');
 var bookRouter = require('./routes/book');
 var authorRouter = require('./routes/author');
@@ -30,7 +29,7 @@ app.use(expressSession({
   saveUninitialized: false,
   resave: false,
   store: store,
-  cookie: {maxAge: 30 * 60 * 1000, httpOnly:true} //cart expires after 30 minutes
+  cookie: {maxAge: 30 * 60 * 1000, httpOnly:true, secure:true} //cart expires after 30 minutes
 }));
 app.use(cookieParser('keyboard_cat'));
 

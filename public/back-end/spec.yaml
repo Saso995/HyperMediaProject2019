@@ -4,18 +4,18 @@ info:
   description: 'This is a bookstore server with a book inventory, users with a shopping cart, a collection of event where the authors present their books.'
   version: "1.0.0"
   contact:
-    email: "some_email@gmail.com"
+    email: "salvatore.bova@mail.polimi.it"
 tags:
   - name: "Book"
-    description: "Available book"
+    description: "operation regarding the books"
   - name: "Cart"
-    description: "Access to the cart"
-  - name: "User"
-    description: "Operations about user"
+    description: "operation regarding the cart"
+  - name: "Auth"
+    description: "operations about registration/login/logout"
   - name: "Event"
-    description: "Access to the events"
+    description: "operation regarding the events"
   - name: "Author"
-    description: "Available authors"
+    description: "operation regarding the authors"
 paths:
   /book:
     get:
@@ -26,10 +26,10 @@ paths:
       operationId: getBook
       parameters:
         - $ref: '#/components/parameters/title'
-        - $ref: '#/components/parameters/ISBN'
         - $ref: '#/components/parameters/author'
         - $ref: '#/components/parameters/genre'
         - $ref: '#/components/parameters/theme'
+        - $ref: '#/components/parameters/bestseller'
       responses:
         '200':
           description: Successful response
@@ -38,7 +38,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Book'
+                  oneOf:
+                    - $ref: '#/components/schemas/Book'
+                    - $ref: '#/components/schemas/Bestseller'
+                  discriminator:
+                    propertyName: data_rank
         '400':
           description: "Invalid input supplied"
         '404':
@@ -49,7 +53,7 @@ paths:
       - Book
       summary: "get book by ID"
       description: "return the information of a specific book through his ID"
-      operationId: getBookId
+      operationId: getBooksByID
       parameters:
       - name: "bookID"
         in: "path"
@@ -69,18 +73,157 @@ paths:
           description: "Invalid id supplied"
         '404':
           description: "Book not found"
+  /book/{bookID}/reviews:
+    get:
+      tags:
+      - Book
+      summary: "get reviews of a book"
+      description: "return all the reviews of a specific book through his ID"
+      operationId: myReviews
+      parameters:
+      - name: "bookID"
+        in: "path"
+        description: "The book's id that we need the reviews to be fetched."
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+        '400':
+          description: "Invalid id supplied"
+        '404':
+          description: "Book not found"
+    post:
+      tags:
+      - Book
+      summary: "add review"
+      description: "add a review to a specific book through his ID"
+      operationId: addReview
+      requestBody:
+        $ref: '#/components/requestBodies/reviewBody'
+      parameters:
+      - name: "bookID"
+        in: "path"
+        description: "The book's id that needs to be fetched."
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  message:
+                    type: string
+        '400':
+          description: "Invalid id supplied"
+        '404':
+          description: "Book not found"
+  /book/{bookID}/reviews/score:
+    get:
+      tags:
+      - Book
+      summary: "get avg by ID"
+      description: "return the average of the reviews of a specific book through his ID"
+      operationId: myReviewScore
+      parameters:
+      - name: "bookID"
+        in: "path"
+        description: "The book's id that we need the avg rating to be fetched."
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  avg:
+                    type: integer
+                    format: int64
+        '400':
+          description: "Invalid id supplied"
+        '404':
+          description: "Book not found"
+  /book/{bookID}/similar/{idSimilar}:
+    get:
+      tags:
+      - Book
+      summary: "get similar books"
+      description: "return a list of books similar to the one specified through its ID"
+      operationId: mySimilar
+      parameters:
+      - name: "bookID"
+        in: "path"
+        description: "The book's id that needs to be fetched."
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: "idSimilar"
+        in: "path"
+        description: "The kind of similarity."
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+        '400':
+          description: "Invalid id supplied"
+        '404':
+          description: "Book not found"
+  /book/get/bestsellerMonth:
+    get:
+      tags:
+      - Book
+      summary: "get bestseller of the month"
+      description: "return a list of 8 books that are the bestsellers for the current month"
+      operationId: getBestSeller
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                    $ref: '#/components/schemas/Bestseller'
+
+
   /event:
     get:
       tags:
       - Event
       summary: "Events available."
       description: "List of the events available in our website."
-      operationId: getEvent
-      parameters:
-        - $ref: '#/components/parameters/eventAuthor'
-        - $ref: '#/components/parameters/eventDate'
-        - $ref: '#/components/parameters/eventLocation'
-        - $ref: '#/components/parameters/eventBook'
+      operationId: getEvents
       responses:
         '200':
           description: Successful response
@@ -90,8 +233,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Event'
-        '400':
-          description: "Invalid input supplied"
         '404':
           description: "No events founded"
   /event/{eventID}:
@@ -100,7 +241,7 @@ paths:
       - Event
       summary: "get event by ID"
       description: "return the information of a specific event through his ID"
-      operationId: getEventId
+      operationId: getEventByID
       parameters:
       - name: "eventID"
         in: "path"
@@ -120,14 +261,91 @@ paths:
           description: "Invalid id supplied"
         '404':
           description: "Event not found"
+  /event/city/{cityID}:
+    get:
+      tags:
+      - Event
+      summary: "get event by city"
+      description: "return all the events for a specific city"
+      operationId: getEventsByCity
+      parameters:
+      - name: "cityID"
+        in: "path"
+        description: "The city's id that we need to fetch all the events."
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        '400':
+          description: "Invalid id supplied"
+        '404':
+          description: "Event not found"
+  /event/book/{bookID}:
+    get:
+      tags:
+      - Event
+      summary: "get events by book ID"
+      description: "return the list of events for a specific book through his ID"
+      operationId: getEventByBookID
+      parameters:
+      - name: "bookID"
+        in: "path"
+        description: "The book's id that needs to be fetched."
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        '400':
+          description: "Invalid id supplied"
+        '404':
+          description: "Book not found"
+  /event/this/month:
+    get:
+      tags:
+      - Event
+      summary: "Events available during this month."
+      description: "List of the events available in our website for the current month."
+      operationId: getEventThisMonth
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        '400':
+          description: "Invalid input supplied"
+        '404':
+          description: "No events founded"
+
+
   /author:
     get:
       tags:
       - Author
       summary: "List of authors"
-      description: "return a list alphabetically ordered of all the authors available in our website"
-      operationId: getAuthor
-      parameters: []
+      description: "return a list of all the authors available in our website"
+      operationId: getAuthors
       responses:
         '200':
           description: Successful response
@@ -145,7 +363,7 @@ paths:
         - Author
       summary: "get author by ID"
       description: "return the information of a specific author through his ID"
-      operationId: getAuthorId
+      operationId: getAuthorByID
       parameters:
       - name: "authorID"
         in: "path"
@@ -160,130 +378,122 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Author'
+                type: object
+                properties:
+                  author:
+                    $ref: '#/components/schemas/Author'
+                  myBooks:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        format: int64
+                      title:
+                        type: string
         '400':
           description: "Invalid id supplied"
         '404':
           description: "Author not found"
-  /user/register:
+
+
+  /auth/signup:
     post:
       tags:
-      - User
+      - Auth
       summary: "Register"
       description: "Register into the store"
-      operationId: "userRegisterPOST"
+      operationId: "signUp"
       requestBody:
-        $ref: '#/components/requestBodies/UserBody'
+        $ref: '#/components/requestBodies/registrationForm'
       responses:
         '201':
           description: 'Successful Created'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  message:
+                    type: string
         '400':
-          description: "Registration failed"
-  /user/login:
+          description: "Email in use"
+        '404':
+          description: "some invalid input"
+  /auth/login:
     post:
       tags:
-      - User
+      - Auth
       summary: "Login"
       description: "Login with a form"
-      operationId: "userLoginPOST"
+      operationId: login
       requestBody:
         $ref: '#/components/requestBodies/Login'
       responses:
         '200':
           description: "successful operation"
-        '400':
-          description: "Invalid username/password supplied"
-  /user/logout:
-    post:
-      tags:
-      - User
-      summary: "Logout"
-      description: "Logs out current logged in user session"
-      operationId: "logoutUser"
-      parameters: []
-      responses:
-        default:
-          description: "successful operation"
-#RIVEDERE DA QUI IN POI
-  /user/{username}:
-    get:
-      tags:
-        - User
-      summary: "Get user by user name"
-      operationId: "getUserByName"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        schema:
-          type: "string"
-      responses:
-        '200':
-          description: "successful operation"
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: user_id=1; Path=/; HttpOnly, signed, secure
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                properties:
+                  message:
+                    type: string
         '400':
-          description: "Invalid username supplied"
+          description: "password wrong or email doesn't exist"
         '404':
-          description: "User not found"
-    put:
+          description: "Invalid username/password supplied"
+  /auth/logout:
+    post:
       tags:
-        - User
-      summary: "Updated user"
-      description: "This can only be done by the logged in user."
-      operationId: "updateUser"
+      - Auth
+      summary: "Logout"
+      description: "Logs out current logged in user session"
+      operationId: "logoutUser"
       parameters:
-      - name: "username"
-        in: "path"
-        description: "name that need to be updated"
-        required: true
-        schema:
-          type: "string"
-      requestBody:
-        $ref: '#/components/requestBodies/UserBody'
-      responses:
-        '202':
-          description: "User updated successfully"
-        '400':
-          description: "Invalid user supplied"
-        '404':
-          description: "User not found"
-    delete:
-      tags:
-        - User
-      summary: "Delete user"
-      description: "This can only be done by the logged in user."
-      operationId: "deleteUser"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be deleted"
-        required: true
-        schema:
-          type: "string"
+        - $ref: '#/components/parameters/cookie'
       responses:
         '200':
-          description: "User deleted successfully"
+          description: "successful operation"
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: user_id=; Path=/; HttpOnly, signed, secure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: "Logged out!"
         '400':
-          description: "Invalid username supplied"
-        '404':
-          description: "User not found"
-  /cart/{userID}:
+          description: "user not logged"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: "You are not logged!"
+
+  /cart:
     get:
       tags:
       - Cart
       summary: "Show the content of the shopping cart of an user"
       operationId: getCart
-      parameters:
-      - name: userID
-        in: path
-        description: "The id of the user that wants to see his cart"
-        required: true
-        schema:
-          type: string
       responses:
         200:
           description: successful operation
@@ -292,71 +502,211 @@ paths:
               schema:
                 $ref: '#/components/schemas/Cart'
         400:
-          description: Invalid username supplied
-        404:
-          description: User not found
+          description: 'cart empty'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: "cart empty, add a book!"
+
     post:
       tags:
       - Cart
       summary: "Add a books into the shopping cart"
       operationId: addBook
       parameters:
-      - name: userID
-        in: path
-        description: "The name of the owner of the cart"
+        - $ref: '#/components/parameters/cookie'
+      requestBody:
+        description: "A JSON object containing information to login"
         required: true
-        schema:
-          type: string
-      - name: book
-        in: query
-        description: "The book the user wants to add"
-        required: true
-        schema:
-          type: string
-          description: "the id/isbn of the selected book"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int64
       responses:
         '200':
           description: 'successful operation'
+          headers:
+            Set-Cookie:
+              $ref: '#/components/parameters/cartSession'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: "user not logged"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: "book not found"
+
+
     delete:
       tags:
       - Cart
-      summary: "Delete book"
-      description: "This can only be done by the logged in user. Delete a book from
-        the cart"
-      operationId: deleteBook
+      summary: "Empty cart"
+      description: "delete all the books in the cart"
+      operationId: emptyCart
       parameters:
-      - name: userID
-        in: path
-        description: "The name of the logged user"
-        required: true
-        schema:
-          type: string
-      - name: book
-        in: query
-        description: "The book the user wants to delete"
-        required: true
-        schema:
-          type: string
-          description: "the id/isbn of the selected book"
+        - $ref: '#/components/parameters/cartSession'
       responses:
         '200':
           description: 'Book removed successfully'
-        '400':
-          description: 'Invalid book supplied'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: "Cart emptied!"
         '404':
-          description: 'Book not in the cart'
+          description: 'No books in your cart'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: "There are no books in your cart"
+  /cart/{bookID}:
+    delete:
+      tags:
+        - Cart
+      summary: "remove books"
+      description: "remove a whole block of the same book from the cart through its ID"
+      operationId: deleteBook
+      parameters:
+      - name: "bookID"
+        in: "path"
+        description: "the book id that needs to be removed."
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - $ref: '#/components/parameters/cartSession'
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: "Successfully removed!"
+        '400':
+          description: "Invalid id supplied"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: "cart empty!"
+        '404':
+          description: "Author not found"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: "This book is not in your cart"
+    patch:
+      tags:
+        - Cart
+      summary: "remove books"
+      description: "decrease of one unit the book specified through its ID"
+      operationId: remove1Book
+      parameters:
+      - name: "bookID"
+        in: "path"
+        description: "the book id that needs to be added."
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - $ref: '#/components/parameters/cartSession'
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: "Successfully removed!"
+        '400':
+          description: "Invalid id supplied"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: "cart empty!"
+        '404':
+          description: "Author not found"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: "This book is not in your cart"
+
+
 components:
   parameters:
+    cookie:
+      name: user_id
+      in: cookie
+      description: ""
+      schema:
+        type: string
+    cartSession:
+      name: connection.sid
+      in: cookie
+      description: ""
+      schema:
+        type: string
     title:
       name: title
       in: query
       description: "Book's title. The API responds with a list of results that match a searching word."
-      schema:
-        type: string
-    ISBN:
-      name: isbn
-      in: query
-      description: "Book ISBN. *Example: 9781781102459*. You can call by book ISBN. The API responds with the exact result."
       schema:
         type: string
     author:
@@ -375,6 +725,18 @@ components:
       name: theme
       in: query
       description: "Book's theme. The API responds with a list of results that match a searching word."
+      schema:
+        type: string
+    bestseller:
+      name: bestseller
+      in: query
+      description: "The API responds with a list of all the bestsellers."
+      schema:
+        type: string
+    favorite:
+      name: favorite
+      in: query
+      description: "The API responds with a list of all the books suggested."
       schema:
         type: string
     eventAuthor:
@@ -405,44 +767,140 @@ components:
     Book:
       type: object
       properties:
-        ISBN:
+        id:
+          type: integer
+          format: int64
+        isbn:
           type: string
         title:
           type: string
-        author:
-          $ref: '#/components/schemas/Author'
+        authorid:
+          type: integer
+          format: int64
+        price:
+          type: number
+          format: double
+        pages:
+          type: integer
+          format: int64
+        lang:
+          type: string
+        publicationdate:
+          type: string
+          format: date
         genre:
           type: string
         theme:
           type: string
+        description:
+          type: string
+          format: text
+        favorite:
+          type: boolean
+        similar_type:
+          type: integer
+          format: int64
+        authorName:
+          type: string
+      example:
+        id: 1
+        isbn: "0-7475-3269-9"
+        title: "harry potter and the philosopher's stone"
+        authorid: 1
+        price: 14.99
+        pages: 332
+        lang: "English"
+        publicationdate: "1997-06-25"
+        genre: "fantasy"
+        theme: "magic,friendship,school"
+        description: "Harry Potter has never even heard of Hogwarts when the letters start dropping on the doormat at number four, Privet Drive. Addressed in green ink on yellowish parchment with a purple seal, they are swiftly confiscated by his grisly aunt and uncle. Then, on Harry's eleventh birthday, a great beetle-eyed giant of a man called Rubeus Hagrid bursts in with some astonishing news: Harry Potter is a wizard, and he has a place at Hogwarts School of Witchcraft and Wizardry. An incredible adventure is about to begin!"
+        favorite: false
+        similar_type: 1
+        authorName: "J. K. Rowling"
+    Bestseller:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        bookid:
+          type: integer
+          format: int64
+        position:
+          type: integer
+          format: int64
+        data_rank:
+          type: string
+          format: date
+        isbn:
+          type: string
+        title:
+          type: string
+        authorid:
+          type: integer
+          format: int64
         price:
-          $ref: '#/components/schemas/Amount'
-        status:
-          type: "string"
-          description: "book availability in the inventory"
-          enum:
-          - "available"
-          - "out of stock"
+          type: "number"
+          format: "double"
         pages:
           type: integer
           format: int64
-      required:
-        - ISBN
-        - title
-        - author
+        lang:
+          type: string
+        publicationdate:
+          type: string
+          format: date
+        genre:
+          type: string
+        theme:
+          type: string
+        description:
+          type: string
+          format: text
+        favorite:
+          type: boolean
+        similar_type:
+          type: integer
+          format: int64
+        authorName:
+          type: string
       example:
-        ISBN: "84-08-05793-6"
-        title: "The shadow of the wind"
-        author:
-          id : 1
-          name: "Carlos Ruiz Zafon"
-        genre: "Mystery"
-        theme: "Childhood, love, war"
-        price:
-          value: 19.99
-          currency: "eur"
-        status: "available"
-        page: 565
+        id: 1
+        bookid: 1
+        position: 1
+        data_rank: "2019-01-01"
+        isbn: "0-7475-3269-9"
+        title: "harry potter and the philosopher's stone"
+        authorid: 1
+        price: 14.99
+        pages: 332
+        lang: "English"
+        publicationdate: "1997-06-25"
+        genre: "fantasy"
+        theme: "magic,friendship,school"
+        description: "Harry Potter has never even heard of Hogwarts when the letters start dropping on the doormat at number four, Privet Drive. Addressed in green ink on yellowish parchment with a purple seal, they are swiftly confiscated by his grisly aunt and uncle. Then, on Harry's eleventh birthday, a great beetle-eyed giant of a man called Rubeus Hagrid bursts in with some astonishing news: Harry Potter is a wizard, and he has a place at Hogwarts School of Witchcraft and Wizardry. An incredible adventure is about to begin!"
+        favorite: false
+        similar_type: 1
+        authorName: "J. K. Rowling"
+    Review:
+      type: object
+      properties:
+        userid:
+          type: integer
+          format: int64
+        bookid:
+          type: integer
+          format: int64
+        reviewid:
+          type: integer
+          format: int64
+        message:
+          type: string
+        rating:
+          type: integer
+          format: int64
+        username:
+          type: string
     Author:
       type: object
       properties:
@@ -451,159 +909,136 @@ components:
           format: int64
         name:
           type: string
-        myBooks:
-          type: array
-          items:
-            $ref: '#/components/schemas/Book'
+        bio:
+          type: string
+          format: text
       example:
         id: 1
-        name: "Carlos Ruiz Zafon"
-        myBooks: "The shadow of the wind, The game of the angel..."
-    Amount:
-      type: "object"
-      required:
-      - "currency"
-      - "value"
-      properties:
-        value:
-          type: "number"
-          format: "double"
-          minimum: 0.01
-          maximum: 1000000000000000
-        currency:
-          $ref: '#/components/schemas/Currency'
-      description: "Price\n"
-      example:
-        currency: "eur"
-        value: 11
-    Currency:
-      type: "string"
-      pattern: "^[A-Z]{3,3}$"
-      description: "some description\n"
-      example: "eur"
+        name: "J. K. Rowling"
+        bio: "(31 July 1965), writing under the pen names J. K. Rowling and Robert Galbraith, is a British novelist, philanthropist, film producer, television producer and screenwriter, best known for writing the Harry Potter fantasy series. The books have won multiple awards, and sold more than 500 million copies, becoming the best-selling book series in history.They have also been the basis for a film series, over which Rowling had overall approval on the scripts and was a producer on the final films in the series."
     Event:
       type: object
       properties:
         id:
           type: integer
           format: int64
-        author:
-          $ref: '#/components/schemas/Author'
-        book:
-          $ref: '#/components/schemas/Book'
+        authorid:
+          type: integer
+          format: int64
+        bookid:
+          type: integer
+          format: int64
+        location:
+          type: string
         date:
           type: string
-        where:
+          format: date
+        name:
+          description: "name of the event"
           type: string
-      required:
-        - id
-        - author
-        - book
-        - date
-        - where
+        description:
+          type: string
+          format: text
+        seats:
+          type: integer
+          format: int64
+        booktitle:
+          type: string
+        authorName:
+          type: string
       example:
-        id : 1
-        author :
-          id : 1
-          name : "Carlos Ruiz Zafon"
-        book:
-          ISBN: "84-08-05793-6"
-          title: "The shadow of the wind"
-          author:
-            id : 1
-            name: "Carlos Ruiz Zafon"
-          genre: "Mystery"
-          theme: "Childhood, love, war"
-          price:
-            value: 19.99
-            currency: "eur"
-          status: "available"
-          page: 565
-        date: "8-4-2019 15:00"
-        where: "Mondadori piazza Duomo (MI)"
+        id: 9
+        authorid: 1
+        bookid: 7
+        location: "Corso Vittorio Emanuele II, 10125 Torino"
+        date: "2019-01-18"
+        name: "Meet J. K. Rowling"
+        description: "Come and meet your favourite writer!!!"
+        seats: 200
     User:
       type: object
       properties:
-        id:
-          type: "integer"
-          format: "int64"
-        username:
-          type: "string"
         firstName:
-          type: "string"
+          type: string
         lastName:
-          type: "string"
+          type: string
         email:
-          type: "string"
+          type: string
         password:
-          type: "string"
-        phone:
-          type: "integer"
-          format: "int64"
-        creditCard:
-          type: "string"
+          type: string
+        confirmationPassword:
+          type: string
         address:
-          type: "string"
-      required:
-        - username
-        - firstName
-        - lastName
-        - email
-        - password
+          type: string
+        birthdate:
+          type: string
+          format: date
       example:
         id: 1
-        username: "testUsername"
         firstName: "testFirstName"
         lastName: "testLastName"
         email: "email_test"
         password: "passw0rd"
-        phone : 1234567890
-        creditCard: "1234-1234-1234-1234"
         address: "viaTest"
+        birthdate: "2019-05-20"
     Cart:
-      title: Cart
+      title: items
       type: object
       properties:
-        total:
-          $ref: '#/components/schemas/Amount'
-        books:
-          type: array
-          items:
-            $ref: '#/components/schemas/Book'
-      description: Order of books
+        bookid:
+          type: object
+          properties:
+            item:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                title:
+                  type: string
+                authorid:
+                  type: integer
+                  format: int64
+                price:
+                  type: number
+                  format: double
+            quantity:
+              type: integer
+              format: int64
+            price:
+              type: number
+              format: double
+        totalQty:
+          type: integer
+          format: int64
+        totalPrice:
+          type: number
+          format: double
+        authors:
+          type: object
+          properties:
+            item:
+              type: object
+              properties:
+                name:
+                  type: string
       example:
-        total:
-          currency: eur
-          value: 100
-        books:
-        - id: 1
-          title: The shadow of the wind
-          author:
-            id: 1
-            name: Carlos Ruiz Zafon
-          genre: Mystery
-          theme: Childhood, love, war
-          ISBN: 84-08-05793-6
-          price:
-            value: 19.99
-            currency: eur
-          status: available
-          page: 565
-        - id: 1
-          title: The shadow of the wind
-          author:
-            id: 1
-            name: Carlos Ruiz Zafon
-          genre: Mystery
-          theme: Childhood, love, war
-          ISBN: 84-08-05793-6
-          price:
-            value: 19.99
-            currency: eur
-          status: available
-          page: 565
+        items:
+          9:
+            item:
+              id: 9
+              title: "the hobbit"
+              authorid: 2
+              price: 21.99
+            qty: 2
+            price: 43.98
+          totalQty: 2
+          totalPrice: 43.98
+          authors:
+            9:
+              name: "J. R. R. Tolkien"
   requestBodies:
-    UserBody:
+    registrationForm:
       description: "A JSON object containing user information"
       required: true
       content:
@@ -622,7 +1057,23 @@ components:
                 type: string
               password:
                 type: string
+    reviewBody:
+      description: "A JSON object containing information to add a reviews"
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                format: text
+              rating:
+                type: integer
+                format: int64
+                minimum: 1
+                maximum: 5
 # Added by API Auto Mocking Plugin
 servers:
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/Saso995/apiSpecification/1.0.0
+  - description: our url
+    url: https://bova-colombo-hyp2019.herokuapp.com
