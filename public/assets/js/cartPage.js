@@ -127,7 +127,7 @@ $('#empty-btn').click(() => {
           buttons: [{id: 0, label: 'Ok'}],
           callback: function() { location.reload(); },
           center:false,
-          position: { top: '0px', left: '25%' }
+          position: { top: '0px', left: '50%' }
         }
       );
     },
