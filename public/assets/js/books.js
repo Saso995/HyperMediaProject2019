@@ -169,7 +169,6 @@ $(document).ready(() => {
 
   //to change login button into logout
     if(doesHttpOnlyCookieExist('user_id')){
-      $('#status').html('logged');
       $('#loginButton').html('Log out');
       $("#loginButton").attr("id", "logoutButton");
 

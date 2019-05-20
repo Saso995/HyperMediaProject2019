@@ -1,3 +1,9 @@
+$(document).ready(() => {
+  if(doesHttpOnlyCookieExist("user_id")){
+      window.location.replace("https://bova-colombo-hyp2019.herokuapp.com");
+  }
+})
+
 $('#loginForm').submit(function(){
     $.ajax({
       url: $('#loginForm').attr('action'),
@@ -37,3 +43,16 @@ $('#loginForm').submit(function(){
     });
     return false;
 });
+
+function doesHttpOnlyCookieExist(cookiename) {
+   var d = new Date();
+   d.setTime(d.getTime() + (1000));
+   var expires = "expires=" + d.toUTCString();
+
+   document.cookie = cookiename + "=new_value;path=/;" + expires;
+   if (document.cookie.indexOf(cookiename + '=') == -1) {
+       return true;
+    } else {
+       return false;
+    }
+}
