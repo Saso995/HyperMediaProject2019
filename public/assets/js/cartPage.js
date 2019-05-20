@@ -122,14 +122,7 @@ $('#empty-btn').click(() => {
     type: 'DELETE',
     dataType : 'json',
     success: (data) => {
-      let dialog = new Messi (data.message,{
-          animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
-          buttons: [{id: 0, label: 'Ok'}],
-          callback: function() { location.reload(); },
-          center:false,
-          position: { top: '0px', left: '30%' }
-        }
-      );
+      location.reload();
     },
     error: (data) => {
       console.log(JSON.stringify(data));
@@ -145,14 +138,7 @@ $(document).on('click', "[id^=remove]", function(){
       type: 'DELETE',
       dataType : 'json',
       success: (data) => {
-        let dialog = new Messi (data.message,{
-            animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
-            buttons: [{id: 0, label: 'Ok'}],
-            callback: function() { location.reload(); },
-            center:false,
-            position: { top: '300px', left: '500px' }
-          }
-        );
+        location.reload();
       }
     });
 });
@@ -167,14 +153,7 @@ $(document).on('click', "[id^=more]", function(){
     },
     dataType : 'json',
     success: (data) => {
-      let dialog = new Messi (data.message,{
-          animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
-          buttons: [{id: 0, label: 'Ok'}],
-          callback: function() { location.reload(); },
-          center:false,
-          position: { top: '300px', left: '500px' }
-        }
-      );
+      location.reload();
     },
     error: (data) => {
       console.log(JSON.stringify(data));
@@ -190,14 +169,7 @@ $(document).on('click', "[id^=less]", function(){
     type: 'PATCH',
     dataType : 'json',
     success: (data) => {
-      let dialog = new Messi (data.message,{
-          animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
-          buttons: [{id: 0, label: 'Ok'}],
-          callback: function() { location.reload(); },
-          center:false,
-          position: { top: '300px', left: '500px' }
-        }
-      );
+      location.reload();
     },
     error: (data) => {
       console.log(JSON.stringify(data));

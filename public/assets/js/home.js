@@ -21,7 +21,7 @@ $(document).ready(() => {
         $(idImg).attr('src', img_path);
         $(idTitle).html(data[i].title);
         $(idPrice).html(data[i].price+'€');
-        $(idAuthor).html(data[i].name);
+        $(idAuthor).html(data[i].authorName);
         $('#addButton').attr('id', "add"+data[i].bookid);
         $.ajax({
           url: '../../book/' + data[i].bookid + '/reviews/score',
@@ -177,6 +177,7 @@ $('#cartButton').click(()=>{
 
 $(document).on('click', "[id^=add]", function(){
     let id = this.id.slice(3);
+    let wholeId = this.id;
     $.ajax({
       url: '../cart',
       type: 'POST',
@@ -186,11 +187,8 @@ $(document).on('click', "[id^=add]", function(){
       dataType : 'json',
       success: (data) => {
         //alert(JSON.stringify(data.message));
-        let dialog = new Messi (data.message,{
-            animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
-            buttons: [{id: 0, label: 'Ok'}]
-          }
-        );
+        setTooltip(wholeId, data.message);
+        hideTooltip(wholeId);
       },
       error: (data) => {
         console.log(JSON.stringify(data));
@@ -210,4 +208,24 @@ function doesHttpOnlyCookieExist(cookiename) {
     } else {
        return false;
     }
+}
+
+//for tooltips
+$('button').tooltip({
+  trigger: 'click',
+  placement: 'right'
+});
+
+function setTooltip(id, message) {
+  let complId = "#"+id;
+  $(complId).tooltip('hide')
+    .attr('data-original-title', message)
+    .tooltip('show');
+}
+
+function hideTooltip(id) {
+  setTimeout(function() {
+    let complId = "#"+id
+    $(complId).tooltip('hide');
+  }, 1000);
 }

@@ -264,11 +264,8 @@ $('#adButton').click(() => {
     },
     dataType : 'json',
     success: (data) => {
-      let dialog = new Messi (data.message,{
-          animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
-          buttons: [{id: 0, label: 'Ok'}]
-        }
-      );
+      setTooltip('adButton', data.message);
+      hideTooltip('adButton');
     },
     error: (data) => {
       console.log(JSON.stringify(data));
@@ -278,6 +275,7 @@ $('#adButton').click(() => {
 
 $(document).on('click', "[id^=add]", function(){
     let id = this.id.slice(3);
+    let wholeId = this.id;
     $.ajax({
       url: '../../cart',
       type: 'POST',
@@ -286,11 +284,8 @@ $(document).on('click', "[id^=add]", function(){
       },
       dataType : 'json',
       success: (data) => {
-        let dialog = new Messi (data.message,{
-            animate: { open: 'bounceInLeft', close: 'bounceOutRight' },
-            buttons: [{id: 0, label: 'Ok'}]
-          }
-        );
+        setTooltip(wholeId, data.message);
+        hideTooltip(wholeId);
       },
       error: (data) => {
         console.log(JSON.stringify(data));
@@ -328,4 +323,25 @@ function doesHttpOnlyCookieExist(cookiename) {
     } else {
        return false;
     }
+}
+
+//for tooltips
+$('button').tooltip({
+  trigger: 'click',
+  placement: 'right'
+});
+
+function setTooltip(id, message) {
+  let complId = "#"+id;
+  $(complId).tooltip('hide')
+    .tooltip('enable')
+    .attr('data-original-title', message)
+    .tooltip('show');
+}
+
+function hideTooltip(id) {
+  setTimeout(function() {
+    let complId = "#"+id
+    $(complId).tooltip('hide').tooltip('disable');
+  }, 1000);
 }
