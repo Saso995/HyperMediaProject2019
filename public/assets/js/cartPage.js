@@ -126,8 +126,9 @@ $('#empty-btn').click(() => {
           animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
           buttons: [{id: 0, label: 'Ok'}],
           callback: function() { location.reload(); },
-          center:false,
-          position: { top: '300px', left: '500px' }
+          center: true
+          /*center:false,
+          position: { top: '300px', left: '500px' }*/
         }
       );
     },
