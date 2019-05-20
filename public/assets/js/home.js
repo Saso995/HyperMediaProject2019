@@ -21,7 +21,7 @@ $(document).ready(() => {
         $(idImg).attr('src', img_path);
         $(idTitle).html(data[i].title);
         $(idPrice).html(data[i].price+'€');
-        $(idAuthor).html(data[i].authorName);
+        $(idAuthor).html(data[i].name);
         $('#addButton').attr('id', "add"+data[i].bookid);
         $.ajax({
           url: '../../book/' + data[i].bookid + '/reviews/score',
