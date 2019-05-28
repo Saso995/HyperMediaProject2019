@@ -112,7 +112,7 @@ $(document).ready(() => {
                     for (var i = grandTotal - limitPerPage; i < grandTotal; i++) {
                       $("#page .list:eq(" + i + ")").show();
                     }
-                    window.location.href = "https://bova-colombo-hyp2019.herokuapp.com/pages/books.html#searchButton"
+                    window.location.href += "#searchButton";
                   }
 
               });
@@ -133,7 +133,7 @@ $(document).ready(() => {
                     }
 
                     $(".pagination li.page-item:eq(" + (currentPage - 1) + ")").addClass('active');
-                    window.location.href = "https://bova-colombo-hyp2019.herokuapp.com/pages/books.html#searchButton"
+                    window.location.href += "#searchButton";
                   }
                 });
 
@@ -153,7 +153,7 @@ $(document).ready(() => {
                     }
 
                     $(".pagination li.page-item:eq(" + (currentPage - 1) + ")").addClass('active');
-                    window.location.href = "https://bova-colombo-hyp2019.herokuapp.com/pages/books.html#searchButton"
+                    window.location.href += "#searchButton";
                   }
                 });
               }
