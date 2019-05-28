@@ -16,6 +16,7 @@ $(document).ready(() => {
     type: 'GET',
     dataType : 'json', // this URL returns data in JSON format
     success: (data) => {
+      let currentState = 0;
         for (var i in data){
           let idBook = data[i].id;
           let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/books/'+idBook+'.jpg';
@@ -23,7 +24,7 @@ $(document).ready(() => {
           let price = data[i].price;
           let author = data[i].authorName;
           let theme = data[i].theme;
-          let currentState = i;
+
           let linkBook = 'https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + idBook;
           let linkAuthor = 'https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data[i].authorid;
           let ranking = "";
@@ -77,18 +78,21 @@ $(document).ready(() => {
                   </td>
                 </tr>
               `);
-              if(currentState == (data.length-1)){
-                var numberOfItems = data.length;
-                var limitPerPage = 5;
-                $('#page .list:gt(' + (limitPerPage - 1) + ')').hide(); // Hide all items over page limits (e.g., 5th item, 6th item, etc.)
-                if(numberOfItems % 5 == 0){
-                  var totalPages = Math.floor(numberOfItems / limitPerPage);
-                }
-                else{
-                  var totalPages = Math.floor(numberOfItems / limitPerPage)+1;
-                }
+
+            }
+          }).then(function (){
+              var numberOfItems = data.length;
+              var limitPerPage = 5;
+              $('#page .list:gt(' + (limitPerPage - 1) + ')').hide(); // Hide all items over page limits (e.g., 5th item, 6th item, etc.)
+              if(numberOfItems % 5 == 0){
+                var totalPages = Math.floor(numberOfItems / limitPerPage);
+              }
+              else{
+                var totalPages = Math.floor(numberOfItems / limitPerPage)+1;
+              }
 
 
+              if (currentState == 0){
                 $(".pagination").append("<li class='page-item active'><a class='page-link' href='javascript:void(0)'>" + 1 + "</a></li>");
 
                 for (var i = 2; i <= totalPages; i++) {
@@ -96,87 +100,87 @@ $(document).ready(() => {
                 }
 
                 $(".pagination").append("<li class='ml-auto' id='next-page'><a class='page-link' href='javascript:void(0)'>Next</a></li>");
+              }
 
 
-                $(".pagination li.page-item").click(function() {
-                  if ($(this).hasClass('active')) {
-                    return false;
+
+              $(".pagination li.page-item").click(function() {
+                if ($(this).hasClass('active')) {
+                  return false;
+                }
+                else {
+                  var currentPage = $(this).index();
+                  $(".pagination li").removeClass('active');
+                  $(this).addClass('active');
+                  $("#page .list").hide();
+                  var grandTotal = limitPerPage * currentPage;
+
+                  for (var i = grandTotal - limitPerPage; i < grandTotal; i++) {
+                    $("#page .list:eq(" + i + ")").show();
                   }
-                  else {
-                    var currentPage = $(this).index();
-                    $(".pagination li").removeClass('active');
-                    $(this).addClass('active');
-                    $("#page .list").hide();
-                    var grandTotal = limitPerPage * currentPage;
+                  let address = window.location.href;
+                  if (address.substr(address.length-13) === "#searchButton"){
+                      window.location.href = address.slice(0, address.length-13) + "#searchButton";
+                  }
+                  else{
+                    window.location.href += "#searchButton";
+                  }
+                }
+            });
 
-                    for (var i = grandTotal - limitPerPage; i < grandTotal; i++) {
-                      $("#page .list:eq(" + i + ")").show();
-                    }
-                    let address = window.location.href;
-                    if (address.substr(address.length-13) === "#searchButton"){
-                        window.location.href = address.slice(0, address.length-13) + "#searchButton";
-                    }
-                    else{
-                      window.location.href += "#searchButton";
-                    }
+              $("#next-page").click(function() {
+                var currentPage = $(".pagination li.active").index();
+                if (currentPage === totalPages) {
+                  return false;
+                }
+                else {
+                  currentPage++;
+                  $(".pagination li").removeClass('active');
+                  $("#page .list").hide();
+                  var grandTotal = limitPerPage * currentPage;
+
+                  for (var i = grandTotal - limitPerPage; i < grandTotal; i++) {
+                    $("#page .list:eq(" + i + ")").show();
                   }
 
+                  $(".pagination li.page-item:eq(" + (currentPage - 1) + ")").addClass('active');
+                  let address = window.location.href;
+                  if (address.substr(address.length-13) === "#searchButton"){
+                      window.location.href = address.slice(0, address.length-13) + "#searchButton";
+                  }
+                  else{
+                    window.location.href += "#searchButton";
+                  }
+                }
               });
 
-                $("#next-page").click(function() {
-                  var currentPage = $(".pagination li.active").index();
-                  if (currentPage === totalPages) {
-                    return false;
+
+              $("#previous-page").click(function() {
+                var currentPage = $(".pagination li.active").index();
+                if (currentPage === 1) {
+                  return false;
+                } else {
+                  currentPage--;
+                  $(".pagination li").removeClass('active');
+                  $("#page .list").hide();
+                  var grandTotal = limitPerPage * currentPage;
+
+                  for (var i = grandTotal - limitPerPage; i < grandTotal; i++) {
+                    $("#page .list:eq(" + i + ")").show();
                   }
-                  else {
-                    currentPage++;
-                    $(".pagination li").removeClass('active');
-                    $("#page .list").hide();
-                    var grandTotal = limitPerPage * currentPage;
 
-                    for (var i = grandTotal - limitPerPage; i < grandTotal; i++) {
-                      $("#page .list:eq(" + i + ")").show();
-                    }
-
-                    $(".pagination li.page-item:eq(" + (currentPage - 1) + ")").addClass('active');
-                    let address = window.location.href;
-                    if (address.substr(address.length-13) === "#searchButton"){
-                        window.location.href = address.slice(0, address.length-13) + "#searchButton";
-                    }
-                    else{
-                      window.location.href += "#searchButton";
-                    }
+                  $(".pagination li.page-item:eq(" + (currentPage - 1) + ")").addClass('active');
+                  let address = window.location.href;
+                  if (address.substr(address.length-13) === "#searchButton"){
+                      window.location.href = address.slice(0, address.length-13) + "#searchButton";
                   }
-                });
-
-
-                $("#previous-page").click(function() {
-                  var currentPage = $(".pagination li.active").index();
-                  if (currentPage === 1) {
-                    return false;
-                  } else {
-                    currentPage--;
-                    $(".pagination li").removeClass('active');
-                    $("#page .list").hide();
-                    var grandTotal = limitPerPage * currentPage;
-
-                    for (var i = grandTotal - limitPerPage; i < grandTotal; i++) {
-                      $("#page .list:eq(" + i + ")").show();
-                    }
-
-                    $(".pagination li.page-item:eq(" + (currentPage - 1) + ")").addClass('active');
-
-                    let address = window.location.href;
-                    if (address.substr(address.length-13) === "#searchButton"){
-                        window.location.href = address.slice(0, address.length-13) + "#searchButton";
-                    }
-                    else{
-                      window.location.href += "#searchButton";
-                    }
+                  else{
+                    window.location.href += "#searchButton";
                   }
-                });
-              }
-            }
+                }
+              });
+
+              currentState = 1;
           });
         }
     },
