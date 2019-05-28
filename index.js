@@ -22,14 +22,14 @@ var cartRouter = require('./routes/cart');
 app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
-
+//app.use(bodyParser.urlencoded({ extended: true })); search difference
 app.use(expressValidator());
 app.use(expressSession({
   secret: 'keyboard_cat',
   saveUninitialized: false,
   resave: false,
   store: store,
-  cookie: {maxAge: 30 * 60 * 1000, httpOnly:true} //cart expires after 30 minutes
+  cookie: {maxAge: 30 * 60 * 1000, httpOnly:true} //cart expires after 1 minutes
 }));
 app.use(cookieParser('keyboard_cat'));
 

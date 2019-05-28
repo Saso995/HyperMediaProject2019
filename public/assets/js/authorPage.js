@@ -13,26 +13,104 @@ $(document).ready(() => {
       success: (data) => {
         $('#author-name').html(data.author[0].name);
         $('#bio').html(data.author[0].bio);
-        for(var i in data.myBooks) {
-          let toAppend = "<li><a href='../../pages/bookPage.html?" + data.myBooks[i].id + "' >" + data.myBooks[i].title+ "</a></li>";
-          $("ol").append(toAppend);
+        $("#img").attr('src','http://localhost:1337/resources/authors/' + data.author[0].id + '.jpg');
+        //to add dinamically the carousel
+        var numberOfBooks = data.myBooks.length;
+        var limitPerCarousel = 4;
+        if(numberOfBooks % 4 == 0){
+          var totalPages = Math.floor(numberOfBooks / limitPerCarousel);
         }
-        $("#img").attr('src','https://bova-colombo-hyp2019.herokuapp.com/resources/authors/' + data.author[0].id + '.jpg');
-
+        else{
+          var totalPages = Math.floor(numberOfBooks / limitPerCarousel)+1;
+        }
+        $('#myCarousel .carousel-inner').eq(0).append(`
+            <div class="item carousel-item active">
+              <div class="row" id="carousel1Row">
+              </div>
+            </div>
+        `)
+        for (let j= 2; j <= totalPages; j++){
+          $('#myCarousel .carousel-inner').eq(0).append(`
+            <div class="item carousel-item">
+    					<div class="row" id="carousel${j}Row">
+    					</div>
+    				</div>
+          `)
+        }
+        //to add books
+        var count = 0;
+        for (var i in data.myBooks){
+          let idBook = data.myBooks[i].id;
+          let img_path = 'http://localhost:1337/resources/books/'+idBook+'.jpg';
+          let title = data.myBooks[i].title;
+          let price = data.myBooks[i].price;
+          let linkBook = 'http://localhost:1337/pages/bookPage.html?' + idBook;
+          $.ajax({
+            url: '../../book/' + idBook + '/reviews/score',
+            type: 'GET',
+            dataType : 'json', // this URL returns data in JSON format
+            success: (avg) => {
+              let nblack = 5 - avg[0].avg;
+              let yellowStar = '<li class="list-inline-item"><i class="text-warning fa fa-star"></i></li>';
+              let blackStar = '<li class="list-inline-item"><i class="text-warning fa fa-star-o"></i></li>';
+              let totalYellow = ``;
+              let totalBlack = ``;
+              for (let white = avg[0].avg; white > 0 ; white--){
+                totalYellow += yellowStar;
+              }
+              for (nblack; nblack > 0 ; nblack--){
+                totalBlack += blackStar
+              }
+              function similar(id) {
+                $(id).append(`
+                  <div class="col-sm-3">
+                    <div class="thumb-wrapper">
+                      <div class="img-box">
+                        <img src="${img_path}" class="img-responsive img-fluid"  alt="book's cover">
+                      </div>
+                      <div class="thumb-content">
+                        <h4><a href=${linkBook}>${title}</a></h4>
+                        <p class="item-price"><span>${price}€</span></p>
+                        <div class="star-rating">
+                          <ul class="list-inline">
+                          ${totalYellow+totalBlack}
+                          </ul>
+                        </div>
+                        <button class="add-prod-btn btn-success" id="add${idBook}"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                      </div>
+                    </div>
+                  </div>
+                `);
+              }
+              if (count < 4){
+                similar("#carousel1Row");
+                count++;
+              }
+              else if(count > 3 && count < 8){
+                similar("#carousel2Row");
+                count++;
+              }
+              else if(count > 7 && count <= 11){
+                similar("#carousel3Row")
+                count++;
+              }
+            }
+          });
+        }
       },
       error: (data) => {
         //alert("What the hell are you looking for?!");
         let dialog = new Messi ("What the hell are you looking for?!",{
             animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
             buttons: [{id: 0, label: 'Ok'}],
-            callback: function() { window.location.replace("https://bova-colombo-hyp2019.herokuapp.com"); }
+            callback: function() { window.location.replace("http://localhost:1337"); }
           }
         );
       }
     });
   }
   else {
-    window.location.replace("https://bova-colombo-hyp2019.herokuapp.com");
+    window.location.replace("http://localhost:1337");
   }
 
   //to change login button into logout
@@ -82,11 +160,31 @@ $('#searchButton').click(() => {
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
+  window.location.replace("http://localhost:1337/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
+  window.location.replace("http://localhost:1337/pages/cartPage.html");
+});
+
+$(document).on('click', "[id^=add]", function(){
+    let id = this.id.slice(3);
+    let wholeId = this.id;
+    $.ajax({
+      url: '../../cart',
+      type: 'POST',
+      data: {
+        'id': id
+      },
+      dataType : 'json',
+      success: (data) => {
+        setTooltip(wholeId, data.message);
+        hideTooltip(wholeId);
+      },
+      error: (data) => {
+        console.log(JSON.stringify(data));
+      }
+    });
 });
 
 
@@ -101,4 +199,25 @@ function doesHttpOnlyCookieExist(cookiename) {
     } else {
        return false;
     }
+}
+
+//for tooltips
+$('button').tooltip({
+  trigger: 'click',
+  placement: 'right'
+});
+
+function setTooltip(id, message) {
+  let complId = "#"+id;
+  $(complId).tooltip('hide')
+    .tooltip('enable')
+    .attr('data-original-title', message)
+    .tooltip('show');
+}
+
+function hideTooltip(id) {
+  setTimeout(function() {
+    let complId = "#"+id
+    $(complId).tooltip('hide').tooltip('disable');
+  }, 1000);
 }

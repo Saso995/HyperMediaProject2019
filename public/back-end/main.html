@@ -2,11 +2,121 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
-	<title>Test</title>
+	<title>Back-end documentation</title>
 	</head>
 
 	<body>
-		<h1>Hello world!</h1>
-	</body>
+		<h1 id="documentation-of-the-backend-part">Documentation of the Backend part</h1>
+		<blockquote>
+			<p>Deliverable D1</p>
+		</blockquote>
+		<h2 id="general-group-information">General group information</h2>
+		<table>
+			<thead>
+				<tr class="header">
+					<th>Member n.</th>
+					<th>Role</th>
+					<th>First name</th>
+					<th>Last Name</th>
+					<th>Matricola</th>
+					<th>Email address</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="odd">
+					<td>1</td>
+					<td>administrator</td>
+					<td>Salvatore</td>
+					<td>Bova</td>
+					<td>912868</td>
+					<td>salvatore.bova@mail.polimi.it</td>
+				</tr>
+				<tr class="even">
+					<td>2</td>
+					<td>member</td>
+					<td>Luca</td>
+					<td>Colombo</td>
+					<td>920123</td>
+					<td>luca.colombo50@mail.polimi.it</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2 id="links-to-other-deliverables">Links to other deliverables</h2>
+		<ul>
+			<li>Deliverable D0: the web application is accessible at <a href="https://bova-colombo-hyp2019.herokuapp.com/">this address</a>.</li>
+			<li>Deliverable D2: the YAML or JSON file containing the specification of the app API can be found at <a href="https://bova-colombo-hyp2019.herokuapp.com/backend/spec.yaml">this address</a>.</li>
+			<li>Deliverable D3: the SwaggerUI page of the same API is available at <a href="https://bova-colombo-hyp2019.herokuapp.com/backend/swaggerui">this address</a>.</li>
+			<li>Deliverable D4: the source code of D0 is available as a zip file at <a href="https://bova-colombo-hyp2019.herokuapp.com/backend/app.zip">this address</a>.</li>
+			<li>Deliverable D5: the address of the online source control repository is available <a href="https://github.com/Saso995/HyperMediaProject2019.git">this address</a>. We hereby declare that this is a private repository and, upon request, we will give access to the instructors.</li>
+		</ul>
+		<h2 id="specification">Specification</h2>
+		<h3 id="web-architecture">Web Architecture</h3>
+		<p>
+			<img src="./components.png" alt="web architecture">
+			<br>
+			We ensured that HTML it's not rendered server side because we send to the browser only data in format json which have to be used and rendered by the js file of the front-end part that made the request HTTP.
+		</p>
+		<h3 id="api">API</h3>
+		<h4 id="rest-compliance">REST compliance</h4>
+		<p>
+			We used REST to exposes information about our website in the form of information about its resources. Through REST we enabled the client to take actions on those resources, such as create new resources (i.e. create a new user) or change existing resources (i.e. add/remove items to cart, add review). With a maturity model level 2: indeed to get the same resource each time we can invoke GETs safely any number of times in any order and getting the same results each time. While to add, modify or delete we used the HTTP methods: POST, DELETE and PUT.
+		</p>
+		<h4 id="openapi-resource-models">OpenAPI Resource models</h4>
+		<p>For the resources we introduced the following model:
+			<ul>
+				<li>Book</li>
+				<li>Bestseller</li>
+				<li>Review</li>
+				<li>Author</li>
+				<li>Event</li>
+				<li>User</li>
+				<li>Cart</li>
+			</ul>
+			These schema objects allow the definition of input and output data types. These types can be objects, but also primitives and arrays.
+		</p>
+		<h3 id="data-model">Data model</h3>
+		<p>The following image is the ER diagram used in the data layer of our web application. How it can be seen there is full correspondence between the API resource model and the data model.
+			<br>
+			<img src="./E-R-diagram.png" width=1280 height= 600 alt="E-R diagram">
+		</p>
+		<h2 id="implementation">Implementation</h2>
+		<h3 id="tools-used">Tools used</h3>
+		<p>For the backend of the application we used nodeJS, so as language Javascript, with its framework Express, we also used many packages (how it can be seen in the package.json file) to implement various function (i.e. 'bcrypt' package to encrypt sensible data or 'cookie' to use cookies in our website).</p>
+		<h3 id="discussion">Discussion</h3>
+		<p>
+			 1. How did you make sure your web application adheres to the provided OpenAPI specification? <br>
+			 2. Why do you think your web application adheres to common practices to partition the web application (static assets vs. application data) <br>
+			 3. Describe synthetically why and how did you manage session state, what are the state change triggering actions (e.g., POST to login etc..). <br>
+			 4. Which technology did you use (relational or a no-SQL database) for managing the data model?
+			<ol>
+				<li>We ensure that our web application adheres to the provided OpenAPI specification defining precise endpoints for each possible request and handling the response through the Routing methods offered by Express; </li>
+				<br>
+				<li>Our application adheres to the common practices of partition of the web application because we made accessible only resources present in the public folder  using the express.static method.</li>
+				<br>
+				<li>For what regard the session states of our website we had two of them to handle, one for the user session and one for the cart session. And we used two different method to accomplish our goal, for what regard the user session we stored it on the client within a cookie using the module cookie-session, while for what regard the cart session we stored only a session identifier on the client within a cookie and stored the session data on the server, more precisely in the database using the module express.session. The state change triggering actions are: for what regard user session POST to login and signup and a DELETE to logout, while for the cart session we have POST to add a book, DELETE to empy the cart, PATCH to remove one item.</li>
+				<br>
+				<li>For what regard the data layer we decided to use a relational databases, because we were more practical with them, so we decided to use PostgreSQL and to connect it with our project we used KNEX.</li>
+			</ol>
 
+		</p>
+		<h2 id="other-information">Other information</h2>
+		<h3 id="task-assignment">Task assignment</h3>
+		<p>
+			<ul>
+				<li> Salvatore Bova worked on front end (30%), backend(70%), OpenApi Spec(50%)</li>
+				<li> Luca Colombo worked on front end (70%), backend(30%), OpenApi Spec(50%)</li>
+			</ul>
+		</p>
+		<h3 id="analysis-of-existing-api">Analysis of existing API</h3>
+		<p>
+			For what regard the Book, Author, Event parts of our API we have been inspired from this<a href="https://api.itbook.store/"> API</a> because it helped us to model the structure of our API, while for what regard the session parts (login/signup/logout and cart) we have been inspired by this<a href="https://petstore.swagger.io/#/"> API</a> because helped us with the structure of the cart and with the end points for the users, but we decided to use different HTTP methods to stay close to the REST principles.
+		</p>
+		<h3 id="learning-outcome">Learning outcome</h3>
+		<p>
+			<ul>
+				<li> Salvatore Bova learned Javascript language, but there are still some doubts about how promises works, but he wants to make his own web application to improve his knowledge and test new things.</li>
+				<li> Luca Colombo improved his HTML and CSS skills, he wants to do more experiences with Javascript though, so probably he will help Salvatore to develop his own website.</li>
+			</ul>
+		</p>
+	</body>
 </html>

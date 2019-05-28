@@ -6,16 +6,16 @@ $(document).ready(() => {
     success: (data) => {
         for (var i in data){
           let idAuthor = data[i].id;
-          let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/authors/'+idAuthor+'.jpg';
+          let img_path = 'http://localhost:1337/resources/authors/'+idAuthor+'.jpg';
           let name = data[i].name;
           let currentState = i;
-          let linkAuthor = 'https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + idAuthor;
+          let linkAuthor = 'http://localhost:1337/pages/authorPage.html?' + idAuthor;
           let bio = data[i].bio;
           $("#page").append(`
             <tr class="list">
               <td>
                 <figure class="media">
-                  <div class="img-wrap"><img src="${img_path}" class="img-sm" width="120" style="padding-right: 5px;"></img></div>
+                  <div class="img-wrap"><img src="${img_path}" class="img-sm" width="120" style="padding-right: 5px;" alt="author's picture"></img></div>
                   <figcaption class="media-body">
                     <h5 class="title"><a href=${linkAuthor}>${name}</a></h5>
                     <dl class="param param-inline small">
@@ -168,11 +168,11 @@ $('#searchButton').click(() => {
 
 
 $('#loginButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
+  window.location.replace("http://localhost:1337/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
+  window.location.replace("http://localhost:1337/pages/cartPage.html");
 });
 
 function doesHttpOnlyCookieExist(cookiename) {

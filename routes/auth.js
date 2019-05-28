@@ -55,8 +55,8 @@ router.post('/login', (req, res, next) => {
                     if(result){
                       res.cookie('user_id', user.id, {
                         httpOnly: true,
-                        signed: true,
-                        secure: true//adding secure remove the cookies from signedCookies
+                        signed: true
+                        //adding secure remove the cookies from signedCookies
                       });
                       res.json({
                         message: "Logged in!"

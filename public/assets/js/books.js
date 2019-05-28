@@ -5,6 +5,9 @@ if(window.location.search){
   var params = window.location.search.split('?')[1].split('&');
   key = params[0].split('=')[0];
   value = decodeURIComponent(params[0].split('=')[1]);
+  if (key === ""){
+    key = "other";
+  }
 }
 
 $(document).ready(() => {
@@ -15,14 +18,14 @@ $(document).ready(() => {
     success: (data) => {
         for (var i in data){
           let idBook = data[i].id;
-          let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/books/'+idBook+'.jpg';
+          let img_path = 'http://localhost:1337/resources/books/'+idBook+'.jpg';
           let title = data[i].title;
           let price = data[i].price;
           let author = data[i].authorName;
           let theme = data[i].theme;
           let currentState = i;
-          let linkBook = 'https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + idBook;
-          let linkAuthor = 'https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data[i].authorid;
+          let linkBook = 'http://localhost:1337/pages/bookPage.html?' + idBook;
+          let linkAuthor = 'http://localhost:1337/pages/authorPage.html?' + data[i].authorid;
           let ranking = "";
           if (key === "bestseller"){
             ranking = data[i].position+'° In best seller, in data: '+data[i].data_rank;
@@ -47,7 +50,7 @@ $(document).ready(() => {
                 <tr class="list">
                   <td>
                     <figure class="media">
-                      <div class="img-wrap"><img src="${img_path}" class="img-sm" width="120" style="padding-right: 5px;"></img></div>
+                      <div class="img-wrap"><img src="${img_path}" class="img-sm" width="100" style="padding-right: 5px;" alt="book's cover"></img></div>
                       <figcaption class="media-body">
                         <h5 class="title"><a href=${linkBook}>${title}</a></h5>
                         <dl class="param param-inline small">
@@ -63,12 +66,12 @@ $(document).ready(() => {
                       </figcaption>
                     </figure>
                   </td>
-                  <td class="verical-divider" style="width:25%">
+                  <td class="verical-divider">
                     <div class="price">
                       <span>Price: € ${price}<span>
                     </div>
                     <div class="btn-button">
-                      <br><br><br><br><br><br><br><br>
+
                       <button class="add-prod-btn btn-success" id="add${idBook}"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
                     </div>
                   </td>
@@ -169,6 +172,7 @@ $(document).ready(() => {
 
   //to change login button into logout
     if(doesHttpOnlyCookieExist('user_id')){
+      $('#status').html('logged');
       $('#loginButton').html('Log out');
       $("#loginButton").attr("id", "logoutButton");
 
@@ -235,11 +239,11 @@ $(document).on('click', "[id^=add]", function(){
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
+  window.location.replace("http://localhost:1337/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
+  window.location.replace("http://localhost:1337/pages/cartPage.html");
 });
 
 function doesHttpOnlyCookieExist(cookiename) {

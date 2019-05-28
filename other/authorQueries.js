@@ -10,7 +10,7 @@ const getAuthorByID = (req, res, next) => {
   if(Number.isInteger(parseInt(req.params.id, 10))){
     db.select().from('authors').where('id', req.params.id).then(function(data){
       if(Object.keys(data).length > 0){
-        db.select('id','title').from('books').where('authorid', req.params.id).orderBy('id').then(function(books){
+        db.select('id','title', 'price').from('books').where('authorid', req.params.id).orderBy('id').then(function(books){
           var result = {
             "author": data,
             "myBooks" : books

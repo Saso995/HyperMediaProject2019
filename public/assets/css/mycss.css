@@ -186,16 +186,33 @@ ul {
 }
 
 #retractable-list a:hover {
-    color: #7c7c7d;
+    color: #4b89da;
+    text-decoration: none;
 }
 
+#retractable-list a {
+    color: #4b89da;
+}
 
 /*page link*/
 a.page-link {
   border: 0;
-  color: #7c7c7d
+  color: #7c7c7d;
+  margin-left: 0px;
 }
 
+a.page-link:hover {
+  color: #7c7c7d;
+  background-color: white;
+}
+
+
+
+.link-list:hover, .link-list:hover {
+  text-decoration: none;
+}
+
+/*pagination*/
 .pagination>li.active>a {
   background-color: #b6b6b7 !important;
 }

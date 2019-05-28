@@ -6,7 +6,7 @@ $(document).ready(() => {
     dataType : 'json',
     success: (data) => {
       for(var i in data){
-        let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/books/'+data[i].bookid+'.jpg';
+        let img_path = 'http://localhost:1337/resources/books/'+data[i].bookid+'.jpg';
         let idImg= "#img"+data[i].position;
         let idTitle= "#title"+data[i].position;
         let idPrice= "#price"+data[i].position;
@@ -14,15 +14,15 @@ $(document).ready(() => {
         let idStar= "#star"+data[i].position;
         let idLinkBook= "#linkBook"+data[i].position;
         let idLinkAuthor= "#linkAuthor"+data[i].position;
-        let linkBook = 'https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + data[i].bookid;
-        let linkAuthor = 'https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data[i].authorid;
+        let linkBook = 'http://localhost:1337/pages/bookPage.html?' + data[i].bookid;
+        let linkAuthor = 'http://localhost:1337/pages/authorPage.html?' + data[i].authorid;
         $(idLinkBook).attr('href', linkBook);
         $(idLinkAuthor).attr('href', linkAuthor);
         $(idImg).attr('src', img_path);
         $(idTitle).html(data[i].title);
         $(idPrice).html(data[i].price+'€');
         $(idAuthor).html(data[i].name);
-        $('#addButton').attr('id', "add"+data[i].bookid);
+        $('#addButton').attr('id', "best"+data[i].bookid);
         $.ajax({
           url: '../../book/' + data[i].bookid + '/reviews/score',
           type: 'GET',
@@ -53,7 +53,7 @@ $(document).ready(() => {
     dataType : 'json',
     success: (data) => {
       for(var i in data){
-        let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/books/'+data[i].id+'.jpg';
+        let img_path = 'http://localhost:1337/resources/books/'+data[i].id+'.jpg';
         let id = (parseInt(i)+1);
         let idImg= "#carImg"+id;
         let idTitle= "#carTitle"+id;
@@ -62,8 +62,8 @@ $(document).ready(() => {
         let idStar= "#carStar"+id;
         let idLinkBook= "#carLinkBook"+id;
         let idLinkAuthor= "#carLinkAuthor"+id;
-        let linkBook = 'https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + data[i].id;
-        let linkAuthor = 'https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data[i].authorid;
+        let linkBook = 'http://localhost:1337/pages/bookPage.html?' + data[i].id;
+        let linkAuthor = 'http://localhost:1337/pages/authorPage.html?' + data[i].authorid;
         $(idLinkBook).attr('href', linkBook);
         $(idLinkAuthor).attr('href', linkAuthor);
         $(idImg).attr('src', img_path)
@@ -101,12 +101,12 @@ $(document).ready(() => {
     type: 'GET',
     dataType : 'json',
     success: (data) => {
-      let linkEvent = 'https://bova-colombo-hyp2019.herokuapp.com/pages/eventPage.html?'+data[0].id;
+      let linkEvent = 'http://localhost:1337/pages/eventPage.html?'+data[0].id;
       $('#link1').attr('href',linkEvent)
       $('#name1').html(data[0].name)
       $('#descr1').html(data[0].description)
       for(let i = 1; i < data.length; i++){
-        linkEvent = 'https://bova-colombo-hyp2019.herokuapp.com/pages/eventPage.html?'+data[i].id;
+        linkEvent = 'http://localhost:1337/pages/eventPage.html?'+data[i].id;
         $('#carousel').append(`
           <div class="carousel-item", style="background-image: url(http://www.alleycatbookshop.com/uploads/2/4/3/0/24303957/595086_orig.jpg);">
             <div class = "carousel-caption">
@@ -168,11 +168,11 @@ $('#searchButton').click(() => {
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
+  window.location.replace("http://localhost:1337/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
+  window.location.replace("http://localhost:1337/pages/cartPage.html");
 });
 
 $(document).on('click', "[id^=add]", function(){
@@ -186,7 +186,6 @@ $(document).on('click', "[id^=add]", function(){
       },
       dataType : 'json',
       success: (data) => {
-        //alert(JSON.stringify(data.message));
         setTooltip(wholeId, data.message);
         hideTooltip(wholeId);
       },
@@ -196,6 +195,25 @@ $(document).on('click', "[id^=add]", function(){
     });
 });
 
+$(document).on('click', "[id^=best]", function(){
+    let id = this.id.slice(4);
+    let wholeId = this.id;
+    $.ajax({
+      url: '../cart',
+      type: 'POST',
+      data: {
+        'id': id
+      },
+      dataType : 'json',
+      success: (data) => {
+        setTooltip(wholeId, data.message);
+        hideTooltip(wholeId);
+      },
+      error: (data) => {
+        console.log(JSON.stringify(data));
+      }
+    });
+});
 
 function doesHttpOnlyCookieExist(cookiename) {
    var d = new Date();
@@ -209,6 +227,7 @@ function doesHttpOnlyCookieExist(cookiename) {
        return false;
     }
 }
+
 
 //for tooltips
 $('button').tooltip({

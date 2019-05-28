@@ -4,13 +4,18 @@ var db = require('../other/connectionDB');
 var authorQueries = require('../other/authorQueries.js');
 
 router.get('/', function(req, res) {
-  if(req.session.cart){
-    res.send(req.session.cart);
-  } else{
-    res.json({ text: "Cart empty, add a book!" })
+  if(req.signedCookies.user_id){
+    if(req.session.cart){
+      res.send(req.session.cart);
+    }
+    else{
+      res.json({ text: "Cart empty, add a book!" })
+    }
+  }
+  else{
+    res.json({ text: "You are not logged, you have to log in to see your cart" })
   }
 });
-
 
 router.post('/', function(req, res, next){
   if(req.signedCookies.user_id){

@@ -1,0 +1,35 @@
+/**** card management responsive ****/
+
+.trash-td {
+  text-align: right;
+}
+
+@media only screen and (min-width: 800px) {
+  .show-sm {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  td{
+    display: block;
+  }
+
+  .table td {
+    border-top:0px;
+  }
+
+  .trash-td {
+    padding-bottom: 20px;
+    text-align: left;
+    border-bottom: 1px solid #dfdfdf;
+  }
+
+  .card-summery-order {
+    padding-top: 10px;
+  }
+
+  tr.specs {
+    display: none;
+  }
+}

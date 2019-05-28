@@ -30,3 +30,12 @@ body {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+
+.accordion-toggle:hover {
+  text-decoration: none;
+  color: #4b89da;
+}
+
+.accordion-toggle {
+  color: #4b89da;
+}

@@ -58,7 +58,15 @@ const getBooks = (req, res, next) => {
         });
       }
       else{
-        next(new Error("Invalid research"));
+        authorQueries.getAuthorByName(value).then(function(result){
+          db.select('books.*', 'authors.name as authorName').from('books').join('authors', 'books.authorid', '=', 'authors.id').where('authorid', result).orderBy('id').then(function(data){
+            res.send(data);
+          });
+        }).catch(function(result){
+          db.select('books.*', 'authors.name as authorName').from('books').join('authors', 'books.authorid', '=', 'authors.id').where('title', 'ilike', '%'+value+'%').orWhere('genre', 'ilike', '%'+value+'%').orWhere('theme', 'ilike', '%'+value+'%').orderBy('id').then(function(data){
+            res.send(data);
+          });
+        });
       }
     } else {
       db.select('books.*', 'authors.name as authorName').from('books').join('authors', 'books.authorid', '=', 'authors.id').where(req.query).orderBy('id').then(function(data){

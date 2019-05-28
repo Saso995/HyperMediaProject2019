@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/mycss.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/messi.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -11,12 +12,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
 
     <!---navbar--->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="https://bova-colombo-hyp2019.herokuapp.com/">Home</a>
+      <a class="navbar-brand" href="http://localhost:1337/">Home</a>
       <button class="navbar-toggler order-first" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -52,13 +54,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="https://bova-colombo-hyp2019.herokuapp.com/pages/authors.html">Authors</a>
+            <a class="nav-link" href="http://localhost:1337/pages/authors.html">Authors</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://bova-colombo-hyp2019.herokuapp.com/pages/events.html">Events</a>
+            <a class="nav-link" href="http://localhost:1337/pages/events.html">Events</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Gift card</a>
+            <a class="nav-link" href="#" style="text-decoration: line-through">Gift card</a>
           </li>
           <li class="nav-item">
             <button class="btn-on-nav" id="loginButton"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
@@ -75,8 +77,8 @@
     <div class="container-fluid">
       <div class="row" id="left_col">
         <!-- filter col -->
-        <div class="col-md-3">
-          <div class="card" style="width: 18rem;">
+        <div class="col-md-3 filter">
+          <div class="card">
             <div class="card-header">
               Filters
             </div>
@@ -85,13 +87,13 @@
                 <h4>City:</h4>
                 <div id="retractable-list">
                   <ul>
-                    <li><a class="link-list" href="https://bova-colombo-hyp2019.herokuapp.com/pages/events.html?1">Milan</a></li>
-                    <li><a class="link-list" href="https://bova-colombo-hyp2019.herokuapp.com/pages/events.html?2">Rome</a></li>
-                    <li><a class="link-list" href="https://bova-colombo-hyp2019.herokuapp.com/pages/events.html?3">Turin</a></li>
-                    <li><a class="link-list" href="https://bova-colombo-hyp2019.herokuapp.com/pages/events.html?4">Naples</a></li>
+                    <li><a class="link-list" href="http://localhost:1337/pages/events.html?1">Milan</a></li>
+                    <li><a class="link-list" href="http://localhost:1337/pages/events.html?2">Rome</a></li>
+                    <li><a class="link-list" href="http://localhost:1337/pages/events.html?3">Turin</a></li>
+                    <li><a class="link-list" href="http://localhost:1337/pages/events.html?4">Naples</a></li>
                     <div class="collapse" id="genre-list">
-                      <li><a class="link-list" href="https://bova-colombo-hyp2019.herokuapp.com/pages/events.html?5">Reggio Calabria</a></li>
-                      <li><a class="link-list" href="https://bova-colombo-hyp2019.herokuapp.com/pages/events.html?6">Palermo</a></li>
+                      <li><a class="link-list" href="http://localhost:1337/pages/events.html?5">Reggio Calabria</a></li>
+                      <li><a class="link-list" href="http://localhost:1337/pages/events.html?6">Palermo</a></li>
                     </div>
                   </ul>
                   <a class="collapsed" data-toggle="collapse" href="#genre-list" aria-expanded="false" aria-controls="genre-list"></a>
@@ -121,12 +123,13 @@
       </div>
       <!-- book searched list -->
     </div>
+  </div>
     <!-- BookPageBody -->
 
 
 
     <!-- Footer -->
-    <footer class="page-footer font-small footer-color pt-4 my-md-5 pt-md-5 border-top">
+    <footer class="page-footer">
 
 
       <!-- Footer Links -->
@@ -140,7 +143,7 @@
 
             <!-- Content -->
             <h5>Our Library</h5>
-            <p class="text-justify text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia</p>
+            <p class="text-justify text-small"> In our website you can find a collecton of books with some information as genre, theme or books related between them. We also have a section for the events where a writer presents his book... Go take a look!</p>
 
           </div>
           <!-- Grid column -->
@@ -153,15 +156,15 @@
             <!-- Links -->
             <h5>Service for you</h5>
 
-            <ul class="list-unstyled text-small">
+            <ul class="list-unstyled">
               <li>
-                <a class="text-muted" href="#!">Customer care</a>
+                <a class="text-muted" href="#!" style="text-decoration: line-through">Customer care</a>
               </li>
               <li>
-                <a class="text-muted" href="#!">FAQ and help</a>
+                <a class="text-muted" href="#!" style="text-decoration: line-through">FAQ and help</a>
               </li>
               <li>
-                <a class="text-muted" href="https://bova-colombo-hyp2019.herokuapp.com/pages/contactUsPage.html">Contact us</a>
+                <a class="text-muted" href="http://localhost:1337/pages/contactUsPage.html">Contact us</a>
               </li>
             </ul>
 
@@ -176,13 +179,13 @@
 
             <ul class="list-unstyled text-small">
               <li>
-                <a class="text-muted" href="https://bova-colombo-hyp2019.herokuapp.com/pages/infoPage.html#headingOrdInfo1">Ordering info</a>
+                <a class="text-muted" href="http://localhost:1337/pages/infoPage.html#headingOrdInfo1">Ordering info</a>
               </li>
               <li>
-                <a class="text-muted" href="https://bova-colombo-hyp2019.herokuapp.com/pages/infoPage.html#accordionShipInfo1">Shipping info</a>
+                <a class="text-muted" href="http://localhost:1337/pages/infoPage.html#accordionShipInfo1">Shipping info</a>
               </li>
               <li>
-                <a class="text-muted" href="https://bova-colombo-hyp2019.herokuapp.com/pages/infoPage.html#accordionPayInfo1">Payment methods</a>
+                <a class="text-muted" href="http://localhost:1337/pages/infoPage.html#accordionPayInfo1">Payment methods</a>
               </li>
             </ul>
 
@@ -196,8 +199,8 @@
       <!-- Footer Links -->
 
       <!-- Copyright -->
-      <div class="footer-copyright text-center py-3">© 2019 Copyright:
-        <a href="#"> Gesù.com</a>
+      <div class="footer-copyright text-center py-3" style="font-size:14px">© 2019 Copyright:
+        <span> Salvatore Bova, Luca Colombo - 2019 Hyp Project</span>
       </div>
       <!-- Copyright -->
 

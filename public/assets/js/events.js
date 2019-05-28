@@ -12,19 +12,20 @@ $(document).ready(() => {
       type: 'GET',
       dataType : 'json', // this URL returns data in JSON format
       success: (data) => {
+          console.log(data)
           for (var i in data){
             let idevent = data[i].id;
-            let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/events/'+data[i].bookid+'.jpg';
+            let img_path = 'http://localhost:1337/resources/events/'+data[i].bookid+'.jpg';
             let title = data[i].name;;
             let currentState = i;
             let date= data[i].date;
             let location= data[i].location;
-            let linkEvent = 'https://bova-colombo-hyp2019.herokuapp.com/pages/eventPage.html?' + idevent;
+            let linkEvent = 'http://localhost:1337/pages/eventPage.html?' + idevent;
             $("#page").append(`
               <tr class="list">
                 <td>
                   <figure class="media">
-                    <div class="img-wrap"><img src="${img_path}" class="img-sm" width="120" style="padding-right: 5px;"></img></div>
+                    <div class="img-wrap"><img src="${img_path}" class="img-sm" width="120" style="padding-right: 5px;" alt="event's cover"></img></div>
                     <figcaption class="media-body">
                       <h5 class="title"><a href=${linkEvent}>${title}</a></h5>
                       <dl class="param param-inline small">
@@ -136,12 +137,12 @@ $(document).ready(() => {
           if(data.length>0){
             for (var i in data){
               let idevent = data[i].id;
-              let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/events/'+data[i].bookid+'.jpg';
+              let img_path = 'http://localhost:1337/resources/events/'+data[i].bookid+'.jpg';
               let title = data[i].name;;
               let currentState = i;
               let date= data[i].date;
               let location= data[i].location;
-              let linkEvent = 'https://bova-colombo-hyp2019.herokuapp.com/pages/eventPage.html?' + idevent;
+              let linkEvent = 'http://localhost:1337/pages/eventPage.html?' + idevent;
               $("#page").append(`
                 <tr class="list">
                   <td>
@@ -239,7 +240,7 @@ $(document).ready(() => {
             let dialog = new Messi ("Sorry there are no events in this city :(",{
                 animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
                 buttons: [{id: 0, label: 'Ok'}],
-                callback: function() { window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/events.htm"); },
+                callback: function() { window.location.replace("http://localhost:1337/pages/events.htm"); },
                 center:false,
                 position: { top: '300px', left: '500px' }
               }
@@ -308,11 +309,11 @@ $('#searchButton').click(() => {
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
+  window.location.replace("http://localhost:1337/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
+  window.location.replace("http://localhost:1337/pages/cartPage.html");
 });
 
 

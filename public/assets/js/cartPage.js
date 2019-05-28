@@ -15,14 +15,14 @@ $(document).ready(() => {
         else{
           //show all the books in the cart
           for (var j in data.items){
-            let img = 'https://bova-colombo-hyp2019.herokuapp.com/resources/books/' + data.items[j].item.id + '.jpg';
-            let linkBook = 'https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + data.items[j].item.id;
-            let linkAuthor = 'https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data.items[j].item.authorid;
+            let img = 'http://localhost:1337/resources/books/' + data.items[j].item.id + '.jpg';
+            let linkBook = 'http://localhost:1337/pages/bookPage.html?' + data.items[j].item.id;
+            let linkAuthor = 'http://localhost:1337/pages/authorPage.html?' + data.items[j].item.authorid;
             $('#table').append(`
               <tr>
                 <td>
                   <figure class="media">
-                  	<div class="img-wrap"><img src=${img} class="img-sm" width="120" style="padding-right: 5px;"></img></div>
+                  	<div class="img-wrap"><img src=${img} class="img-sm" width="120" style="padding-right: 5px;" alt="book's cover"></img></div>
                   	<figcaption class="media-body">
                       <h5 class="title">
                       <a href=${linkBook}>${data.items[j].item.title}</a>
@@ -43,15 +43,17 @@ $(document).ready(() => {
               	</td>
               	<td>
                   <div class="price">
+                    <span class="show-sm">Price: </span>
                     <span>${data.items[j].item.price}€</span>
                   </div>
               	</td>
                 <td>
                   <div class="total">
+                    <span class="show-sm">Total: </span>
                     <span>${data.items[j].price}€</span>
                   </div>
               	</td>
-              	<td class="text-right">
+              	<td class="trash-td">
               	  <button class="btn btn-outline-secondary" id="remove${j}"><i class="fa fa-trash" aria-hidden="true"></i></button>
               	</td>
               </tr>
@@ -188,11 +190,11 @@ $('#searchButton').click(() => {
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
+  window.location.replace("http://localhost:1337/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
+  window.location.replace("http://localhost:1337/pages/cartPage.html");
 });
 
 function doesHttpOnlyCookieExist(cookiename) {
