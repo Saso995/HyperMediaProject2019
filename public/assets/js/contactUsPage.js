@@ -46,11 +46,11 @@ $('#searchButton').click(() => {
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("http://localhost:1337/pages/loginPage.html");
+  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("http://localhost:1337/pages/cartPage.html");
+  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
 });
 
 function doesHttpOnlyCookieExist(cookiename) {

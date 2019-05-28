@@ -1,6 +1,6 @@
 $(document).ready(() => {
   if(doesHttpOnlyCookieExist("user_id")){
-      window.location.replace("http://localhost:1337");
+      window.location.replace("https://bova-colombo-hyp2019.herokuapp.com");
   }
 })
 
@@ -14,7 +14,7 @@ $('#signUpForm').submit(function(){
           let dialog = new Messi (data.message,{
               animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
               buttons: [{id: 0, label: 'Ok'}],
-              callback: function() { window.location.href = "http://localhost:1337/"; }
+              callback: function() { window.location.href = "https://bova-colombo-hyp2019.herokuapp.com/"; }
             }
           );
         }

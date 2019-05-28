@@ -13,7 +13,7 @@ $(document).ready(() => {
       success: (data) => {
         $('#author-name').html(data.author[0].name);
         $('#bio').html(data.author[0].bio);
-        $("#img").attr('src','http://localhost:1337/resources/authors/' + data.author[0].id + '.jpg');
+        $("#img").attr('src','https://bova-colombo-hyp2019.herokuapp.com/resources/authors/' + data.author[0].id + '.jpg');
         //to add dinamically the carousel
         var numberOfBooks = data.myBooks.length;
         var limitPerCarousel = 4;
@@ -41,10 +41,10 @@ $(document).ready(() => {
         var count = 0;
         for (var i in data.myBooks){
           let idBook = data.myBooks[i].id;
-          let img_path = 'http://localhost:1337/resources/books/'+idBook+'.jpg';
+          let img_path = 'https://bova-colombo-hyp2019.herokuapp.com/resources/books/'+idBook+'.jpg';
           let title = data.myBooks[i].title;
           let price = data.myBooks[i].price;
-          let linkBook = 'http://localhost:1337/pages/bookPage.html?' + idBook;
+          let linkBook = 'https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + idBook;
           $.ajax({
             url: '../../book/' + idBook + '/reviews/score',
             type: 'GET',
@@ -103,14 +103,14 @@ $(document).ready(() => {
         let dialog = new Messi ("What the hell are you looking for?!",{
             animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
             buttons: [{id: 0, label: 'Ok'}],
-            callback: function() { window.location.replace("http://localhost:1337"); }
+            callback: function() { window.location.replace("https://bova-colombo-hyp2019.herokuapp.com"); }
           }
         );
       }
     });
   }
   else {
-    window.location.replace("http://localhost:1337");
+    window.location.replace("https://bova-colombo-hyp2019.herokuapp.com");
   }
 
   //to change login button into logout
@@ -160,11 +160,11 @@ $('#searchButton').click(() => {
 });
 
 $('#loginButton').click(()=>{
-  window.location.replace("http://localhost:1337/pages/loginPage.html");
+  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/loginPage.html");
 });
 
 $('#cartButton').click(()=>{
-  window.location.replace("http://localhost:1337/pages/cartPage.html");
+  window.location.replace("https://bova-colombo-hyp2019.herokuapp.com/pages/cartPage.html");
 });
 
 $(document).on('click', "[id^=add]", function(){
