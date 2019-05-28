@@ -112,7 +112,13 @@ $(document).ready(() => {
                     for (var i = grandTotal - limitPerPage; i < grandTotal; i++) {
                       $("#page .list:eq(" + i + ")").show();
                     }
-                //    window.location.href += "#searchButton";
+                    let address = window.location.href;
+                    if (address.substr(address.length-13) === "#searchButton"){
+                        window.location.href = address.slice(0, address.length-13) + "#searchButton";
+                    }
+                    else{
+                      window.location.href += "#searchButton";
+                    }
                   }
 
               });
@@ -133,7 +139,13 @@ $(document).ready(() => {
                     }
 
                     $(".pagination li.page-item:eq(" + (currentPage - 1) + ")").addClass('active');
-                  //  window.location.href += "#searchButton";
+                    let address = window.location.href;
+                    if (address.substr(address.length-13) === "#searchButton"){
+                        window.location.href = address.slice(0, address.length-13) + "#searchButton";
+                    }
+                    else{
+                      window.location.href += "#searchButton";
+                    }
                   }
                 });
 
@@ -154,7 +166,13 @@ $(document).ready(() => {
 
                     $(".pagination li.page-item:eq(" + (currentPage - 1) + ")").addClass('active');
 
-                    //window.location.href += "#searchButton";
+                    let address = window.location.href;
+                    if (address.substr(address.length-13) === "#searchButton"){
+                        window.location.href = address.slice(0, address.length-13) + "#searchButton";
+                    }
+                    else{
+                      window.location.href += "#searchButton";
+                    }
                   }
                 });
               }
