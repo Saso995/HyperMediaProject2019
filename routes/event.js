@@ -6,6 +6,8 @@ router.get('/', queries.getEvents);
 
 router.get('/city/:cityName', queries.getEventsByCity);
 
+router.get('/month/:idMonth', queries.getEventsByMonth);
+
 router.get('/:id', queries.getEventByID);
 
 router.get('/book/:bookid', queries.getEventByBookID);

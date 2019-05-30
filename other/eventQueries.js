@@ -1,10 +1,25 @@
 var db = require('./connectionDB');
 
 const getEvents = (req, res) => {
-  db.select().from('events').orderBy('date', 'asc').then(function(data){
-    res.send(data);
-  });
-};
+    db.select().from('events').orderBy('date', 'asc').then(function(data){
+      res.send(data);
+    });
+}
+
+const getEventsByMonth = (req,res) => {
+  let month = '2019-'+req.params.idMonth+'-%';
+  db.select().from('events').where('date', 'ilike', month).then(function(data){
+    console.log(data);
+    if (data.length > 0){
+      res.send(data);
+    }
+    else{
+      res.json({
+        message: "No events for this month"
+      });
+    }
+  })
+}
 
 const getEventsByCity = (req,res,next) => {
   let value = req.params.cityName;
@@ -84,5 +99,6 @@ module.exports = {
   getEventByID,
   getEventByBookID,
   getEventThisMonth,
-  getEventsByCity
+  getEventsByCity,
+  getEventsByMonth
 }

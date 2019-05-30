@@ -7,7 +7,7 @@ info:
     email: "salvatore.bova@mail.polimi.it"
 servers:
   - description: Url where you can find our website
-    url: http://localhost:1337/
+    url: https://bova-colombo-hyp2019.herokuapp.com/
 tags:
   - name: "Book"
     description: "operation regarding the books"
@@ -290,6 +290,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Event'
+        '400':
+          description: "Invalid id supplied"
+        '404':
+          description: "Event not found"
+  /event/month/{idMonth}:
+    get:
+      tags:
+      - Event
+      summary: "get event by month"
+      description: "return all the events for a specific month"
+      operationId: getEventsByMonth
+      parameters:
+      - name: "idMonth"
+        in: "path"
+        description: "The month's id that we need to fetch all the events. (i.e. 01 = January and so on)"
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
         '400':
           description: "Invalid id supplied"
         '404':
