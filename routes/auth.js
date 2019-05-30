@@ -78,7 +78,7 @@ router.post('/login', (req, res, next) => {
 router.post('/logout', (req, res, next) => {
   console.log(req.signedCookies);
   if(req.signedCookies.user_id){
-    req.session.cart.destroy();
+    req.session.destroy();
     res.cookie("user_id", "", { expires: new Date(0)});
     res.json({
       message: "Logged out!"
