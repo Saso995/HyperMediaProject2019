@@ -123,7 +123,7 @@ $(document).ready(() => {
 
 //to change login button into logout
   if(doesHttpOnlyCookieExist('user_id')){
-    $('#loginButton').html('Log out');
+    $('#loginButton').html('<i class="fa fa-sign-out" aria-hidden="true"></i> Logout');
     $("#loginButton").attr("id", "logoutButton");
 
     $("#logoutButton").unbind("click").click(function () {

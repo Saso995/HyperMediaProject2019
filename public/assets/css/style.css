@@ -2,6 +2,9 @@ body {
     font-family: "Courier New", Courier, monospace !important;
     background-color: rgba(21, 212, 255, 0.05);
 }
+.container-fluid {
+  padding-top: 30px;
+}
 
 /* navbar */
 .bg-light{
@@ -13,6 +16,11 @@ body {
   color: rgba(0, 0, 0, 0.5);
   padding: 8.25px 6px; /* Some padding */
 }
+.dropdown-menu {
+  background-color: #d5f6ff;
+  border: none;
+}
+
 
 /* Darker background on mouse-over */
 .btn-on-nav:hover {
@@ -24,7 +32,7 @@ body {
 }
 
 /*btn*/
-.btn-success, .btn-danger {
+.btn-success, .btn-danger, .btn-rev {
   font-size: 80%;
   border-radius: 5rem;
   letter-spacing: .1rem;
@@ -79,4 +87,115 @@ body {
   .filter {
     padding-bottom: 10px;
   }
+}
+
+/* all title style */
+h2, h5 {
+  font-weight: bold;
+}
+
+h3 {
+  font-weight: bold;
+  color: white;
+}
+
+h4 {
+  font-weight: bold;
+  color: #4b89da;
+}
+
+.carousel-inner dd {
+  color: #4b89da;
+}
+
+.carousel-caption a {
+  text-decoration-color: white;
+}
+
+h5 a, h5 a:hover {
+  color: #4b89da;
+}
+
+dd a, dd a:hover {
+  color: #4b89da;
+}
+
+.filter h4 {
+  font-weight: normal;
+  color: black;
+}
+
+
+/*read more*/
+#retractable-list {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+#retractable-list p.collapse:not(.show) {
+    height: 42px !important;
+    overflow: hidden;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+#retractable-list p.collapsing {
+    min-height: 42px !important;
+}
+
+#retractable-list a.collapsed:after  {
+    content: '+ Read More';
+    color: #7c7c7d;
+}
+
+#retractable-list a:not(.collapsed):not(.link-list):after {
+    content: '- Read Less';
+    color: #7c7c7d;
+}
+
+#retractable-list a:hover {
+    color: #4b89da;
+    text-decoration: none;
+}
+
+#retractable-list a {
+    color: #4b89da;
+}
+
+/*li ul*/
+li {
+    list-style-type: none;
+}
+
+ul {
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+/*page link*/
+a.page-link {
+  border: 0;
+  color: #7c7c7d;
+  margin-left: 0px;
+}
+
+a.page-link:hover {
+  color: #7c7c7d;
+  background-color: white;
+}
+
+.link-list:hover, .link-list:hover {
+  text-decoration: none;
+}
+
+/*pagination*/
+.pagination>li.active>a {
+  background-color: #b6b6b7 !important;
+}
+
+/*vertical divider*/
+.verical-divider {
+    border-left: 1px solid #dfdfdf;
 }

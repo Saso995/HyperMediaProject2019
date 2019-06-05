@@ -1,5 +1,5 @@
 .container-fluid {
-  padding-top: 0;
+  padding-top: 15px;
   max-width: 100%; /* Maximum width */
   position: relative;
   margin: 0 auto; /* Center it */
@@ -15,4 +15,9 @@
 
 h1{
   font-size: 70px;
+}
+
+h4 {
+  font-weight: bold;
+  color: black;
 }
