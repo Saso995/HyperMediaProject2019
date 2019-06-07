@@ -1,4 +1,5 @@
 //fills the page
+var numberOfBooks = 0;
 $(document).ready(() => {
     $.ajax({
       url: '../../cart',
@@ -15,6 +16,7 @@ $(document).ready(() => {
         else{
           //show all the books in the cart
           for (var j in data.items){
+            numberOfBooks++;
             let img = 'https://bova-colombo-hyp2019.herokuapp.com/resources/books/' + data.items[j].item.id + '.jpg';
             let linkBook = 'https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + data.items[j].item.id;
             let linkAuthor = 'https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data.items[j].item.authorid;
@@ -130,6 +132,34 @@ $('#empty-btn').click(() => {
       console.log(JSON.stringify(data));
     }
   });
+});
+
+$('#payment-btn').click(() => {
+  if (numberOfBooks){
+    let dialog = new Messi ("If you click 'Yes' your order will be completed. Are you sure?",{
+        animate: { open: 'bounceInLeft', close: 'bounceOutRight' }, modal: true,
+        buttons: [
+                    {id: 0, label: 'Yes', val: 0},
+                    {id: 1, label: 'No', val: 1}
+                 ],
+        callback: function(val) {
+                                    if (val == 0 ){
+                                      $.ajax({
+                                        url: '../../cart',
+                                        type: 'DELETE',
+                                        dataType : 'json',
+                                        success: (data) => {
+                                          window.location.href = "http://localhost:1337/";
+                                        },
+                                        error: (data) => {
+                                          console.log(JSON.stringify(data));
+                                        }
+                                      });
+                                    }
+                                }
+      }
+    );
+  }
 });
 
 //eliminate a whole set of books
