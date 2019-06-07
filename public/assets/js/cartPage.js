@@ -149,7 +149,7 @@ $('#payment-btn').click(() => {
                                         type: 'DELETE',
                                         dataType : 'json',
                                         success: (data) => {
-                                          window.location.href = "http://localhost:1337/";
+                                          window.location.href = "https://bova-colombo-hyp2019.herokuapp.com";
                                         },
                                         error: (data) => {
                                           console.log(JSON.stringify(data));
