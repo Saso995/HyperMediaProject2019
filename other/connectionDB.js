@@ -1,10 +1,10 @@
 const knex = require('knex')({
   client: 'pg',
   connection: {
-    user: 'gkvpviahzxzody',
-    host: 'ec2-54-228-252-67.eu-west-1.compute.amazonaws.com',
-    database: 'd3fii9r6lupojg',
-    password: '8e084bee26ad1d29645a1b3ac0a3789a651760aa337beaaf0957c4a093c47463',
+    user: 'lgkrsspypjfgyp',
+    host: 'ec2-54-246-121-32.eu-west-1.compute.amazonaws.com',
+    database: 'deogk8jckp1m9i',
+    password: 'fee5dc2195a33dd430be880a29ab15ab8f60e49a756ff40ba5d305408b80cbbf',
     port: 5432
   }
 });
