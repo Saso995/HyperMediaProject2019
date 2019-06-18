@@ -256,6 +256,12 @@ $(document).ready(() => {
         });
       });
     }
+	
+	$('#searchBox').keypress(function(e){
+		if(e.keyCode==13){
+		$('#searchButton').click();
+		}
+	});
 });
 //keep updated the number of stars
 let nowStars;
