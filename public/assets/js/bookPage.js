@@ -45,7 +45,7 @@ $(document).ready(() => {
   else{
     window.location.replace("https://bova-colombo-hyp2019.herokuapp.com");
   }
-  
+
     function fillAuthors (id2, id3, id4){
     if (id2 != 0){
       $.ajax({
@@ -54,7 +54,7 @@ $(document).ready(() => {
         dataType : 'json', // this URL returns data in JSON format
         success: (data) => {
           $('#authorName2').html(data.author[0].name);
-          $("#authorName2").attr('href','http://localhost:1337/pages/authorPage.html?' + data.author[0].id);
+          $("#authorName2").attr('href','https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data.author[0].id);
         }
       });
       if (id3 != 0){
@@ -64,7 +64,7 @@ $(document).ready(() => {
           dataType : 'json', // this URL returns data in JSON format
           success: (data) => {
             $('#authorName3').html(data.author[0].name);
-            $("#authorName3").attr('href','http://localhost:1337/pages/authorPage.html?' + data.author[0].id);
+            $("#authorName3").attr('href','https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data.author[0].id);
           }
         });
       }
@@ -75,7 +75,7 @@ $(document).ready(() => {
           dataType : 'json', // this URL returns data in JSON format
           success: (data) => {
             $('#authorName4').html(data.author[0].name);
-            $("#authorName4").attr('href','http://localhost:1337/pages/authorPage.html?' + data.author[0].id);
+            $("#authorName4").attr('href','https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data.author[0].id);
           }
         });
       }
