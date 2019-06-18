@@ -147,6 +147,12 @@ $(document).ready(() => {
         });
       });
     }
+	
+	$('#searchBox').keypress(function(e){
+      if(e.keyCode==13){
+        $('#searchButton').click();
+      }
+    });
 });
 
 $('#searchButton').click(() => {

@@ -27,7 +27,10 @@ $(document).ready(() => {
 
           let linkBook = 'https://bova-colombo-hyp2019.herokuapp.com/pages/bookPage.html?' + idBook;
           let linkAuthor = 'https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data[i].authorid;
-          let ranking = "";
+          let otherAuthor = '';
+          if (data[i].authorid2 != 0 || data[i].authorid3 != 0 || data[i].authorid4 != 0 )
+            otherAuthor = " + others";
+		  let ranking = "";
           if (key === "bestseller"){
             ranking = data[i].position+'° In best seller, in data: '+data[i].data_rank;
           }
@@ -55,7 +58,7 @@ $(document).ready(() => {
                       <figcaption class="media-body">
                         <h5 class="title"><a href=${linkBook}>${title}</a></h5>
                         <dl class="param param-inline small">
-                          <dd><a href=${linkAuthor}>${author}</a></dd>
+                          <dd><a href=${linkAuthor}>${author}</a>${otherAuthor}</dd>
                           <dd>${theme}</dd>
                           <dd>${ranking}</dd>
                         </dl>
@@ -232,7 +235,13 @@ $(document).ready(() => {
         });
       });
     }
-})
+	
+	$('#searchBox').keypress(function(e){
+    if(e.keyCode==13){
+      $('#searchButton').click();
+    }
+  });
+});
 
 $('#searchButton').click(() => {
   if ($('#searchBox').val()){

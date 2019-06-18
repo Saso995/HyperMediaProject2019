@@ -25,7 +25,8 @@ $(document).ready(() => {
         $("#img").attr('src','https://bova-colombo-hyp2019.herokuapp.com/resources/books/' + data.book[0].id + '.jpg');
         $('#authorName').html(data.authorName);
         $("#authorName").attr('href','https://bova-colombo-hyp2019.herokuapp.com/pages/authorPage.html?' + data.book[0].authorid);
-        var d = data.book[0].publicationdate;
+        fillAuthors(data.book[0].authorid2, data.book[0].authorid3, data.book[0].authorid4);
+		var d = data.book[0].publicationdate;
         var onlyD = d.substr(0, 10);
         $('#publicationDate').html(onlyD);
         let similarType = data.book[0].similar_type;
@@ -43,6 +44,42 @@ $(document).ready(() => {
   }
   else{
     window.location.replace("https://bova-colombo-hyp2019.herokuapp.com");
+  }
+  
+    function fillAuthors (id2, id3, id4){
+    if (id2 != 0){
+      $.ajax({
+        url: '../../author/' + id2,
+        type: 'GET',
+        dataType : 'json', // this URL returns data in JSON format
+        success: (data) => {
+          $('#authorName2').html(data.author[0].name);
+          $("#authorName2").attr('href','http://localhost:1337/pages/authorPage.html?' + data.author[0].id);
+        }
+      });
+      if (id3 != 0){
+        $.ajax({
+          url: '../../author/' + id3,
+          type: 'GET',
+          dataType : 'json', // this URL returns data in JSON format
+          success: (data) => {
+            $('#authorName3').html(data.author[0].name);
+            $("#authorName3").attr('href','http://localhost:1337/pages/authorPage.html?' + data.author[0].id);
+          }
+        });
+      }
+      if (id4 != 0){
+        $.ajax({
+          url: '../../author/' + id4,
+          type: 'GET',
+          dataType : 'json', // this URL returns data in JSON format
+          success: (data) => {
+            $('#authorName4').html(data.author[0].name);
+            $("#authorName4").attr('href','http://localhost:1337/pages/authorPage.html?' + data.author[0].id);
+          }
+        });
+      }
+    }
   }
 
   //fills book's Events
