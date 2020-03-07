@@ -108,7 +108,7 @@ $(document).ready(() => {
       for(let i = 1; i < data.length; i++){
         linkEvent = 'https://bova-colombo-hyp2019.herokuapp.com/pages/eventPage.html?'+data[i].id;
         $('#carousel').append(`
-          <div class="carousel-item", style="background-image: url(http://www.alleycatbookshop.com/uploads/2/4/3/0/24303957/595086_orig.jpg);">
+          <div class="carousel-item", style="background-image: url(https://bova-colombo-hyp2019.herokuapp.com/assets/img/events.jpg);">
             <div class = "carousel-caption">
               <a href="${linkEvent}"><h3>${data[i].name}</h3></a>
               <p>${data[i].description}</p>
@@ -154,7 +154,7 @@ $(document).ready(() => {
       });
     });
   }
-  
+
   $('#searchBox').keypress(function(e){
     if(e.keyCode==13){
       $('#searchButton').click();
