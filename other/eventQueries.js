@@ -94,8 +94,9 @@ const getEventThisMonth = (req, res, next) =>{
 
 
   today = yyyy + '-' + mm;
-  today = "2019-08"
+  today = "2019-06"
   db.select().from('events').where('date', 'ilike', "%"+today+"%").then(function(data){
+    console.log(data)
     res.send(data);
   });
 }
