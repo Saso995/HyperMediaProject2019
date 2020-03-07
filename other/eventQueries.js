@@ -88,12 +88,13 @@ const getEventThisMonth = (req, res, next) =>{
   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
   var yyyy = today.getFullYear();
 
-  //just to have always books without updates of the db (it's just am univerisity project)
-  //if (yyyy> 2019)
-    yyyy = 2019;
+  //just to have always events/books without updates of the db (it's just am univerisity project)
+  /*if (yyyy> 2019)
+    yyyy = 2019;*/
+
 
   today = yyyy + '-' + mm;
-
+  today = "2019-08"
   db.select().from('events').where('date', 'ilike', "%"+today+"%").then(function(data){
     res.send(data);
   });
