@@ -132,37 +132,6 @@ const mySimilar = (req,res) => {
   })
 }
 
-/*const getSimilar = (req,res,next) => {
-  var theme = req.params.theme;
-  console.log(theme)
-  var i = (theme.match(/,/g) || []).length;
-  var stringWhere = "where 'theme' LIKE ";
-  var or = " or 'theme' LIKE ";
-
-  for (; i >= 0; i--){
-    stringWhere += "'"+ "%" +theme.split(',')[i]+ "%" + "'";
-    if (i > 0){
-      stringWhere += or;
-    }
-  }
-  console.log(stringWhere)
-
-  let tot = `SELECT * FROM books ${stringWhere};`
-  console.log(tot)
-  db.raw(tot).then(function(result){
-    console.log(result);
-    res
-  });
-
-  function getSimilar(theme){
-    let par = "%"+theme+"%";
-    console.log(par);
-    return db.select().from('books').where('theme', 'ilike', par).then(function(similar){
-      var result = JSON.stringify(similar);
-      return result;
-    });
-}*/
-
 const getBestSeller = (req, res) => {
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
@@ -170,7 +139,6 @@ const getBestSeller = (req, res) => {
   var yyyy = today.getFullYear();
 
   today = yyyy + '-' + mm;
-  //db.select().from('bestseller').where('data_rank', 'ilike', '%'+today+'%').orderBy('position').then(function(result){
   db.select('bestseller.*', 'books.title', 'books.price', 'books.authorid', 'authors.name').from('bestseller').join('books', 'bestseller.bookid', '=', 'books.id').join('authors', 'books.authorid', '=', 'authors.id').where('data_rank', 'ilike', '%'+today+'%').orderBy('position').then(function(result){
     res.send(result)
   });
