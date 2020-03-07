@@ -139,6 +139,11 @@ const getBestSeller = (req, res) => {
   var yyyy = today.getFullYear();
 
   today = yyyy + '-' + mm;
+
+  //just to have always events/books without updates of the db (it's just am univerisity project)
+  if (yyyy> 2019)
+    today = "2019-06"
+    
   db.select('bestseller.*', 'books.title', 'books.price', 'books.authorid', 'authors.name').from('bestseller').join('books', 'bestseller.bookid', '=', 'books.id').join('authors', 'books.authorid', '=', 'authors.id').where('data_rank', 'ilike', '%'+today+'%').orderBy('position').then(function(result){
     res.send(result)
   });
